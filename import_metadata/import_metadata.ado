@@ -3,6 +3,8 @@
 cap prog drop import_metadata
 prog def import_metadata
 
+version 13
+
 syntax anything 				/// Specify the list of Excel or dta files to import - they will be appended onto each other.
 	using, 						/// Specify the Excel metadata file (for read or write).
 								///
