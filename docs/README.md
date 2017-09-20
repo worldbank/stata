@@ -10,7 +10,7 @@ Thank you and enjoy!
 
 # Visual Library
 
-![betterBar demo](https://raw.githubusercontent.com/worldbank/stata/master/betterBar/betterBar.eps)
+![betterBar demo](https://raw.githubusercontent.com/worldbank/stata/master/betterBar/betterBar.png)
 
 ```
 sysuse auto
