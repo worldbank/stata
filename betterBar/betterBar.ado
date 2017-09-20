@@ -1,7 +1,9 @@
 ** Generates better bar graphs
 
-cap prog drop betterbar
-prog def betterbar
+cap prog drop betterBar
+prog def betterBar
+
+version 12
 
 syntax anything 				/// Variable list should be parenthesis-grouped to produce grouping if desired.
 	[using]						/// For output
