@@ -8,11 +8,13 @@ Please use the adofiles and/or any code they contain for WB or external projects
 
 Thank you and enjoy!
 
+# Installing Commands
+
 # Visual Library
 
 ## betterBar
 
-![betterBar demo](https://raw.githubusercontent.com/worldbank/stata/master/betterBar/betterBar.png)
+![betterBar demo](https://www.mathsisfun.com/data/images/bar-graph-fruit.svg)
 
 ```
 sysuse auto
