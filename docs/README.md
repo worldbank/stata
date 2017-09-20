@@ -10,9 +10,9 @@ Thank you and enjoy!
 
 # Visual Library
 
-![betterBar demo](/stata/betterBar/betterBar.eps)
+![betterBar demo](https://raw.githubusercontent.com/worldbank/stata/master/betterBar/betterBar.eps)
 
-```
+```stata
 sysuse auto
 betterBar mpg trunk turn , over(foreign) se barlook(1 lw(thin) lc(white) fi(100))
 '''
