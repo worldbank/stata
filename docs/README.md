@@ -10,6 +10,8 @@ Thank you and enjoy!
 
 # Installing Commands
 
+Commands can be accessed directly through the [GitHub respository](https://github.com/worldbank/stata/) or by downloading and installing `wb_git_install` [directly](https://github.com/worldbank/stata/tree/master/wb_git_install) which will add the files to Stata on command.
+
 # Visual Library
 
 ## betterBar
@@ -17,6 +19,7 @@ Thank you and enjoy!
 ![betterBar demo](https://www.mathsisfun.com/data/images/bar-graph-fruit.svg)
 
 ```
+wb_git_install betterBar
 sysuse auto
 betterBar mpg trunk turn \\\
   , over(foreign) se \\\
