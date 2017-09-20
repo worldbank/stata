@@ -14,5 +14,7 @@ Thank you and enjoy!
 
 ```
 sysuse auto
-betterBar mpg trunk turn , over(foreign) se barlook(1 lw(thin) lc(white) fi(100))
+betterBar mpg trunk turn \\\
+  , over(foreign) se \\\
+  barlook(1 lw(thin) lc(white) fi(100))
 ```
