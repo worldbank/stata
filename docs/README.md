@@ -16,7 +16,9 @@ Commands can be accessed directly through the [GitHub respository](https://githu
 
 # Visual Library
 
-## betterBar
+## Graphics
+
+### betterBar
 
 ![betterBar demo](https://www.mathsisfun.com/data/images/bar-graph-fruit.svg)
 
