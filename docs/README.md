@@ -10,7 +10,7 @@ Thank you and enjoy!
 
 # Visual Library
 
-![betterBar demo](/betterBar/betterBar.eps)
+![betterBar demo](/stata/betterBar/betterBar.eps)
 
 ```
 sysuse auto
