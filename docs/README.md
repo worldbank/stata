@@ -42,7 +42,7 @@ betterBar mpg trunk turn \\\
 
 [`import_metadata`](https://github.com/worldbank/stata/tree/master/src/import_metadata) allows the user to create an Excel-based metadata file, then import one or more .xlsx or .dta files, including harmonizing variable naming and categorical coding and labeling. It can be used to expedite the cleaning of a single file or to combine (append) different surveys or survey rounds, taking the "hard work" out of the dofile.
 
-![import_metadata demo](https://www.mathsisfun.com/data/images/bar-graph-fruit.svg)
+![import_metadata demo](https://raw.githubusercontent.com/worldbank/stata/master/src/import_metadata/import_metadata.png)
 
 ```
 wb_git_install import_metadata
