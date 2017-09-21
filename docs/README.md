@@ -41,6 +41,6 @@ betterBar mpg trunk turn \\\
 ![import_metadata demo](https://www.mathsisfun.com/data/images/bar-graph-fruit.svg)
 
 ```
-wb_git_install betterBar
+wb_git_install import_metadata
 [see documentation for extensive examples]
 ```
