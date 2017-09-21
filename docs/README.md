@@ -20,9 +20,9 @@ Commands can be accessed directly through the [World Bank GitHub Stata resposito
 
 ### betterBar
 
-[`betterBar`](https://github.com/worldbank/stata/tree/master/betterBar) contains extensive options for creating bar graphs for multiple variables with confidence intervals, setting `by()` and `over()` groups, adding labels and legends, and various styling commands.
+[`betterBar`](https://github.com/worldbank/stata/tree/master/src/betterBar) contains extensive options for creating bar graphs for multiple variables with confidence intervals, setting `by()` and `over()` groups, adding labels and legends, and various styling commands.
 
-![betterBar demo](https://raw.githubusercontent.com/worldbank/stata/master/betterBar/betterBar.png)
+![betterBar demo](https://raw.githubusercontent.com/worldbank/stata/master/src/betterBar/betterBar.png)
 
 ```
 wb_git_install betterBar
@@ -36,7 +36,7 @@ betterBar mpg trunk turn \\\
 
 ### import_metadata
 
-[`import_metadata`](https://github.com/worldbank/stata/tree/master/import_metadata) allows the user to create an Excel-based metadata file, then import one or more .xlsx or .dta files, including harmonizing variable naming and categorical coding and labeling. It can be used to expedite the cleaning of a single file or to combine (append) different surveys or survey rounds, taking the "hard work" out of the dofile.
+[`import_metadata`](https://github.com/worldbank/stata/tree/master/src/import_metadata) allows the user to create an Excel-based metadata file, then import one or more .xlsx or .dta files, including harmonizing variable naming and categorical coding and labeling. It can be used to expedite the cleaning of a single file or to combine (append) different surveys or survey rounds, taking the "hard work" out of the dofile.
 
 ![import_metadata demo](https://www.mathsisfun.com/data/images/bar-graph-fruit.svg)
 
