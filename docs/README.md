@@ -12,11 +12,11 @@ Thank you and enjoy!
 
 ## Installing Commands
 
-(`wb_git_install`)[https://github.com/worldbank/stata/tree/master/wb_git_install] installs commands from the [World Bank GitHub Stata respository](https://github.com/worldbank/stata).
+[`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) installs commands from the [World Bank GitHub Stata respository](https://github.com/worldbank/stata).
 
-Begin by installing (`wb_git_install`)[https://github.com/worldbank/stata/tree/master/wb_git_install] into the /ado/personal folder. It will then be able to access any command in the [src](https://github.com/worldbank/stata/tree/master/src) directory.
+Begin by installing [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) into the /ado/personal folder. It will then be able to access any command in the [src](https://github.com/worldbank/stata/tree/master/src) directory.
 
-Commands still in substantial development can be found in the [dev](https://github.com/worldbank/stata/tree/master/dev) directory and will be made visible to (`wb_git_install`)[https://github.com/worldbank/stata/tree/master/wb_git_install] and posted on the [landing page](http://worldbank.github.io/stata/) after review. Please feel free to contribute to development of all commands!
+Commands still in substantial development can be found in the [dev](https://github.com/worldbank/stata/tree/master/dev) directory and will be made visible to [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) and posted on the [landing page](http://worldbank.github.io/stata/) after review. Please feel free to contribute to development of all commands!
 
 # Visual Library
 
