@@ -1,7 +1,7 @@
 * Creates table of summary statistics
 
-cap prog drop sumstats
-prog def sumstats
+cap prog drop sumStats
+prog def sumStats
 
 syntax anything using, stats(string asis) [*]
 

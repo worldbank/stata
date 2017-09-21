@@ -19,11 +19,11 @@ syntax anything // Needs the name of the command only.
     qui cd "`adoPlusDir'/`firstLetter'/"
 
 	cap copy ///
-		"https://raw.githubusercontent.com/worldbank/stata/master/`anything'/`anything'.ado" ///
+		"https://raw.githubusercontent.com/worldbank/stata/master/src/`anything'/`anything'.ado" ///
 		"`anything'.ado" , replace
 
 	cap copy ///
-		"https://raw.githubusercontent.com/worldbank/stata/master/`anything'/`anything'.sthlp" ///
+		"https://raw.githubusercontent.com/worldbank/stata/master/src/`anything'/`anything'.sthlp" ///
 		"`anything'.sthlp" , replace
 
 	di in red "Installed `anything' to `adoPlusDir'/`firstLetter'"
