@@ -48,3 +48,22 @@ betterBar mpg trunk turn \\\
 wb_git_install import_metadata
 [see documentation for extensive examples]
 ```
+
+## Statistical Analysis
+
+### sumStats
+
+[`sumStats`](https://github.com/worldbank/stata/tree/master/src/sumStats) will produce requested statistics for any number and combination of variables and sample restrictions.
+
+![sumStats demo](https://raw.githubusercontent.com/worldbank/stata/master/src/sumStats/sumStats.png)
+
+```
+sysuse auto.dta, clear
+sumStats ///
+	(sumstats (price mpg rep78 headroom trunk if foreign == 0)///
+	(price mpg rep78 headroom trunk if foreign == 1) ///
+	using "table_1.xls" , replace stats(mean sd p5 p95 N)
+ ```
+
+
+
