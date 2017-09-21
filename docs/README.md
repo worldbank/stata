@@ -24,7 +24,7 @@ Commands still in substantial development can be found in the [dev](https://gith
 
 ### betterBar
 
-[`betterBar`](https://github.com/worldbank/stata/tree/master/src/betterBar) contains extensive options for creating bar graphs for multiple variables with confidence intervals, setting `by()` and `over()` groups, adding labels and legends, and various styling commands.
+[`betterBar`](https://github.com/worldbank/stata/tree/master/src/betterBar) creates bar graphs for multiple variables with confidence intervals, setting `by()` and `over()` groups, adding labels and legends, and various styling commands.
 
 ![betterBar demo](https://raw.githubusercontent.com/worldbank/stata/master/src/betterBar/betterBar.png)
 
