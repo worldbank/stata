@@ -20,6 +20,8 @@ Commands can be accessed directly through the [GitHub respository](https://githu
 
 ### betterBar
 
+`betterBar` contains extensive options for creating bar graphs for multiple variables with confidence intervals, setting `by()` and `over()` groups, adding labels and legends, and various styling commands.
+
 ![betterBar demo](https://www.mathsisfun.com/data/images/bar-graph-fruit.svg)
 
 ```
@@ -28,4 +30,17 @@ sysuse auto
 betterBar mpg trunk turn \\\
   , over(foreign) se \\\
   barlook(1 lw(thin) lc(white) fi(100))
+```
+
+## Data Management
+
+### import_metadata
+
+`import_metadata` allows the user to create an Excel-based metadata file, then import one or more .xlsx or .dta files, including harmonizing variable naming and categorical coding and labeling. It can be used to expedite the cleaning of a single file or to combine (append) different surveys or survey rounds, taking the "hard work" out of the dofile.
+
+![import_metadata demo](https://www.mathsisfun.com/data/images/bar-graph-fruit.svg)
+
+```
+wb_git_install betterBar
+[see documentation for extensive examples]
 ```
