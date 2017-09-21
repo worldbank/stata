@@ -60,7 +60,7 @@ wb_git_install import_metadata
 ```
 sysuse auto.dta, clear
 sumStats ///
-  (sumstats (price mpg rep78 headroom trunk if foreign == 0)///
+  (sumstats (price mpg rep78 headroom trunk if foreign == 0) ///
   (price mpg rep78 headroom trunk if foreign == 1) ///
   using "table_1.xls" , replace stats(mean sd p5 p95 N)
  ```
