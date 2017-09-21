@@ -12,7 +12,7 @@ Thank you and enjoy!
 
 ## Installing Commands
 
-Commands can be accessed directly through the [GitHub respository](https://github.com/worldbank/stata/) or by downloading and installing `wb_git_install` [directly](https://github.com/worldbank/stata/tree/master/wb_git_install) which will add the files to Stata on command.
+Commands can be accessed directly through the [World Bank GitHub Stata respository](https://github.com/worldbank/stata/) or by downloading and installing [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) which will add the files to Stata on command.
 
 # Visual Library
 
