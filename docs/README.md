@@ -22,7 +22,7 @@ Commands can be accessed directly through the [World Bank GitHub Stata resposito
 
 [`betterBar`](https://github.com/worldbank/stata/tree/master/betterBar) contains extensive options for creating bar graphs for multiple variables with confidence intervals, setting `by()` and `over()` groups, adding labels and legends, and various styling commands.
 
-![betterBar demo](https://www.mathsisfun.com/data/images/bar-graph-fruit.svg)
+![betterBar demo](stata/betterBar/betterBar.png)
 
 ```
 wb_git_install betterBar
