@@ -1,4 +1,4 @@
-# Introduction
+# World Bank GitHub Stata respository
 
 ## Usage and contribution
 
