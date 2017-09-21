@@ -1,4 +1,14 @@
-# stata
+# World Bank GitHub Stata repository
+
+## How to use
+
+_wb_git_install_ installs commands from the [World Bank GitHub Stata directory](https://github.com/worldbank/stata).
+
+Begin by installing the adofile from this location into the /ado/personal folder. It will then be able to access any command in the [src](https://github.com/worldbank/stata/tree/master/src) directory.
+
+Commands still in substantial development can be found in the [dev](https://github.com/worldbank/stata/tree/master/dev) directory and will be made visible to _wb_git_install_ and posted on the [landing page](http://worldbank.github.io/stata/) after review. Please feel free to contribute to development of all commands!
+
+## Description
 
 This repository contains a broad variety of STATA commands (adofiles) which are useful in data management, statistical analysis, and the production of graphics. In many cases, these adofiles reduce the production of routine items from a tedious programming task to a single command line – such as data import and cleaning; production of summary statistics tables; and categorical bar charts with confidence intervals.
 
