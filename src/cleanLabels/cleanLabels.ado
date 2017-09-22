@@ -72,7 +72,7 @@ qui {
 	
 	end
 
-* Demo
+/* Demo
 
 sysuse auto, clear
 label def origin 1 "Of, Foreign : Origin" 0 "D,omes:tic" , modify
