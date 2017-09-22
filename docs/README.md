@@ -43,6 +43,7 @@ betterBar mpg trunk turn \\\
 ![dta2kml demo](https://raw.githubusercontent.com/worldbank/stata/master/src/dta2kml/dta2kml.jpg)
 
 ```
+wb_git_install dta2kml
 clear
 set obs 100
 gen lat = rnormal() +38
@@ -57,6 +58,7 @@ dta2kml using demo.kml , lat(lat) lon(lon) replace
 ![txt2qr demo](https://raw.githubusercontent.com/worldbank/stata/master/src/txt2qr/txt2qr.png)
 
 ```
+wb_git_install txt2qr
 txt2qr ///
   worldbank.github.io/stata/ ///
   using txt2qr.png, save replace
@@ -82,6 +84,7 @@ wb_git_install import_metadata
 ![cleanLabels demo](https://raw.githubusercontent.com/worldbank/stata/master/src/cleanLabels/cleanlabels.png)
 
 ```
+wb_git_install cleanLabels
 sysuse auto, clear
 label def origin 1 "Of, Foreign : Origin" 0 "D,omes:tic" , modify
 labelbook origin 
@@ -98,6 +101,7 @@ labelbook origin
 ![sumStats demo](https://raw.githubusercontent.com/worldbank/stata/master/src/sumStats/sumStats.png)
 
 ```
+wb_git_install sumStats
 sysuse auto.dta, clear
 sumStats ///
   (price mpg rep78 headroom trunk if foreign == 0) ///
