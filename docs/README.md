@@ -31,8 +31,8 @@ Commands still in development can be found in and submitted to the [dev](https:/
 ```
 wb_git_install betterBar
 sysuse auto
-betterBar mpg trunk turn \\\
-  , over(foreign) se \\\
+betterBar mpg trunk turn ///
+  , over(foreign) se ///
   barlook(1 lw(thin) lc(white) fi(100))
 ```
 

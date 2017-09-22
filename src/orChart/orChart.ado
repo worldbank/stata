@@ -130,7 +130,7 @@ qui { // odds-ratio / logistic regressions: bounded by [1/100 , 100]
 			, 	xscale(log) xlab(none) ylab(`labels', angle(0) nogrid notick) ///
 				xlab(0.01 "0.01" 0.1 `""0.1" "{&larr} Favors `case0'""' 1 "1.0" 10 `""10" "Favors `case1' {&rarr}""' 100 "100", notick) ///
 				xline(0.01, lc(black)) xline(1, lc(gray) lp(dash)) xline(10, lc(gray) lp(dot)) xline(0.1, lc(gray) lp(dot)) xline(100, lc(black)) ///
-				yscale(noline) xscale(noline) ytit("") legend(off) graphregion(color(white)) caption(`"`pnote'"', pos(7) span size(small)) `options'
+				yscale(noline) xscale(noline) ytit("") legend(off) graphregion(color(white)) bgcolor(white) caption(`"`pnote'"', pos(7) span size(small)) `options'
 		
 		* xlab(0.01 "1:100" 0.1 "1:10" 1 "1:1" 10 "10:1" 100 "100:1", notick)
 		

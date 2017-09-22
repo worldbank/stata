@@ -399,13 +399,13 @@ qui keep if `touse'
 	if "`barplot'" != "" {
 	tw `addplot' `seplot' `blabplot' (scatter `axisfix', ms(i)) , `labelaxis'lab(`theXLabels', angle(0) nogrid notick labs(`labsize')) yscale(noline) xscale(noline) ///
 		`addStats' `valueaxis'lab(, angle(0) nogrid) `labelaxis'tit(" ") `valueaxis'tit(" ") legend(pos(6) `theLegendOff' order(`theLegendOrder') region(lc(white)) ) ///
-		graphregion(color(white)) ///
+		graphregion(color(white)) bgcolor(white) ///
 		`options'
 	}
 	else {
 	tw `meanplots' `addplot' `seplot' `blabplot' (scatter `axisfix', ms(i)) , `labelaxis'lab(`theXLabels', angle(0) nogrid notick labs(`labsize')) yscale(noline) xscale(noline) ///
 		`addStats' `valueaxis'lab(, angle(0) nogrid) `labelaxis'tit(" ") `valueaxis'tit(" ") legend(pos(6) `theLegendOff' order(`theLegendOrder') region(lc(white)) ) ///
-		graphregion(color(white)) ///
+		graphregion(color(white)) bgcolor(white) ///
 		`options'	
 	}
 	
