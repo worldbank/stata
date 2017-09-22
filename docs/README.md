@@ -103,8 +103,8 @@ replace pop = pop / 1000
 format pop18p %tdMon_CCYY
 drop if state == "Virginia"
 xtile category = popurban , n(2)
-	label def category 1 "Early Adopters" 2 "Late Adopters"
-	label val category category
+  label def category 1 "Early Adopters" 2 "Late Adopters"
+  label val category category
 timeLines , ///
   id(region) start(pop18p) end(pop) ///
   labels(state) labopts(mlabangle(30)) ///
