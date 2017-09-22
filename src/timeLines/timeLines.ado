@@ -1,8 +1,10 @@
 
-cap prog drop timechart
-prog def timechart
+cap prog drop timeLines
+prog def timeLines
 
-syntax [if] [in], id(varlist) start(varname) end(varname) [names(varname)] [labels(varname)] [class(varname)] [classcolors(string asis)] [*]
+syntax [if] [in], id(varlist) start(varname) end(varname) ///
+	[names(varname)] [labels(varname)] [class(varname)] ///
+	[classcolors(string asis)] [labopts(string asis)] [*]
 
 marksample touse
 preserve
@@ -12,22 +14,23 @@ preserve
 	keep if `touse'
 	
 	tempvar tempid
-	egen `tempid' = group(`id')
-		
+	egen `tempid' = group(`id') , label
+	/*	
 		qui sum `tempid'
 		replace `tempid' = `r(max)' - `tempid' + 1
 		cap `sort' `tempid'
-	
+	*/
 * Set up names
 		
 	if "`names'" == "" {
 		tempvar tempname
-		gen `tempname' = `tempid'
+		decode `tempid' , gen(`tempname')
 		local names = "\`tempname'"
 		}
 	
 		qui sum `tempid'
 		local ymax = `r(max)'
+		local ymin = `r(min)'
 		
 	tempfile a
 		save `a'
@@ -46,7 +49,7 @@ preserve
 * Set up labels
 	
 	if "`labels'" != "" {
-		local labplot (scatter `tempid' `start', msym(none) mlab(`labels') mlabangle(0) mlabpos(3) mlabcolor(black))
+		local labplot (scatter `tempid' `start', msym(none) mlab(`labels') mlabangle(0) mlabpos(1) mlabcolor(black) `labopts')
 		}
 		
 * Number observations
@@ -83,7 +86,7 @@ preserve
 				local theValues = "`theValues' `nextValue'"
 				}
 				
-			if `nclass' > 1 local legend `"legend(order(`legend'))"'
+			if `nclass' > 1 local legend `"legend(region(lc(none) fc(none)) order(`legend'))"'
 				
 		use `a', clear
 
@@ -101,11 +104,29 @@ preserve
 	
 * Graph
 	
-	local ytop = `ymax' + 1
-	
-	* di `" tw `plots' `labplot' , `legend' ytit(" ") ylab( 0 " " `theLabels' `ytop' " ", angle(0) noticks) graphregion(color(white)) title(, color(black) span) subtitle(, color(black) span) `options'  "'
-	
-	tw `plots' `labplot' , `legend' ytit(" ") xtit(" ")  ylab( `theLabels' , angle(0) noticks) yscale(reverse) ///
-		graphregion(color(white)) title(, color(black) span) subtitle(, color(black) span) `options' ylab(,grid)
+	qui su `start'
+	gen xbot = `r(min)'
+	gen ytop = `ymin' - 0.5
+		
+	tw `plots' `labplot' (scatter ytop xbot in 1 , m(none)), `legend' ytit(" ") xtit(" ")  ylab( `theLabels' , angle(0) noticks) yscale(reverse) ///
+		graphregion(color(white)) title(, color(black) span) subtitle(, color(black) span) `options' ylab(,grid) bgcolor(white)
 
 end
+
+/** DEMO
+
+webuse census , clear
+keep in 40/50
+replace pop18p = pop18p / 1000
+replace pop = pop / 1000
+format pop18p %tdMon_CCYY
+drop if state == "Virginia"
+xtile category = popurban , n(2)
+	label def category 1 "Early Adopters" 2 "Late Adopters"
+	label val category category
+timeLines , ///
+  id(region) start(pop18p) end(pop) ///
+  labels(state) labopts(mlabangle(30)) ///
+  xsize(7) class(category) classcolors(maroon navy)
+
+* Have a lovely day!

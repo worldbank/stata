@@ -88,6 +88,31 @@ txt2qr ///
   , save replace
 ```
 
+### timeLines
+
+[`timeLines`](https://github.com/worldbank/stata/tree/master/src/timeLines) creates a graphical representation of time use for various panel units when each observation represents an activity with a start and end time.
+
+![timeLines demo](https://raw.githubusercontent.com/worldbank/stata/master/src/timeLines/timeLines.png)
+
+```
+wb_git_install timeLines
+webuse census , clear
+keep in 40/50
+replace pop18p = pop18p / 1000
+replace pop = pop / 1000
+format pop18p %tdMon_CCYY
+drop if state == "Virginia"
+xtile category = popurban , n(2)
+	label def category 1 "Early Adopters" 2 "Late Adopters"
+	label val category category
+timeLines , ///
+  id(region) start(pop18p) end(pop) ///
+  labels(state) labopts(mlabangle(30)) ///
+  xsize(7) class(category) classcolors(maroon navy)
+```
+
+
+
 ## Data Management
 
 ### import_metadata
