@@ -50,6 +50,18 @@ gen lon = rnormal() -77
 dta2kml using demo.kml , lat(lat) lon(lon) replace
 ```
 
+### txt2qr
+
+[`txt2qr`](https://github.com/worldbank/stata/tree/master/src/txt2qr) outputs arbitrary text into a QR code for use with scanning devices such as ODK plugins.
+
+![txt2qr demo](https://raw.githubusercontent.com/worldbank/stata/master/src/txt2qr/txt2qr.jpg)
+
+```
+txt2qr ///
+  worldbank.github.io/stata/ ///
+  using txt2qr.png, save replace
+```
+
 ## Data Management
 
 ### import_metadata
