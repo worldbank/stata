@@ -36,6 +36,20 @@ betterBar mpg trunk turn \\\
   barlook(1 lw(thin) lc(white) fi(100))
 ```
 
+### dta2kml
+
+[`dta2kml`](https://github.com/worldbank/stata/tree/master/src/dta2kml) outputs decimal lat/lon coordinates into a KML file for visual exploration.
+
+![dta2kml demo](https://raw.githubusercontent.com/worldbank/stata/master/src/dta2kml/dta2kml.jpg)
+
+```
+clear
+set obs 100
+gen lat = rnormal() +38
+gen lon = rnormal() -77
+dta2kml using demo.kml , lat(lat) lon(lon) replace
+```
+
 ## Data Management
 
 ### import_metadata
