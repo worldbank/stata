@@ -49,6 +49,20 @@ wb_git_install import_metadata
 [see documentation for extensive examples]
 ```
 
+### cleanLabels
+
+[`cleanLabels`](https://github.com/worldbank/stata/tree/master/src/cleanLabels) removes characters from value labels. By default it removes “,” and “:” since these are known to cause issues with export commands.
+
+![cleanLabels demo](https://raw.githubusercontent.com/worldbank/stata/master/src/cleanLabels/cleanlabels.png)
+
+```
+sysuse auto, clear
+label def origin 1 "Of, Foreign : Origin" 0 "D,omes:tic" , modify
+labelbook origin 
+cleanLabels foreign
+labelbook origin
+```
+
 ## Statistical Analysis
 
 ### sumStats
