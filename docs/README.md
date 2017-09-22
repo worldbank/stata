@@ -48,9 +48,9 @@ webuse census , clear
 tab region, gen(region_)
 gen endsinA = substr(state,-1,1) == "a"
 orChart ///
-	region_1 region_2 region_3 region_4 ///
-	, command(logit) rhs(endsinA pop) ///
-	case0(Others) case1(States Ending in A) xsize(8)
+  region_1 region_2 region_3 region_4 ///
+  , command(logit) rhs(endsinA pop) ///
+  case0(Others) case1(States Ending in A) xsize(8)
 ```
 
 ### dta2kml
