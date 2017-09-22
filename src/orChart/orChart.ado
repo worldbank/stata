@@ -1,15 +1,15 @@
 * Regression coefficient chart/table
 
-cap prog drop chartable
-prog def chartable
+cap prog drop orChart
+prog def orChart
 
-syntax varlist [if] [in] [using] [pweight], Command(string asis) rhs(string asis) [or] [Pstars] [regopts(string asis)] [globalif] [*] case0(string asis) case1(string asis)
+syntax varlist [if] [in] [using] [pweight], Command(string asis) rhs(string asis) [regopts(string asis)] [globalif] [*] case0(string asis) case1(string asis)
 
 preserve
 marksample touse, novarlist
 keep if `touse'
 
-qui if "`or'" == "or" { // odds-ratio / logistic regressions: bounded by [1/100 , 100]
+qui { // odds-ratio / logistic regressions: bounded by [1/100 , 100]
 
 	if "`weight'" != "" local theWeight "[`weight' `exp']"
 
@@ -26,7 +26,7 @@ qui if "`or'" == "or" { // odds-ratio / logistic regressions: bounded by [1/100 
 			local theLabel : var label `var'
 			local theLabels =  `"`theLabels' "`theLabel'" "'
 
-			`command' `var' `rhs' `theWeight', `or' `regopts'
+			`command' `var' `rhs' `theWeight', or `regopts'
 			
 			mat mattemp = r(table)
 			mat nextResults = mattemp[1...,1]
@@ -65,12 +65,11 @@ qui if "`or'" == "or" { // odds-ratio / logistic regressions: bounded by [1/100 
 		svmat double theResult, n(matcol)
 			
 		gen b2 = string(round(theResultb,.01))
-			if "`pstars'" != "" {
+
 				replace b2 = b2 + "*" if theResultpvalue < 0.1
 				replace b2 = b2 + "*" if theResultpvalue < 0.05
 				replace b2 = b2 + "*" if theResultpvalue < 0.01
-				* local pnote "note:  *** p<0.01, ** p<0.05, * p<0.1"
-				}
+
 			replace b2 = "0" + b2 if theResultb < 1 & theResultb > 0
 
 		
@@ -131,7 +130,7 @@ qui if "`or'" == "or" { // odds-ratio / logistic regressions: bounded by [1/100 
 			, 	xscale(log) xlab(none) ylab(`labels', angle(0) nogrid notick) ///
 				xlab(0.01 "0.01" 0.1 `""0.1" "{&larr} Favors `case0'""' 1 "1.0" 10 `""10" "Favors `case1' {&rarr}""' 100 "100", notick) ///
 				xline(0.01, lc(black)) xline(1, lc(gray) lp(dash)) xline(10, lc(gray) lp(dot)) xline(0.1, lc(gray) lp(dot)) xline(100, lc(black)) ///
-				yscale(noline) xscale(noline) ytit("") legend(off) graphregion(color(white)) xsize(7) caption(`"`pnote'"', pos(7) span size(small)) `options'
+				yscale(noline) xscale(noline) ytit("") legend(off) graphregion(color(white)) caption(`"`pnote'"', pos(7) span size(small)) `options'
 		
 		* xlab(0.01 "1:100" 0.1 "1:10" 1 "1:1" 10 "10:1" 100 "100:1", notick)
 		
@@ -153,6 +152,6 @@ qui if "`or'" == "or" { // odds-ratio / logistic regressions: bounded by [1/100 
 			export excel label y0 N0 x0 y1 N1 x1 b ll ul pvalue `using' , replace first(varl)
 			}
 			
-	} // end logistic regressions (OR option)
+	} // end qui
 
 end

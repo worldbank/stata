@@ -36,6 +36,23 @@ betterBar mpg trunk turn \\\
   barlook(1 lw(thin) lc(white) fi(100))
 ```
 
+### orChart
+
+[`orChart`](https://github.com/worldbank/stata/tree/master/src/orChart) generates a chart of primary logistic regression results for a single binary independent variable, expressed as odds ratios, for a list of dependent variables, combined with a table detailing those results.
+
+![orChart demo](https://raw.githubusercontent.com/worldbank/stata/master/src/orChart/orChart.png)
+
+```
+wb_git_install orChart
+webuse census , clear
+tab region, gen(region_)
+gen endsinA = substr(state,-1,1) == "a"
+orChart ///
+	region_1 region_2 region_3 region_4 ///
+	, command(logit) rhs(endsinA pop) ///
+	case0(Others) case1(States Ending in A) xsize(8)
+```
+
 ### dta2kml
 
 [`dta2kml`](https://github.com/worldbank/stata/tree/master/src/dta2kml) outputs decimal lat/lon coordinates into a KML file for visual exploration.
@@ -87,7 +104,7 @@ wb_git_install import_metadata
 wb_git_install cleanLabels
 sysuse auto, clear
 label def origin 1 "Of, Foreign : Origin" 0 "D,omes:tic" , modify
-labelbook origin 
+labelbook origin
 cleanLabels foreign
 labelbook origin
 ```
@@ -108,6 +125,3 @@ sumStats ///
   (price mpg rep78 headroom trunk if foreign == 1) ///
   using "table_1.xls" , replace stats(mean sd p5 p95 N)
  ```
-
-
-
