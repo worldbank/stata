@@ -30,7 +30,7 @@ Commands still in development can be found in and submitted to the [dev](https:/
 
 ```
 wb_git_install betterBar
-sysuse auto
+sysuse auto , clear
 betterBar mpg trunk turn ///
   , over(foreign) se ///
   barlook(1 lw(thin) lc(white) fi(100))
@@ -45,7 +45,7 @@ betterBar mpg trunk turn ///
 ```
 wb_git_install orChart
 webuse census , clear
-tab region, gen(region_)
+tab region , gen(region_)
 gen endsinA = substr(state,-1,1) == "a"
 orChart ///
   region_1 region_2 region_3 region_4 ///
@@ -78,7 +78,8 @@ dta2kml using demo.kml , lat(lat) lon(lon) replace
 wb_git_install txt2qr
 txt2qr ///
   worldbank.github.io/stata/ ///
-  using txt2qr.png, save replace
+  using txt2qr.png ///
+  , save replace
 ```
 
 ## Data Management
@@ -102,7 +103,7 @@ wb_git_install import_metadata
 
 ```
 wb_git_install cleanLabels
-sysuse auto, clear
+sysuse auto , clear
 label def origin 1 "Of, Foreign : Origin" 0 "D,omes:tic" , modify
 labelbook origin
 cleanLabels foreign
@@ -119,9 +120,10 @@ labelbook origin
 
 ```
 wb_git_install sumStats
-sysuse auto.dta, clear
+sysuse auto , clear
 sumStats ///
   (price mpg rep78 headroom trunk if foreign == 0) ///
   (price mpg rep78 headroom trunk if foreign == 1) ///
-  using "table_1.xls" , replace stats(mean sd p5 p95 N)
+  using "table_1.xls" ///
+  , replace stats(mean sd p5 p95 N)
  ```
