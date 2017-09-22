@@ -129,4 +129,6 @@ timeLines , ///
   labels(state) labopts(mlabangle(30)) ///
   xsize(7) class(category) classcolors(maroon navy)
   
+  graph export "/users/bbdaniels/desktop/timeLines.png" , replace
+  
 * Have a lovely day!
