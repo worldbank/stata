@@ -6,7 +6,7 @@ This repository contains a broad variety of STATA commands (adofiles) which are 
 
 This repository is an effort to debug, polish, improve, and disseminate this set of commands and others that are developed during the course of work. As byproducts of various DEC projects, the adofiles in this repository can be found in various stages of development. Some are barely-developed commands without even a helpfile; some are fully developed with example datasets and use instructions; some have bugs or undocumented features. Few have appropriate levels of code commenting.
 
-Please use the adofiles and/or any code they contain for WB or external projects and analysis as desired; they are shared under the [MIT License](https://opensource.org/licenses/MIT). Please contribute development of both existing code, new functionality, and documentation. For questions about any existing or intended functionality of any of the files, contact [Benjamin Daniels](mailto: bdaniels@worldbank.org) at [DIME Analytics](http://www.worldbank.org/en/research/dime/brief/DIME-Analytics).
+Please use the adofiles and/or any code they contain for WB or external projects and analysis as desired; they are shared under the [MIT License](https://opensource.org/licenses/MIT). Please contribute development of both existing code, new functionality, and documentation. For questions about any existing or intended functionality of any of the files, contact [Benjamin Daniels](mailto:bdaniels@worldbank.org) at [DIME Analytics](http://www.worldbank.org/en/research/dime/brief/DIME-Analytics).
 
 Thank you and enjoy!
 
@@ -22,7 +22,7 @@ Commands still in development can be found in and submitted to the [dev](https:/
 
 ### xml_tab
 
-Many of the commands listed here that write to Excel spreadsheets depend on [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html), which is included in the [Poverty Research Toolkit](http://econ.worldbank.org/WBSITE/EXTERNAL/EXTDEC/EXTRESEARCH/EXTPROGRAMS/EXTPOVRES/0,,contentMDK:20292195~menuPK:546578~pagePK:64168182~piPK:64168060~theSitePK:477894,00.html#xml_tab) and authored by [Zurab Sajaia](mailto: zsajaia@worldbank.org) and [Michael Lokshin](mailto: mlokshin@worldbank.org). [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html) is available for installation in Stata by writing `net install dm0037.pkg`; `ssc install xml_tab, replace`; or `findit xml_tab`.
+Many of the commands listed here that write to Excel spreadsheets depend on [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html), which is included in the [Poverty Research Toolkit](http://econ.worldbank.org/WBSITE/EXTERNAL/EXTDEC/EXTRESEARCH/EXTPROGRAMS/EXTPOVRES/0,,contentMDK:20292195~menuPK:546578~pagePK:64168182~piPK:64168060~theSitePK:477894,00.html#xml_tab) and authored by [Zurab Sajaia](mailto:zsajaia@worldbank.org) and [Michael Lokshin](mailto:mlokshin@worldbank.org). [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html) is available for installation in Stata by writing `net install dm0037.pkg`; `ssc install xml_tab, replace`; or `findit xml_tab`.
 
 # Data Analysis
 
