@@ -19,7 +19,7 @@ cap mat drop theResults
 		
 	import excel `using', first clear
 
-	keep note logic value
+	keep stat var logic value
 
 	drop if logic == ""
 	
@@ -29,13 +29,16 @@ cap mat drop theResults
 	qui forvalues i = 1/`r(N)' {
 	
 		local theLogic = logic[`i']
+		local theVar = var[`i']
+		local theStat = stat[`i']
+			local theStat = "\`r(`theStat')'"
 	
 		tempfile a
 			qui save `a', replace
 		
 		use `theData', clear
-		qui count if `theLogic'
-		local theValue = `r(N)'
+		qui su `theVar' if `theLogic' , d
+		local theValue = `theStat'
 		
 		use `a', clear
 		
@@ -46,7 +49,7 @@ cap mat drop theResults
 		
 	mkmat value , mat(theResults)
 		
-	putexcel C2 = matrix(theResults) `using', modify
+	putexcel D2 = matrix(theResults) `using', modify
 	
 	use `theData', clear
 	
@@ -55,7 +58,6 @@ end
 /* Demo
 
 sysuse auto, clear
-flowchart using ///
-	"/Users/bbdaniels/Desktop/flowChart.xlsx"
+flowchart using "flowChart.xlsx"
 
 * Have a lovely day!
