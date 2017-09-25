@@ -86,7 +86,7 @@ keep mpg price
 rename (mpg price)(cost value)
 knapsack 500, p(cost) v(value) gen(chosen)
 di "`r(max)'"
-table chosen , c(sum cost sum value)'
+table chosen , c(sum cost sum value)
 ```
 
 ## dta2kml
