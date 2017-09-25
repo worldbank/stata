@@ -161,10 +161,9 @@ sumStats ///
 
 ### knapsack
 
-[`knapsack'](https://github.com/worldbank/stata/tree/master/src/knapsack) implements a [dynamic programming solution to the Knapsack Problem](http://www.es.ele.tue.nl/education/5MC10/Solutions/knapsack.pdf), which selects an optimal set from a list of options based on input variables indicating price and value, and a set budget.
+[`knapsack`](https://github.com/worldbank/stata/tree/master/src/knapsack) implements a [dynamic programming solution to the Knapsack Problem](http://www.es.ele.tue.nl/education/5MC10/Solutions/knapsack.pdf), which selects an optimal set from a list of options based on input variables indicating price and value, and a set budget.
 
 ![knapsack demo](https://raw.githubusercontent.com/worldbank/stata/master/src/knapsack/knapsack.png)
-
 
 ```
 wb_git_install knapsack
