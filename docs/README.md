@@ -141,7 +141,7 @@ cleanLabels foreign
 labelbook origin
 ```
 
-## Statistical Analysis
+## Analysis
 
 ### sumStats
 
@@ -158,3 +158,20 @@ sumStats ///
   using "table_1.xls" ///
   , replace stats(mean sd p5 p95 N)
  ```
+
+### knapsack
+
+[`knapsack'](https://github.com/worldbank/stata/tree/master/src/knapsack) implements a [dynamic programming solution to the Knapsack Problem](http://www.es.ele.tue.nl/education/5MC10/Solutions/knapsack.pdf), which selects an optimal set from a list of options based on input variables indicating price and value, and a set budget.
+
+![knapsack demo](https://raw.githubusercontent.com/worldbank/stata/master/src/knapsack/knapsack.png)
+
+
+```
+wb_git_install knapsack
+sysuse auto, clear
+keep mpg price
+rename (mpg price)(cost value)
+knapsack 500, p(cost) v(value) gen(chosen)
+di "`r(max)'"
+table chosen , c(sum cost sum value)'
+```
