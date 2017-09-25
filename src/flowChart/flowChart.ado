@@ -8,6 +8,8 @@ marksample touse
 preserve
 keep if `touse'
 
+version 13
+
 tempfile theData
 	save `theData', replace
 	
@@ -24,7 +26,7 @@ cap mat drop theResults
 * Do the calculatons...
 
 	qui count
-	forvalues i = 1/`r(N)' {
+	qui forvalues i = 1/`r(N)' {
 	
 		local theLogic = logic[`i']
 	
@@ -47,5 +49,13 @@ cap mat drop theResults
 	putexcel C2 = matrix(theResults) `using', modify
 	
 	use `theData', clear
-
+	
 end
+	
+/* Demo
+
+sysuse auto, clear
+flowchart using ///
+	"/Users/bbdaniels/Desktop/flowChart.xlsx"
+
+* Have a lovely day!

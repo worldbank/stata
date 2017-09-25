@@ -24,11 +24,9 @@ Commands still in development can be found in and submitted to the [dev](https:/
 
 Many of the commands listed here that write to Excel spreadsheets depend on [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html), which is included in the [Poverty Research Toolkit](http://econ.worldbank.org/WBSITE/EXTERNAL/EXTDEC/EXTRESEARCH/EXTPROGRAMS/EXTPOVRES/0,,contentMDK:20292195~menuPK:546578~pagePK:64168182~piPK:64168060~theSitePK:477894,00.html#xml_tab) and authored by [Zurab Sajaia](mailto: zsajaia@worldbank.org) and [Michael Lokshin](mlokshin@worldbank.org). [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html) is available for installation in Stata by writing `net install dm0037.pkg`; `ssc install xml_tab, replace`; or `findit xml_tab`.
 
-# Visual Library
+# Data Analysis
 
-## Graphics
-
-### betterBar
+## betterBar
 
 [`betterBar`](https://github.com/worldbank/stata/tree/master/src/betterBar) creates bar graphs for multiple variables with confidence intervals, setting `by()` and `over()` groups, adding labels and legends, and various styling commands.
 
@@ -42,7 +40,7 @@ betterBar mpg trunk turn ///
   barlook(1 lw(thin) lc(white) fi(100))
 ```
 
-### orChart
+## orChart
 
 [`orChart`](https://github.com/worldbank/stata/tree/master/src/orChart) generates a chart of primary logistic regression results for a single binary independent variable, expressed as odds ratios, for a list of dependent variables, combined with a table detailing those results.
 
@@ -59,7 +57,39 @@ orChart ///
   case0(Others) case1(States Ending in A) xsize(8)
 ```
 
-### dta2kml
+## sumStats
+
+[`sumStats`](https://github.com/worldbank/stata/tree/master/src/sumStats) will produce requested statistics for any number and combination of variables and sample restrictions.
+
+![sumStats demo](https://raw.githubusercontent.com/worldbank/stata/master/src/sumStats/sumStats.png)
+
+```
+wb_git_install sumStats
+sysuse auto , clear
+sumStats ///
+  (price mpg rep78 headroom trunk if foreign == 0) ///
+  (price mpg rep78 headroom trunk if foreign == 1) ///
+  using "table_1.xls" ///
+  , replace stats(mean sd p5 p95 N)
+ ```
+
+## knapsack
+
+[`knapsack`](https://github.com/worldbank/stata/tree/master/src/knapsack) implements a [dynamic programming solution to the Knapsack Problem](http://www.es.ele.tue.nl/education/5MC10/Solutions/knapsack.pdf), which selects an optimal set from a list of options based on input variables indicating price and value, and a set budget.
+
+![knapsack demo](https://raw.githubusercontent.com/worldbank/stata/master/src/knapsack/knapsack.png)
+
+```
+wb_git_install knapsack
+sysuse auto, clear
+keep mpg price
+rename (mpg price)(cost value)
+knapsack 500, p(cost) v(value) gen(chosen)
+di "`r(max)'"
+table chosen , c(sum cost sum value)'
+```
+
+## dta2kml
 
 [`dta2kml`](https://github.com/worldbank/stata/tree/master/src/dta2kml) outputs decimal lat/lon coordinates into a KML file for visual exploration.
 
@@ -74,7 +104,7 @@ gen lon = rnormal() -77
 dta2kml using demo.kml , lat(lat) lon(lon) replace
 ```
 
-### txt2qr
+## txt2qr
 
 [`txt2qr`](https://github.com/worldbank/stata/tree/master/src/txt2qr) outputs arbitrary text into a QR code for use with scanning devices such as ODK plugins.
 
@@ -88,7 +118,19 @@ txt2qr ///
   , save replace
 ```
 
-### timeLines
+## flowChart
+
+[`flowChart`](https://github.com/worldbank/stata/tree/master/src/flowChart) allows for the creation of dynamically updating custom tables and flowcharts via an Excel spreadsheet with a simple interface.
+
+![flowChart demo](https://raw.githubusercontent.com/worldbank/stata/master/src/flowChart/flowChart.png)
+
+```
+wb_git_install flowChart
+sysuse auto, clear
+flowchart using "flowChart.xlsx"
+```
+
+## timeLines
 
 [`timeLines`](https://github.com/worldbank/stata/tree/master/src/timeLines) creates a graphical representation of time use for various panel units when each observation represents an activity with a start and end time.
 
@@ -111,11 +153,9 @@ timeLines , ///
   xsize(7) class(category) classcolors(maroon navy)
 ```
 
+# Data Management
 
-
-## Data Management
-
-### import_metadata
+## import_metadata
 
 [`import_metadata`](https://github.com/worldbank/stata/tree/master/src/import_metadata) allows the user to create an Excel-based metadata file, then import one or more .xlsx or .dta files, including harmonizing variable naming and categorical coding and labeling. It can be used to expedite the cleaning of a single file or to combine (append) different surveys or survey rounds, taking the "hard work" out of the dofile.
 
@@ -126,7 +166,7 @@ wb_git_install import_metadata
 [see documentation for extensive examples]
 ```
 
-### cleanLabels
+## cleanLabels
 
 [`cleanLabels`](https://github.com/worldbank/stata/tree/master/src/cleanLabels) removes characters from value labels. By default it removes “,” and “:” since these are known to cause issues with export commands.
 
@@ -139,38 +179,4 @@ label def origin 1 "Of, Foreign : Origin" 0 "D,omes:tic" , modify
 labelbook origin
 cleanLabels foreign
 labelbook origin
-```
-
-## Analysis
-
-### sumStats
-
-[`sumStats`](https://github.com/worldbank/stata/tree/master/src/sumStats) will produce requested statistics for any number and combination of variables and sample restrictions.
-
-![sumStats demo](https://raw.githubusercontent.com/worldbank/stata/master/src/sumStats/sumStats.png)
-
-```
-wb_git_install sumStats
-sysuse auto , clear
-sumStats ///
-  (price mpg rep78 headroom trunk if foreign == 0) ///
-  (price mpg rep78 headroom trunk if foreign == 1) ///
-  using "table_1.xls" ///
-  , replace stats(mean sd p5 p95 N)
- ```
-
-### knapsack
-
-[`knapsack`](https://github.com/worldbank/stata/tree/master/src/knapsack) implements a [dynamic programming solution to the Knapsack Problem](http://www.es.ele.tue.nl/education/5MC10/Solutions/knapsack.pdf), which selects an optimal set from a list of options based on input variables indicating price and value, and a set budget.
-
-![knapsack demo](https://raw.githubusercontent.com/worldbank/stata/master/src/knapsack/knapsack.png)
-
-```
-wb_git_install knapsack
-sysuse auto, clear
-keep mpg price
-rename (mpg price)(cost value)
-knapsack 500, p(cost) v(value) gen(chosen)
-di "`r(max)'"
-table chosen , c(sum cost sum value)'
 ```
