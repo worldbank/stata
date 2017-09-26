@@ -16,7 +16,10 @@ Thank you and enjoy!
 
 [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) installs commands from the [World Bank GitHub Stata respository](https://github.com/worldbank/stata).
 
-Begin by installing [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) into the /ado/personal folder. Type `sysdir` in the Stata console to locate this. [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) will then be able to access any command in the [src](https://github.com/worldbank/stata/tree/master/src) directory by writing `wb_git_install commandName`.
+Begin by installing [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) into Stata's /ado/personal folder. `wb_git_install` will then be able to access any command in this repository's [src](https://github.com/worldbank/stata/tree/master/src) directory.
+```
+net install "https://raw.githubusercontent.com/worldbank/stata/master/wb_git_install/wb_git_install.pkg"
+```
 
 Commands still in development can be found in and submitted to the [dev](https://github.com/worldbank/stata/tree/master/dev) directory and will be made visible to [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) and posted on the [landing page](http://worldbank.github.io/stata/) after review. Please feel free to contribute to development of all commands!
 
