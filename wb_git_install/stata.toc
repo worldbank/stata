@@ -1,2 +1,6 @@
 v 1.0
-d Stata program by Benjamin Daniels
+d Stata programs by Benjamin Daniels at DIME Analytics
+
+d Here is the installer link:
+
+p wb_git_install Installs files from World Bank Stata GitHub Repository.
