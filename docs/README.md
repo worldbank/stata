@@ -2,30 +2,28 @@
 
 ## Usage and contribution
 
-This repository contains a broad variety of STATA commands (adofiles) which are useful in data management, statistical analysis, and the production of graphics. In many cases, these adofiles reduce the production of routine items from a tedious programming task to a single command line – such as data import and cleaning; production of summary statistics tables; and categorical bar charts with confidence intervals.
+This repository is an effort to debug, polish, improve, and disseminate useful reusable Stata code that is developed during the course of work. This repository is for such useful snippets – formalized as [adofiles](https://www.stata.com/manuals13/u17.pdf) – which automate routine data management, statistical analysis, and graphing tasks such as data import and cleaning, production of summary statistics tables, and categorical bar charts with confidence intervals.
 
-This repository is an effort to debug, polish, improve, and disseminate this set of commands and others that are developed during the course of work. As byproducts of various DEC projects, the adofiles in this repository can be found in various stages of development. Some are barely-developed commands without even a helpfile; some are fully developed with example datasets and use instructions; some have bugs or undocumented features. Few have appropriate levels of code commenting.
+Please use the adofiles and/or any code they contain as desired; they are shared under the [MIT License](https://opensource.org/licenses/MIT). Please contribute development of both existing code, new functionality, and documentation. For questions about any existing or intended functionality of any of the files, contact [Benjamin Daniels](mailto:bdaniels@worldbank.org) at [DIME Analytics](http://www.worldbank.org/en/research/dime/brief/DIME-Analytics).
 
-Please use the adofiles and/or any code they contain for WB or external projects and analysis as desired; they are shared under the [MIT License](https://opensource.org/licenses/MIT). Please contribute development of both existing code, new functionality, and documentation. For questions about any existing or intended functionality of any of the files, contact [Benjamin Daniels](mailto:bdaniels@worldbank.org) at [DIME Analytics](http://www.worldbank.org/en/research/dime/brief/DIME-Analytics).
-
-Thank you and enjoy!
+Commands still in development can be found in and submitted to the [dev](https://github.com/worldbank/stata/tree/master/dev) directory; the team will review and surface that code on this [landing page](http://worldbank.github.io/stata/) and make the files visible to [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) after review. Feel free to contribute to the development of all commands.
 
 ## Installing Commands
 
 ### wb_git_install
 
-[`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) installs commands from the [World Bank GitHub Stata respository](https://github.com/worldbank/stata). Begin by installing [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) into Stata's /ado/personal folder. `wb_git_install` will then be able to access any command in this repository's [src](https://github.com/worldbank/stata/tree/master/src) directory.
+[`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) copies code from this [World Bank GitHub Stata respository](https://github.com/worldbank/stata) into Stata.  `wb_git_install` can access any command in this repository's [src](https://github.com/worldbank/stata/tree/master/src) directory by name alone. Begin by installing [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install):
 ```
 net install "https://raw.githubusercontent.com/worldbank/stata/master/wb_git_install/wb_git_install.pkg"
 ```
 
-Commands still in development can be found in and submitted to the [dev](https://github.com/worldbank/stata/tree/master/dev) directory and will be made visible to [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) and posted on the [landing page](http://worldbank.github.io/stata/) after review. Please feel free to contribute to development of all commands!
+Some corporate security policies, including the World Bank's, will not allow this functionality on company-managed machines. If the above command returns a security error, you will need to access the [src](https://github.com/worldbank/stata/tree/master/src) directory directly and install the commands manually into `c(sysdir_plus)` or `c(sysdir_personal)`. Type `sysdir` in Stata to see the location of these folders; [or access the Stata documentation for more details.](https://www.stata.com/manuals13/u17.pdf)
 
 ### xml_tab
 
 Many of the commands listed here that write to Excel spreadsheets depend on [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html), which is included in the [Poverty Research Toolkit](http://econ.worldbank.org/WBSITE/EXTERNAL/EXTDEC/EXTRESEARCH/EXTPROGRAMS/EXTPOVRES/0,,contentMDK:20292195~menuPK:546578~pagePK:64168182~piPK:64168060~theSitePK:477894,00.html#xml_tab) and authored by [Zurab Sajaia](mailto:zsajaia@worldbank.org) and [Michael Lokshin](mailto:mlokshin@worldbank.org). [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html) is available for installation in Stata by writing `net install dm0037.pkg`; `ssc install xml_tab, replace`; or `findit xml_tab`.
 
-# Data Analysis
+# Commands for Data Analysis
 
 ## betterBar
 
@@ -154,7 +152,7 @@ timeLines , ///
   xsize(7) class(category) classcolors(maroon navy)
 ```
 
-# Data Management
+# Commands for Data Management
 
 ## import_metadata
 
