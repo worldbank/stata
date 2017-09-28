@@ -143,7 +143,7 @@ syntax anything [if] [in], 			/// Anything specifies the full regression model.
 			kdensity fake if sim_touse == 1 , gen(x y) nograph
 			sort x
 			tw  (kdensity fake if sim_touse == 1 , lc(black) ) , /// (scatter x estimate, ms(i)) , ///
-				xline(``place'', lp(dash)) xline(`estimate') xlab( `estimate' `""B""`estimate'""' 0 "0" `label' ) ///
+				xline(``place'', lp(dash)) xline(`estimate') xlab( `estimate' `""{&beta}=""`estimate'""' 0 "0" `label' ) ///
 				legend(off) ylab(none) bgcolor(white) graphregion(color(white) margin(large)) title("`title'", color(black) span) subtitle("`subtitle'", color(black) span) ///
 				note("p = `p2'. Dashed line indicates one-sided `ci'% bound of `reps' placebo treatment estimates. ") `graphoptions' xtit(" ") ytit(" ")
 
@@ -151,7 +151,7 @@ syntax anything [if] [in], 			/// Anything specifies the full regression model.
 
 end
 
-/*** DEMO ***
+/*** DEMO
 
 clear
 set obs 1000
