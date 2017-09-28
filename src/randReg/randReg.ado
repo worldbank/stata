@@ -144,7 +144,7 @@ syntax anything [if] [in], 			/// Anything specifies the full regression model.
 			sort x
 			tw  (kdensity fake if sim_touse == 1 , lc(black) ) , /// (scatter x estimate, ms(i)) , ///
 				xline(``place'', lp(dash)) xline(`estimate') xlab( `estimate' `""B""`estimate'""' 0 "0" `label' ) ///
-				legend(off) ylab(none) graphregion(color(white) margin(large)) title("`title'", color(black) span) subtitle("`subtitle'", color(black) span) ///
+				legend(off) ylab(none) bgcolor(white) graphregion(color(white) margin(large)) title("`title'", color(black) span) subtitle("`subtitle'", color(black) span) ///
 				note("p = `p2'. Dashed line indicates one-sided `ci'% bound of `reps' placebo treatment estimates. ") `graphoptions' xtit(" ") ytit(" ")
 
 		}
@@ -160,7 +160,7 @@ gen treatment = treat_rand > 0.5
 gen error = rnormal()
 gen outcome = .3*treatment + 3*error
 randReg reg outcome treatment , seed(4747) t(treatment) graph reps(100)
-	graph export "/users/bbdaniels/desktop/test.png" , replace width(1000)
+	graph export "randReg.png" , replace width(1000)
 	return list
 
 * Have a lovely day!

@@ -53,11 +53,9 @@ gen treatment = treat_rand > 0.5
 gen error = rnormal()
 gen outcome = .3*treatment + 3*error
 randReg reg outcome treatment , seed(4747) t(treatment) graph reps(100)
-	graph export "randReg.png" , replace width(1000)
-	return list
+  graph export "randReg.png" , replace width(1000)
+  return list
 ```
-
-
 
 ## orChart
 
