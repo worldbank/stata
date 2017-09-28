@@ -39,6 +39,26 @@ betterBar mpg trunk turn ///
   barlook(1 lw(thin) lc(white) fi(100))
 ```
 
+## randReg
+
+[`randReg`](https://github.com/worldbank/stata/tree/master/src/randReg) provides simulation results and visual illustration of randomization-based p-values, based on [Randomization inference vs. bootstrapping for p-values.](https://jasonkerwin.com/nonparibus/2017/09/25/randomization-inference-vs-bootstrapping-p-values/)
+
+![randReg demo](https://raw.githubusercontent.com/worldbank/stata/master/src/randReg/randReg.png)
+
+```
+clear
+set obs 1000
+gen treat_rand = runiform()
+gen treatment = treat_rand > 0.5
+gen error = rnormal()
+gen outcome = .3*treatment + 3*error
+randReg reg outcome treatment , seed(4747) t(treatment) graph reps(100)
+	graph export "randReg.png" , replace width(1000)
+	return list
+```
+
+
+
 ## orChart
 
 [`orChart`](https://github.com/worldbank/stata/tree/master/src/orChart) generates a chart of primary logistic regression results for a single binary independent variable, expressed as odds ratios, for a list of dependent variables, combined with a table detailing those results.
