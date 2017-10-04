@@ -106,6 +106,7 @@ syntax anything 			/// Specify full model
 		if `theBeta' > `theMax' local theMax = `theBeta'
 		if 0 > `theMax' local theMax = 0
 		
+	local graph_opts bgcolor(white) title("") note(, justification(left) color(black) span pos(7)) title(, justification(left) color(black) span pos(11)) subtitle(, justification(left) color(black) span pos(11)) graphregion(color(white)) ylab(,angle(0) nogrid) ytit("") xtit(,placement(left) justification(left)) yscale(noline) xscale(noline) legend(region(lc(none) fc(none)))
 	
 	tw 	(rarea l95 u95 i , fc(gs14) lc(gs14)) ///
 		(function 0 , range(i) lc(black) lp(dot)) ///
@@ -113,7 +114,7 @@ syntax anything 			/// Specify full model
 		(function `p90' , range(`theMin' `theMax') lc(black) lp(dash) hor) ///
 		(function `p95' , range(`theMin' `theMax') lc(black) lp(dash) hor) ///
 		(line b i ,lp(solid) lc(black)) ///
-	,	$graph_opts legend(off) xtit("Bounding Fraction{&rarr}") ///
+	,	`graph_opts' legend(off) xtit("Bounding Fraction{&rarr}") ///
 		ylab(`theBeta' "{&beta}: `sBeta'" 0 "No Effect") xlab(0 25 50 `p90' `""p="".1""' `p95' `""p="".05""')
 	
 end
