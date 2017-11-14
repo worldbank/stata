@@ -1,5 +1,11 @@
 # World Bank GitHub
 
+## Other World Bank Repositories
+
+* [Impact Evaluations Toolkit](https://worldbank.github.io/ietoolkit/)
+* [Stata Visual Library](https://worldbank.github.io/Stata-IE-Visual-Library/)
+* [Disributional Impact Analysis Toolkit](https://worldbank.github.io/DIA-toolkit/)
+
 ## Usage and contribution
 
 This repository is an effort to debug, polish, improve, and disseminate useful reusable Stata code that is developed during the course of work. This repository is for such useful snippets – formalized as [adofiles](https://www.stata.com/manuals13/u17.pdf) – which automate routine data management, statistical analysis, and graphing tasks such as data import and cleaning, production of summary statistics tables, and categorical bar charts with confidence intervals.
