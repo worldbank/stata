@@ -4,7 +4,7 @@
 
 * [Impact Evaluations Toolkit](https://worldbank.github.io/ietoolkit/)
 * [Stata Visual Library](https://worldbank.github.io/Stata-IE-Visual-Library/)
-* [Disributional Impact Analysis Toolkit](https://worldbank.github.io/DIA-toolkit/)
+* [Distributional Impact Analysis Toolkit](https://worldbank.github.io/DIA-toolkit/)
 
 ## Usage and contribution
 
