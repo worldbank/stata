@@ -42,7 +42,7 @@ syntax anything [if] [in], 			/// Anything specifies the full regression model.
 
 	qui `anything' , `options'
 		local beta = _b[`treatment']
-		local p = (2 * ttail(e(df_r), abs(_b[treatment]/_se[treatment])))
+		local p = (2 * ttail(e(df_r), abs(_b[`treatment']/_se[`treatment'])))
 		mat results =  `beta' , . , 0 // Initialize results matrix with "true" beta , no false beta, and indicator off
 		local beta_disp = round(`beta',`round')
 		local p1_disp = round(`p',`round')
