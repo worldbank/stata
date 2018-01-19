@@ -10,9 +10,10 @@ local thedepvar : word 1 of `anything'
 local thedepvar = "`thedepvar' ~ "
 local rhsvars = subinstr("`anything'","`thedepvar' ","",1)
 local rhsvars = subinstr("`rhsvars'"," "," + ",.)
-version 13
+
 // Export in CSV format
-quietly: cap saveold "testout.dta" , replace 
+quietly: cap saveold "testout.dta" , replace v(12)
+	if _rc!=0 saveold "testout.dta" , replace
 quietly: file close _all
  
 // Write R Code
@@ -21,7 +22,7 @@ quietly: file open rcode using  test.R, write replace
 quietly: file write rcode ///
     `"setwd("`c(pwd)'")"' _newline ///
     `"set.seed(42)"' _newline ///
-    `"install.packages("randomForest",repos="http://cran.us.r-project.org")"' _newline ///
+    `"if(!"randomForests" %in% installed.packages()) install.packages("randomForest",repos="http://cran.us.r-project.org")"' _newline ///
     `"library(foreign)"' _newline ///
 	`"library(randomForest)"' _newline ///	
     `"data<-data.frame(read.dta("testout.dta"))"' _newline ///
@@ -35,8 +36,8 @@ quietly: file close rcode
 qui shell /Library/Frameworks/R.framework/Resources/bin/R --vanilla <test.R
 
 // Read Revised Data Back to Stata
- use testin.dta, clear
-summarize
+qui use testin.dta, clear
+su `generate'
 
 // Clean up
 rm testout.dta
