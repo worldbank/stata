@@ -1,14 +1,19 @@
 
 // Set Working Directory
 
-cd "/Users/bbdaniels/GitHub/tests/stata2r"
+cd "/Users/robmarty/Dropbox/World Bank/stata/dev/stata2r/"
 
 clear
 set more off
 log close _all
+
+local xvars "var1 var2 var3"
+local yvar "varY"
+
  
 // Create Data
 set obs 100
+
 matrix c = (1,-.5,0 \ -.5,1,.4 \ 0,.4,1)
 corr2data x y z, corr(c)
  
@@ -20,10 +25,12 @@ quietly: file close _all
 // dependencies: foreign
 quietly: file open rcode using  test.R, write replace
 quietly: file write rcode ///
-    `"setwd("/Users/bbdaniels/GitHub/tests/stata2r/")"' _newline ///
+    `"setwd("/Users/robmarty/Dropbox/World Bank/stata/dev/stata2r/")"' _newline ///
+    `"install.packages("randomForest")"' _newline ///
     `"library(foreign)"' _newline ///
+	`"library(randomForest)"' _newline ///	
     `"data<-data.frame(read.dta("testout.dta"))"' _newline ///
-    `"attach(data)"' _newline ///
+    `"rf.output <- randomForest(x ~ y + z, data = data)"' _newline ///
     `"x2<-x*2"' _newline ///
     `"data2<-cbind(data,x2)"' _newline ///
     `"write.dta(data2,"testin.dta")"'
@@ -41,3 +48,4 @@ rm testout.dta
 rm test.R
 
 * Have a lovely day!
+
