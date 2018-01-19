@@ -21,7 +21,7 @@ quietly: file close _all
 quietly: file open rcode using  test.R, write replace
 quietly: file write rcode ///
     `"setwd("`c(pwd)'")"' _newline ///
-    `"#install.packages("randomForest")"' _newline ///
+    `"if(!"randomForest" %in% installed.packages()) install.packages("randomForest")"' _newline ///
     `"library(foreign)"' _newline ///
 	`"library(randomForest)"' _newline ///	
     `"data<-data.frame(read.dta("testout.dta"))"' _newline ///
