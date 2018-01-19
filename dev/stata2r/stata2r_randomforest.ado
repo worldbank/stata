@@ -1,16 +1,16 @@
 
-// Set Working Directory
+cap prog drop stata2r_rf
+prog def stata2r_rf
 
-cd "/Users/bbdaniels/GitHub/tests/stata2r"
+syntax anything , GENerate(string asis)
 
-clear
-set more off
-log close _all
- 
-// Create Data
-set obs 100
-matrix c = (1,-.5,0 \ -.5,1,.4 \ 0,.4,1)
-corr2data x y z, corr(c)
+
+local thedepvar : word 1 of `anything'
+local thedepvar = "`thedepvar' ~ "
+local rhsvars = subinstr("`anything'","`thedepvar' ","",1)
+local rhsvars = subinstr("`rhsvars'"," "," + ",.)
+
+/*
  
 // Export in CSV format
 quietly: saveold "testout.dta" , replace v(12)
@@ -35,9 +35,22 @@ quietly: shell "/Applications/R.app" CMD BATCH test.R
 // Read Revised Data Back to Stata
 quietly: use testin.dta, clear
 summarize
- 
+
 // Clean up
 rm testout.dta
 rm test.R
+
+
+*/
+
+end
+
+ * Demo
+ 
+ sysuse auto, clear
+ 
+ stata2r_rf price mpg make
+ 
+ 
 
 * Have a lovely day!
