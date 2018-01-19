@@ -3,7 +3,6 @@ set tracedepth 2
 
 cap prog drop stata2r_rf
 prog def stata2r_rf
-version 13
 
 syntax anything , GENerate(string asis)
 
@@ -13,7 +12,8 @@ local rhsvars = subinstr("`anything'","`thedepvar' ","",1)
 local rhsvars = subinstr("`rhsvars'"," "," + ",.)
 
 // Export in CSV format
-quietly: saveold "testout.dta" , replace
+quietly: cap saveold "testout.dta" , replace v(12)
+quietly: cap saveold "testout.dta" 
 quietly: file close _all
  
 // Write R Code
