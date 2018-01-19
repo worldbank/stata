@@ -44,11 +44,11 @@ rm test.R
 
 end
 
-cd "/Users/robmarty/Desktop/"
+* Demo
 
 sysuse auto, clear
 
-stata2r_rf price mpg trunk, gen(newvarfun)
+stata2r_rf price mpg trunk, gen(predicted_price)
  
  
 
