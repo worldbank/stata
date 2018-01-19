@@ -10,10 +10,9 @@ local thedepvar : word 1 of `anything'
 local thedepvar = "`thedepvar' ~ "
 local rhsvars = subinstr("`anything'","`thedepvar' ","",1)
 local rhsvars = subinstr("`rhsvars'"," "," + ",.)
-
+version 13
 // Export in CSV format
-quietly: cap saveold "testout.dta" , replace v(12)
-quietly: cap saveold "testout.dta" 
+quietly: cap saveold "testout.dta" , replace 
 quietly: file close _all
  
 // Write R Code
@@ -22,7 +21,7 @@ quietly: file open rcode using  test.R, write replace
 quietly: file write rcode ///
     `"setwd("`c(pwd)'")"' _newline ///
     `"set.seed(42)"' _newline ///
-    `"#install.packages("randomForest",repos="http://cran.us.r-project.org")"' _newline ///
+    `"install.packages("randomForest",repos="http://cran.us.r-project.org")"' _newline ///
     `"library(foreign)"' _newline ///
 	`"library(randomForest)"' _newline ///	
     `"data<-data.frame(read.dta("testout.dta"))"' _newline ///
