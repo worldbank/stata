@@ -21,7 +21,7 @@ quietly: file close _all
 quietly: file open rcode using  test.R, write replace
 quietly: file write rcode ///
     `"setwd("`c(pwd)'")"' _newline ///
-    `"#if(!"randomForest" %in% installed.packages()) install.packages("randomForest")"' _newline ///
+    `"#install.packages("randomForest")"' _newline ///
     `"library(foreign)"' _newline ///
 	`"library(randomForest)"' _newline ///	
     `"data<-data.frame(read.dta("testout.dta"))"' _newline ///
@@ -31,10 +31,11 @@ quietly: file write rcode ///
 quietly: file close rcode
  
 // Run R
-quietly: shell "/Applications/R.app" CMD BATCH test.R
- 
+ * shell "/Applications/R.app" CMD BATCH test.R
+qui shell /Library/Frameworks/R.framework/Resources/bin/R --vanilla <test.R
+
 // Read Revised Data Back to Stata
-quietly: use testin.dta, clear
+ use testin.dta, clear
 summarize
 
 // Clean up

@@ -1,7 +1,7 @@
 
 // Set Working Directory
 
-cd "/Users/bbdaniels/GitHub/tests/stata2r"
+cd "/Users/bbdaniels/desktop/"
 
 clear
 set more off
@@ -30,7 +30,9 @@ quietly: file write rcode ///
 quietly: file close rcode
  
 // Run R
-quietly: shell "/Applications/R.app" CMD BATCH test.R
+ * shell "/Applications/R.app" CMD BATCH test.R
+ 
+ shell /Library/Frameworks/R.framework/Resources/bin/R --vanilla <test.R
  
 // Read Revised Data Back to Stata
 quietly: use testin.dta, clear
