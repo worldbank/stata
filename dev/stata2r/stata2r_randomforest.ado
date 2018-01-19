@@ -4,7 +4,8 @@ set tracedepth 2
 cap prog drop stata2r_rf
 prog def stata2r_rf
 
-syntax anything , GENerate(string asis)
+syntax anything , GENerate(string asis) [seed(integer 42)] ///
+	[rpath(string asis)] // for windows
 
 local thedepvar : word 1 of `anything'
 local thedepvar = "`thedepvar' ~ "
@@ -21,7 +22,7 @@ quietly: file close _all
 quietly: file open rcode using  test.R, write replace
 quietly: file write rcode ///
     `"setwd("`c(pwd)'")"' _newline ///
-    `"set.seed(42)"' _newline ///
+    `"set.seed(`seed')"' _newline ///
     `"if(!"randomForests" %in% installed.packages()) install.packages("randomForest",repos="http://cran.us.r-project.org")"' _newline ///
     `"library(foreign)"' _newline ///
 	`"library(randomForest)"' _newline ///	
@@ -33,7 +34,12 @@ quietly: file close rcode
  
 // Run R
  * shell "/Applications/R.app" CMD BATCH test.R
-qui shell /Library/Frameworks/R.framework/Resources/bin/R --vanilla <test.R
+if "`c(os)'" == "MacOSX" {
+	qui shell /Library/Frameworks/R.framework/Resources/bin/R --vanilla <test.R
+	}
+else {
+	qui shell "`rpath'" CMD BATCH test.R
+	}
 
 // Read Revised Data Back to Stata
 qui use testin.dta, clear
@@ -50,7 +56,9 @@ end
 
 sysuse auto, clear
 
-stata2r_rf price mpg trunk, gen(predicted_price)
+stata2r_rf price mpg trunk, gen(predicted_price) seed(474747)
+
+* stata2r_rf price mpg trunk, gen(predicted_price) seed(474747) rpath(C:\Program Files\R\R-2.15.1\bin\x64\R.exe)
  
  
 
