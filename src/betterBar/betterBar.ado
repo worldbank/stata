@@ -114,7 +114,7 @@ qui keep if `touse'
 		* Bar labels
 	
 		if "`barlab'" != "" {
-			local blabplot (scatter `scatter', mlabel(mean) msymbol(none) mlabc(black) mlabs(1.8) mlabp(3))
+			local blabplot (scatter `scatter', mlabel(mean2) msymbol(none) mlabc(black) mlabs(1.8) mlabp(3))
 			}
 			
 	* Variable sort
@@ -373,6 +373,7 @@ qui keep if `touse'
 	if "`over'" == "_over" local theLegendOff off
 		
 	format mean %9.2f
+	gen mean2 = string(round((mean*100),1)) + "%"
 	gen zero = 0 
 
 * Print using datasheet if using is specified
