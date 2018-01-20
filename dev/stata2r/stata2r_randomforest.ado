@@ -11,14 +11,15 @@ syntax anything , GENerate(string asis) [seed(integer 42)] ///
 
 	unab anything : `anything'
 	local thedepvar : word 1 of `anything'
-	local thedepvar = "`thedepvar' ~ "
 	local rhsvars = subinstr("`anything'","`thedepvar' ","",1)
 	local rhsvars = subinstr("`rhsvars'"," "," + ",.)
 
+	gen X_FAKEDV = `thedepvar'
+	local thedepvar "X_FAKEDV ~ "
 	gen X_FAKEID = _n
 
 	preserve
-		keep `anything' X_FAKEID
+		keep `anything' X_FAKEID X_FAKEDV
 
 // Export dataset
 
@@ -63,7 +64,7 @@ syntax anything , GENerate(string asis) [seed(integer 42)] ///
 	restore
 		
 		qui merge 1:1 X_FAKEID using `newdata' , nogen update replace
-		drop X_FAKEID
+		drop X_FAKEID X_FAKEDV
 
 
 
@@ -77,7 +78,7 @@ rm test.R
 end
 
 * Demo
-
+-
 sysuse auto, clear
 
 stata2r_rf mpg foreign price  trunk, gen(predicted_price) seed(474747)
