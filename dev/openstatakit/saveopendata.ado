@@ -111,6 +111,6 @@ end
 	reg rep78 headroom
 
 	saveopendata "saveopendata" 	using "saveopendata.ado"
-	saveopendata "saveopendata" 	, compact
+	saveopendata "saveopendatacompact" 	, compact
 	
 * Have a lovely day!
