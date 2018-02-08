@@ -96,7 +96,7 @@ noi di in red "Check the dataset carefully to make sure:"
 noi di in red "(A) There is no personally-identifying information remaining"
 noi di in red "(B) Your analysis reproduces exactly from this copy"
 noi di in red " "
-noi di in red "Thank you for creating a neatly shareable dataset or codebook with OpenStataKit!"
+noi di in red "Thank you for creating a neatly shareable dataset or codebook with saveopendata!"
 	
 end
 
