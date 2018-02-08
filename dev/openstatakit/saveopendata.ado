@@ -18,7 +18,6 @@ qui {
 	
 * If [using] is requested:
 * Initialize datafile of variable names
-
 if `"`using'"' != "" {
 	
 		preserve
