@@ -1,0 +1,16 @@
+
+Variable      Obs Unique      Mean   Min    Max  Label
+------------------------------------------------------------------------------
+make           74     74         .     .      .  Make and Model
+price          74     74  6165.257  3291  15906  Price
+mpg            74     21   21.2973    12     41  Mileage (mpg)
+rep78          69      5  3.405797     1      5  Repair Record 1978
+headroom       74      8  2.993243   1.5      5  Headroom (in.)
+trunk          74     18  13.75676     5     23  Trunk space (cu. ft.)
+weight         74     64  3019.459  1760   4840  Weight (lbs.)
+length         74     47  187.9324   142    233  Length (in.)
+turn           74     18  39.64865    31     51  Turn Circle (ft.)
+displacement   74     31  197.2973    79    425  Displacement (cu. in.)
+gear_ratio     74     36  3.014865  2.19   3.89  Gear Ratio
+foreign        74      2  .2972973     0      1  Car type
+------------------------------------------------------------------------------
