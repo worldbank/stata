@@ -1,7 +1,7 @@
 * Program to trim public release dataset to only include variables used in analysis
 
-cap prog drop saveopendata
-prog def saveopendata
+cap prog drop opendataexport
+prog def opendataexport
 
 * Syntax – anything sets location to save data and codebook ; using lists all dofiles that use the current dataset
 
@@ -100,7 +100,7 @@ noi di in red "Thank you for creating a neatly shareable dataset or codebook wit
 	
 end
 
-/* Demo
+* Demo
 
 	cd /Users/bbdaniels/GitHub/stata/dev/openstatakit/
 
@@ -110,7 +110,7 @@ end
 	
 	reg rep78 headroom
 
-	saveopendata "saveopendata" 	using "saveopendata.ado"
-	saveopendata "saveopendatacompact" 	, compact
+	opendataexport "opendataexport" using `""opendataexport.ado" "opendataexport.ado""'
+	opendataexport "opendataexport_compact" 	, compact
 	
 * Have a lovely day!
