@@ -214,6 +214,22 @@ wb_git_install import_metadata
 [see documentation for extensive examples]
 ```
 
+## import_metadata
+
+[`opendataexport`](https://github.com/worldbank/stata/tree/master/src/opendataexport) reads the currently open dataset and either (A) creates a codebook for it in the specified location; or (B) reads a series of .dofiles
+    that reference the data and keeps only the variables that those dofiles reference.
+
+
+![opendataexport demo](https://raw.githubusercontent.com/worldbank/stata/master/src/opendataexport/opendataexport.png)
+
+```
+wb_git_install opendataexport
+sysuse auto , clear
+opendataexport "opendataexport_compact" 	, compact
+```
+
+
+
 ## cleanLabels
 
 [`cleanLabels`](https://github.com/worldbank/stata/tree/master/src/cleanLabels) removes characters from value labels. By default it removes “,” and “:” since these are known to cause issues with export commands.
