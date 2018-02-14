@@ -47,7 +47,7 @@ import excel `using', first clear
 			
 * Prepare value labels if specified
 
-	if "`vallab'" != "" {
+if "`vallab'" != "" {
 			
 	* Prepare list of value labels needed.
 		
