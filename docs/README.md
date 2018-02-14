@@ -214,7 +214,7 @@ wb_git_install import_metadata
 [see documentation for extensive examples]
 ```
 
-## import_metadata
+## opendataexport
 
 [`opendataexport`](https://github.com/worldbank/stata/tree/master/src/opendataexport) reads the currently open dataset and either (A) creates a codebook for it in the specified location; or (B) reads a series of .dofiles
     that reference the data and keeps only the variables that those dofiles reference.
@@ -227,7 +227,6 @@ wb_git_install opendataexport
 sysuse auto , clear
 opendataexport "opendataexport_compact" 	, compact
 ```
-
 
 
 ## cleanLabels
