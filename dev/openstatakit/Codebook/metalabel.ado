@@ -3,7 +3,7 @@
 cap prog drop metalabel
 prog def metalabel
 
-syntax using, [varlab] [vallab]
+syntax using, [varlab] [vallab] [rename] [recode]
 
 preserve
 
@@ -17,6 +17,30 @@ import excel `using', first clear
 		forvalues i = 1/`r(N)' {
 			local theVarname = varname[`i']
 			local `theVarname'_lab = varlab[`i']
+			}
+			
+		}
+		
+* Prepare renames if specified.
+
+	if "`rename'" != "" {
+
+		qui count
+		forvalues i = 1/`r(N)' {
+			local theVarname = varname[`i']
+			local `theVarname'_ren = rename[`i']
+			}
+			
+		}
+		
+* Prepare recodes if specified.
+
+	if "`recode'" != "" {
+
+		qui count
+		forvalues i = 1/`r(N)' {
+			local theVarname = varname[`i']
+			local `theVarname'_rec = recode[`i']
 			}
 			
 		}
@@ -90,6 +114,8 @@ restore
 
 	foreach var of varlist * {
 		if "``var'_lab'" != "" label var `var' "``var'_lab'"
+		if "``var'_rec'" != "" recode    `var' ``var'_rec'
+		if "``var'_ren'" != "" rename    `var' ``var'_ren'
 		}
 		
 	if "`vallab'" != "" {
