@@ -121,7 +121,7 @@ restore
 	if "`vallab'" != "" {
 		
 		foreach theValueLabel in `theValueLabels' {
-			label def `theValueLabel' `theLabelList_`theValueLabel''
+			label def `theValueLabel' `theLabelList_`theValueLabel'', replace
 			}
 				
 			destring `theVarNames', replace
