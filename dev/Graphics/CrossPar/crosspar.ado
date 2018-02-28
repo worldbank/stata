@@ -2,7 +2,7 @@
 
 cap prog drop crosspar
 prog def crosspar
-syntax anything , [scatter]
+syntax anything , [controls(string asis)] [scatter]
 
 	local graph_opts title(, justification(left) color(black) span pos(11)) graphregion(color(white)) ylab(,angle(0) nogrid) xtit(,placement(left) justification(left)) legend(region(lc(none) fc(none)))
 	tempvar resid
@@ -26,14 +26,11 @@ syntax anything , [scatter]
 				
 				di in red "`x': `var' – `oindepvars' – `indepvar'"
 				
-				qui reg `var' `oindepvars'
+				qui reg `var' `oindepvars' `controls' 
 					cap drop `resid'
 					qui predict `resid' , resid
-						qui replace `resid' = `resid' + _b[_cons]
-						foreach rhsvar in `oindepvars' {
-							qui su `rhsvar'
-							qui replace `resid' = `resid' + `r(mean)'*_b[`rhsvar'] // Shift to overall mean
-							}
+						qui su `var' if e(sample)
+						qui replace `resid' = `resid' + `r(mean)' // Shift to overall mean
 					
 				* Graph scatter of residuals
 					
@@ -44,7 +41,7 @@ syntax anything , [scatter]
 					if "`scatter'" != "" local theScatter "(scatter `resid' `indepvar' , m(.) msize(tiny) jitter(5) mc(gray))"
 					if "`scatter'" == "" local theScatter "(lfit `resid' `indepvar' , lc(gray) lp(dash) lw(medthick))"
 					
-					qui reg `resid' `indepvar' `oindepvars' 
+					qui reg `resid' `indepvar' `oindepvars' `controls' 
 					local b = round(_b[`indepvar'],0.01)
 					mat a = r(table)
 						local p = a[4,1]
