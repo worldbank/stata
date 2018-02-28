@@ -232,7 +232,7 @@ if "`graph'" != "" {
 		gen b_label = string(round(b*100,1)) + "%"
 				
 		tw ///
-			`plots' `addplot' `blabplot'  ///
+			`plots' `blabplot' `addplot' ///
 		, 	ylab(`theYlabels', angle(0) notick) ytit("") xtit("") ///
 			legend(order(`legendorder')) `options'
 			
