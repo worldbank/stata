@@ -45,7 +45,7 @@ syntax anything /// syntax depvars | indepvars
 					if "`scatter'" != "" local theScatter "(scatter `resid' `indepvar' , m(.) msize(tiny) jitter(5) mc(gray))"
 					if "`scatter'" == "" local theScatter "(lfit `resid' `indepvar' , lc(gray) lp(dash) lw(medthick))"
 					
-					reg `resid' `indepvar' 
+					qui reg `resid' `indepvar' `oindepvars' `controls' 
 					local b = round(_b[`indepvar'],0.01)
 					mat a = r(table)
 						local p = a[4,1]
