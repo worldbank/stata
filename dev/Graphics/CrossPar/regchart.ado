@@ -6,7 +6,7 @@ syntax anything /// syntax depvars | indepvars
 	, [controls(string asis)] [scatter]
 
 	local graph_opts title(, justification(left) color(black) span pos(11)) graphregion(color(white)) ylab(,angle(0) nogrid) xtit(,placement(left) justification(left)) legend(region(lc(none) fc(none)))
-	tempvar resid
+	tempvar resid iresid
 	
 	* Loop over variables
 	
@@ -35,6 +35,11 @@ syntax anything /// syntax depvars | indepvars
 					qui predict `resid' , resid
 						qui su `var' if e(sample)
 						qui replace `resid' = `resid' + `r(mean)' // Shift to overall mean
+						
+				qui reg `indepvar' `oindepvars' `controls' 
+					cap drop `iresid'
+					qui predict `iresid' , resid
+						
 					
 				* Graph scatter of residuals
 					
@@ -42,8 +47,8 @@ syntax anything /// syntax depvars | indepvars
 					local xtit : var label `indepvar'
 					local title ""
 						if `y' == 1 local title "`ytit'"
-					if "`scatter'" != "" local theScatter "(scatter `resid' `indepvar' , m(.) msize(tiny) jitter(5) mc(gray))"
-					if "`scatter'" == "" local theScatter "(lfit `resid' `indepvar' , lc(gray) lp(dash) lw(medthick))"
+					if "`scatter'" != "" local theScatter "(scatter `resid' `iresid' , m(.) msize(tiny) jitter(5) mc(gray))"
+					if "`scatter'" == "" local theScatter "(lfit `resid' `iresid' , lc(gray) lp(dash) lw(medthick))"
 					
 					qui reg `resid' `indepvar' `oindepvars' `controls' 
 					local b = round(_b[`indepvar'],0.01)
@@ -54,7 +59,7 @@ syntax anything /// syntax depvars | indepvars
 					
 					tw ///
 						 `theScatter' ///
-						(lpoly `resid' `indepvar' , lw(thick) lc(maroon)) ///
+						(lpoly `resid' `iresid' , lw(thick) lc(maroon)) ///
 						, title({bf:`title'}) ytit(" ") xtit("{bf:`xtit' {&rarr}}" "`theLabel'") legend(off) `graph_opts'  nodraw
 					
 						qui graph save __`x'.gph, replace
