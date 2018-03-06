@@ -39,6 +39,8 @@ syntax anything /// syntax depvars | indepvars
 				qui reg `indepvar' `oindepvars' `controls' 
 					cap drop `iresid'
 					qui predict `iresid' , resid
+						qui su `indepvar' if e(sample)
+						qui replace `iresid' = `iresid' + `r(mean)' // Shift to overall mean
 						
 					
 				* Graph scatter of residuals
