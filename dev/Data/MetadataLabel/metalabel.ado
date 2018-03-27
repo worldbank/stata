@@ -3,7 +3,7 @@
 cap prog drop metalabel
 prog def metalabel
 
-syntax using, [varlab] [vallab]
+syntax using, [varlab] [vallab] [rename] [recode]
 
 preserve
 
@@ -20,10 +20,34 @@ import excel `using', first clear
 			}
 			
 		}
+		
+* Prepare renames if specified.
+
+	if "`rename'" != "" {
+
+		qui count
+		forvalues i = 1/`r(N)' {
+			local theVarname = varname[`i']
+			local `theVarname'_ren = rename[`i']
+			}
+			
+		}
+		
+* Prepare recodes if specified.
+
+	if "`recode'" != "" {
+
+		qui count
+		forvalues i = 1/`r(N)' {
+			local theVarname = varname[`i']
+			local `theVarname'_rec = recode[`i']
+			}
+			
+		}
 			
 * Prepare value labels if specified
 
-	if "`vallab'" != "" {
+if "`vallab'" != "" {
 			
 	* Prepare list of value labels needed.
 		
@@ -90,12 +114,14 @@ restore
 
 	foreach var of varlist * {
 		if "``var'_lab'" != "" label var `var' "``var'_lab'"
+		if "``var'_rec'" != "" recode    `var' ``var'_rec'
+		if "``var'_ren'" != "" rename    `var' ``var'_ren'
 		}
 		
 	if "`vallab'" != "" {
 		
 		foreach theValueLabel in `theValueLabels' {
-			label def `theValueLabel' `theLabelList_`theValueLabel''
+			label def `theValueLabel' `theLabelList_`theValueLabel'', replace
 			}
 				
 			destring `theVarNames', replace

@@ -213,7 +213,7 @@ syntax using, /// Location to output all saved regressions
 		`using' ///
 		,  `options' ///
 		below c("Constant") stats(`stats' r2 N) lines(COL_NAMES 3 LAST_ROW 3 _cons 2) format((SCLB0) (SCCB0 NCRR2 NCRI2)) drop(o.*)
-		
+	
 	restore
 	
 	* Clear the global macros
