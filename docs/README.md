@@ -214,6 +214,21 @@ wb_git_install import_metadata
 [see documentation for extensive examples]
 ```
 
+## applyCodebook
+
+[`applyCodebook`](https://github.com/worldbank/stata/tree/master/src/applyCodebook) allows the user to create an Excel codebook file, which will apply renames, recodes, variable labels, and value labels to the open dataset. It can be used to expedite the cleaning of a single file , taking the "hard work" out of the dofile.
+
+![applyCodebook demo](https://raw.githubusercontent.com/worldbank/stata/master/src/applyCodebook/applyCodebook.png)
+
+```
+wb_git_install applyCodebook
+sysuse auto, clear
+
+applyCodebook ///
+  using "applyCodebook_DEMO.xlsx" ///
+  , rename varlab recode vallab
+```
+
 ## opendataexport
 
 [`opendataexport`](https://github.com/worldbank/stata/tree/master/src/opendataexport) reads the currently open dataset and either (A) creates a codebook for it in the specified location; or (B) reads a series of .dofiles
