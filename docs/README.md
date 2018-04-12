@@ -29,6 +29,49 @@ Some corporate security policies, including the World Bank's, will not allow thi
 
 Many of the commands listed here that write to Excel spreadsheets depend on [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html), which is included in the [Poverty Research Toolkit](http://econ.worldbank.org/WBSITE/EXTERNAL/EXTDEC/EXTRESEARCH/EXTPROGRAMS/EXTPOVRES/0,,contentMDK:20292195~menuPK:546578~pagePK:64168182~piPK:64168060~theSitePK:477894,00.html#xml_tab) and authored by [Zurab Sajaia](mailto:zsajaia@worldbank.org) and [Michael Lokshin](mailto:mlokshin@worldbank.org). [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html) is available for installation in Stata by writing `net install dm0037.pkg`; `ssc install xml_tab, replace`; or `findit xml_tab`.
 
+
+# Commands for Data Management
+
+## import_metadata
+
+[`import_metadata`](https://github.com/worldbank/stata/tree/master/src/import_metadata) allows the user to create an Excel-based metadata file, then import one or more .xlsx or .dta files, including harmonizing variable naming and categorical coding and labeling. It can be used to expedite the cleaning of a single file or to combine (append) different surveys or survey rounds, taking the "hard work" out of the dofile.
+
+![import_metadata demo](https://raw.githubusercontent.com/worldbank/stata/master/src/import_metadata/import_metadata.png)
+
+```
+wb_git_install import_metadata
+[see documentation for extensive examples]
+```
+
+## applyCodebook
+
+[`applyCodebook`](https://github.com/worldbank/stata/tree/master/src/applyCodebook) allows the user to create an Excel codebook file, which will apply renames, recodes, variable labels, and value labels to the open dataset. It can be used to expedite the cleaning of a single file , taking the "hard work" out of the dofile.
+
+![applyCodebook demo](https://raw.githubusercontent.com/worldbank/stata/master/src/applyCodebook/applyCodebook.png)
+
+```
+wb_git_install applyCodebook
+sysuse auto, clear
+
+applyCodebook ///
+  using "applyCodebook_DEMO.xlsx" ///
+  , rename varlab recode vallab
+```
+
+## opendataexport
+
+[`opendataexport`](https://github.com/worldbank/stata/tree/master/src/opendataexport) reads the currently open dataset and either (A) creates a codebook for it in the specified location; or (B) reads a series of .dofiles
+    that reference the data and keeps only the variables that those dofiles reference.
+
+
+![opendataexport demo](https://raw.githubusercontent.com/worldbank/stata/master/src/opendataexport/opendataexport.png)
+
+```
+wb_git_install opendataexport
+sysuse auto , clear
+opendataexport "opendataexport_compact" 	, compact
+```
+
 # Commands for Data Analysis
 
 ## betterBar
@@ -201,48 +244,7 @@ timeLines , ///
   xsize(7) class(category) classcolors(maroon navy)
 ```
 
-# Commands for Data Management
-
-## import_metadata
-
-[`import_metadata`](https://github.com/worldbank/stata/tree/master/src/import_metadata) allows the user to create an Excel-based metadata file, then import one or more .xlsx or .dta files, including harmonizing variable naming and categorical coding and labeling. It can be used to expedite the cleaning of a single file or to combine (append) different surveys or survey rounds, taking the "hard work" out of the dofile.
-
-![import_metadata demo](https://raw.githubusercontent.com/worldbank/stata/master/src/import_metadata/import_metadata.png)
-
-```
-wb_git_install import_metadata
-[see documentation for extensive examples]
-```
-
-## applyCodebook
-
-[`applyCodebook`](https://github.com/worldbank/stata/tree/master/src/applyCodebook) allows the user to create an Excel codebook file, which will apply renames, recodes, variable labels, and value labels to the open dataset. It can be used to expedite the cleaning of a single file , taking the "hard work" out of the dofile.
-
-![applyCodebook demo](https://raw.githubusercontent.com/worldbank/stata/master/src/applyCodebook/applyCodebook.png)
-
-```
-wb_git_install applyCodebook
-sysuse auto, clear
-
-applyCodebook ///
-  using "applyCodebook_DEMO.xlsx" ///
-  , rename varlab recode vallab
-```
-
-## opendataexport
-
-[`opendataexport`](https://github.com/worldbank/stata/tree/master/src/opendataexport) reads the currently open dataset and either (A) creates a codebook for it in the specified location; or (B) reads a series of .dofiles
-    that reference the data and keeps only the variables that those dofiles reference.
-
-
-![opendataexport demo](https://raw.githubusercontent.com/worldbank/stata/master/src/opendataexport/opendataexport.png)
-
-```
-wb_git_install opendataexport
-sysuse auto , clear
-opendataexport "opendataexport_compact" 	, compact
-```
-
+# Commands for Data Cleaning
 
 ## cleanLabels
 
