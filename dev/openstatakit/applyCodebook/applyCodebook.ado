@@ -1,7 +1,7 @@
 ** Labels Variables from Metadata
 
-cap prog drop metalabel
-prog def metalabel
+cap prog drop applyCodebook
+prog def applyCodebook
 
 syntax using, [varlab] [vallab] [rename] [recode]
 
@@ -142,5 +142,7 @@ restore
 		}
 
 		} // End vallab option
+
+di in red "Codebook applied!"
 
 end
