@@ -30,16 +30,16 @@ Some corporate security policies, including the World Bank's, will not allow thi
 Many of the commands listed here that write to Excel spreadsheets depend on [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html), which is included in the [Poverty Research Toolkit](http://econ.worldbank.org/WBSITE/EXTERNAL/EXTDEC/EXTRESEARCH/EXTPROGRAMS/EXTPOVRES/0,,contentMDK:20292195~menuPK:546578~pagePK:64168182~piPK:64168060~theSitePK:477894,00.html#xml_tab) and authored by [Zurab Sajaia](mailto:zsajaia@worldbank.org) and [Michael Lokshin](mailto:mlokshin@worldbank.org). [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html) is available for installation in Stata by writing `net install dm0037.pkg`; `ssc install xml_tab, replace`; or `findit xml_tab`.
 
 
-# Commands for Data Management
+# Codebooks for Data Management
 
-## import_metadata
+## importCodebook
 
-[`import_metadata`](https://github.com/worldbank/stata/tree/master/src/import_metadata) allows the user to create an Excel-based metadata file, then import one or more .xlsx or .dta files, including harmonizing variable naming and categorical coding and labeling. It can be used to expedite the cleaning of a single file or to combine (append) different surveys or survey rounds, taking the "hard work" out of the dofile.
+[`importCodebook`](https://github.com/worldbank/stata/tree/master/src/importCodebook) allows the user to create an Excel-based metadata file, then import one or more .xlsx or .dta files, including harmonizing variable naming and categorical coding and labeling. It can be used to expedite the cleaning of a single file or to combine (append) different surveys or survey rounds, taking the "hard work" out of the dofile.
 
-![import_metadata demo](https://raw.githubusercontent.com/worldbank/stata/master/src/import_metadata/import_metadata.png)
+![importCodebook demo](https://raw.githubusercontent.com/worldbank/stata/master/src/importCodebook/importCodebook.png)
 
 ```
-wb_git_install import_metadata
+wb_git_install importCodebook
 [see documentation for extensive examples]
 ```
 
@@ -58,18 +58,18 @@ applyCodebook ///
   , rename varlab recode vallab
 ```
 
-## opendataexport
+## exportCodebook
 
-[`opendataexport`](https://github.com/worldbank/stata/tree/master/src/opendataexport) reads the currently open dataset and either (A) creates a codebook for it in the specified location; or (B) reads a series of .dofiles
+[`exportCodebook`](https://github.com/worldbank/stata/tree/master/src/exportCodebook) reads the currently open dataset and either (A) creates a codebook for it in the specified location; or (B) reads a series of .dofiles
     that reference the data and keeps only the variables that those dofiles reference.
 
 
-![opendataexport demo](https://raw.githubusercontent.com/worldbank/stata/master/src/opendataexport/opendataexport.png)
+![exportCodebook demo](https://raw.githubusercontent.com/worldbank/stata/master/src/exportCodebook/exportCodebook.png)
 
 ```
-wb_git_install opendataexport
+wb_git_install exportCodebook
 sysuse auto , clear
-opendataexport "opendataexport_compact" 	, compact
+exportCodebook "exportCodebook_compact" 	, compact
 ```
 
 # Commands for Data Analysis
