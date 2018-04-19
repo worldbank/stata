@@ -1,16 +1,16 @@
 {smcl}
 {* May 14th 2014}
 {hline}
-Help for {hi:import_metadata}
+Help for {hi:importCodebook}
 {hline}
 
 {title:Description}
 
-{p}{cmd:import_metadata} imports data from one or more spreadsheets and datasets and appends and consolidates them based on a single metadata spreadsheet containing information about the variables.
+{p}{cmd: importCodebook} imports data from one or more spreadsheets and datasets and appends and consolidates them based on a single metadata spreadsheet containing information about the variables.
 
 {title:Syntax}
 
-{p 2 4 4}{cmd:import_metadata} {break} {it:master_file_list} {break} 
+{p 2 4 4}{cmd: importCodebook} {break} {it:master_file_list} {break} 
 {help using} {it:metadata_file} {break} , [{opt p:rep}] {break} [{it:Metadata Template Options}] 
 {break} [{it:Master/Data Options}] {break} [{it:Using/Metadata Options}] {break} [{it:Output Options}] 
 
@@ -82,7 +82,7 @@ Help for {hi:import_metadata}
 
 {title:Example}
 
-{p 2 4 4}metaimport 	"$directory/data/raw/Data1.xlsx" ///
+{p 2 4 4} importCodebook 	"$directory/data/raw/Data1.xlsx" ///
 {break} 		"$directory/data/raw/Data2.xlsx" ///
 {break}			"$directory/data/raw/Data3.xlsx" ///
 {break}			"$directory/data/raw/Data4.xlsx" ///
