@@ -15,6 +15,7 @@ syntax anything // Needs the name of the command only.
   local adoDir      = trim(subinstr("`adoPlusDir'","ado/personal/","",.))
 	local firstLetter = lower(substr("`anything'",1,1))
 
+	qui cap mkdir "`adoPlusDir'/"
     qui cap mkdir "`adoPlusDir'/`firstLetter'/"
     qui cd "`adoPlusDir'/`firstLetter'/"
 
@@ -26,7 +27,7 @@ syntax anything // Needs the name of the command only.
 		"https://raw.githubusercontent.com/worldbank/stata/master/src/`anything'/`anything'.sthlp" ///
 		"`anything'.sthlp" , replace
 
-	di in red "Installed `anything' to `adoPlusDir'/`firstLetter'"
+	di "Installed `anything' to `adoPlusDir'/`firstLetter'"
 
 end
 
