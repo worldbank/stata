@@ -79,7 +79,7 @@ syntax varlist using [if/] [in], controls(varlist) treatment(varlist) [sd] [titl
 	if "`if'" != "" local ifif if
 	
 	foreach var in `morevars' `controls' {
-		local ifcond `" `ifcond' & `var' != . "'
+		local ifcond `" `ifcond' & `var' < . "'
 		}
 		
 	* Lag control
