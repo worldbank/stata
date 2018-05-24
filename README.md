@@ -14,6 +14,6 @@ Thank you and enjoy!
 
 [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) installs commands from the [World Bank GitHub Stata directory](https://github.com/worldbank/stata).
 
-Begin by installing the adofile from this location into the /ado/personal folder. It will then be able to access any command in the [src](https://github.com/worldbank/stata/tree/master/src) directory.
+Begin by installing the adofile from this location into the /ado/personal folder. You can see where this folder is located by typing the command `sysdir` in Stata. It will then be able to access any command in the [src](https://github.com/worldbank/stata/tree/master/src) directory.
 
 Commands still in substantial development can be found in the development branch and will be made visible to [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) and posted on the [landing page](http://worldbank.github.io/stata/) after review. Please feel free to contribute to development of all commands!
