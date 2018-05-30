@@ -1,7 +1,7 @@
 * Survey (weighted) table
 
-cap prog drop weightab
-prog def weightab
+cap prog drop weightTab
+prog def weightTab
 
 	syntax ///
 		anything 					/// Variables list
