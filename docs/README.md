@@ -88,6 +88,20 @@ betterBar mpg trunk turn ///
   barlook(1 lw(thin) lc(white) fi(100))
 ```
 
+## weightTab
+
+[`weightTab`](https://github.com/worldbank/stata/tree/master/src/weightTab) creates tables of (weighted) statistics and, optionally, bar graphs for multiple variables with any output statistic from the `mean` command.
+
+![weightTab demo](https://raw.githubusercontent.com/worldbank/stata/master/src/weightTab/weightTab.png)
+
+```
+wb_git_install weightTab
+sysuse auto , clear
+weightTab  price-trunk [pweight = weight] ///
+	using "weightTab.xls" ///
+	, over(foreign) stats(b se ul ll) graph
+```
+
 ## randReg
 
 [`randReg`](https://github.com/worldbank/stata/tree/master/src/randReg) provides simulation results and visual illustration of randomization-based p-values, based on [Randomization inference vs. bootstrapping for p-values.](https://jasonkerwin.com/nonparibus/2017/09/25/randomization-inference-vs-bootstrapping-p-values/)
