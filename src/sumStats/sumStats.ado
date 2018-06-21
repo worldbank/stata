@@ -53,6 +53,10 @@ cap mat drop stats_toprint
 
 	mat rownames stats_toprint = `allLabels'
 
+	local statnames = subinstr("`stats'"," ",`"" ""',.)
+		di `"`statnames'"'
+	mat colnames stats_toprint = "`statnames'"
+
 	xml_tab stats_toprint ///
 		`using' ///
 	,  	`options'
