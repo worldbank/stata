@@ -4,6 +4,9 @@ version 12.0
 capture program drop wb_git_install
 program define wb_git_install
 syntax anything // Needs the name of the command only.
+  
+  *Storing the old current directory
+  local old_cd = "`c(pwd)'"
 
   local adoPlusDir = "`c(sysdir_personal)'"
 
@@ -28,7 +31,9 @@ syntax anything // Needs the name of the command only.
 		"`anything'.sthlp" , replace
 
 	di "Installed `anything' to `adoPlusDir'/`firstLetter'"
-
+  
+   *Returning the session with the original current directory
+   qui cd "`old_cd'"
 end
 
 * Demo usage: wb_git_install betterBar
