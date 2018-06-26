@@ -1,15 +1,27 @@
 ** Labels Variables from Metadata
 
-cap prog drop applyCodebook
-prog def applyCodebook
+cap prog drop applyCodebook_ak
+prog def applyCodebook_ak
 
-syntax using, [varlab] [vallab] [rename] [recode]
+syntax using, [varlab] [vallab] [rename] [recode] [sheet(string)]
 
 preserve
 
 qui {
 
-import excel `using', first clear
+* Open specific sheet if specified
+
+	if "`sheet'" != "" {
+
+		import excel `using', first clear sheet("`sheet'")
+
+		}
+
+	else {
+
+		import excel `using', first clear
+
+	}
 
 * Prepare variable labels if specified.
 
@@ -88,8 +100,19 @@ if "`vallab'" != "" {
 			}
 
 	* Prepare parallel lists of variables to be value-labeled and their corresponding value labels.
+	* Open specific sheet if specified
 
-		import excel `using', first clear
+		if "`sheet'" != "" {
+
+			import excel `using', first clear sheet("`sheet'")
+
+			}
+
+		else {
+
+			import excel `using', first clear
+
+		}
 
 			keep if `vallab' != ""
 			local theValueLabelNames ""
