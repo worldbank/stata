@@ -1,7 +1,7 @@
 ** Labels Variables from Metadata
 
-cap prog drop applyCodebook_ak
-prog def applyCodebook_ak
+cap prog drop applyCodebook
+prog def applyCodebook
 
 syntax using, [varlab] [vallab] [rename] [recode] [sheet(string)]
 
