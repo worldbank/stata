@@ -27,6 +27,7 @@ cap mat drop stats_toprint
 
 			mat a = r(StatTotal)'
 			mat blankrow = J(1,colsof(a),.)
+				mat rownames blankrow = "unrestricted"
 
 		if regexm("``i''"," if ") {
 			local ifcond = substr("``i''",strpos("``i''"," if "),.)
