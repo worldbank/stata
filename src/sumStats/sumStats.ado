@@ -26,11 +26,11 @@ cap mat drop stats_toprint
 			, s(`stats') save
 
 			mat a = r(StatTotal)'
+			mat blankrow = J(1,colsof(a),.)
 
 		if regexm("``i''"," if ") {
 			local ifcond = substr("``i''",strpos("``i''"," if "),.)
 			local ifcond = substr(subinstr("`ifcond'"," if ","",.),1,30)
-			mat blankrow = J(1,colsof(a),.)
 				mat rownames blankrow = "`ifcond'"
 			}
 
