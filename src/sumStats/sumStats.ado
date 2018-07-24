@@ -42,6 +42,7 @@ cap mat drop stats_toprint
 
 		foreach var of varlist `stats_toprint' {
 			local theLabel : var label `var'
+			local theRownames = `"`theRownames' "`theLabel'""'
 			local theLabel = substr("`theLabel'",1,30)
 			local allLabels = `"`allLabels' "`theLabel'""'
 			}
@@ -59,6 +60,7 @@ cap mat drop stats_toprint
 
 	xml_tab stats_toprint ///
 		`using' ///
-	,  	`options'
+	,  	rnames(`allLabels') ///
+		`options'
 
 end
