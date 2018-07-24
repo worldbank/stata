@@ -60,7 +60,7 @@ cap mat drop stats_toprint
 
 	xml_tab stats_toprint ///
 		`using' ///
-	,  	rnames(`allLabels') ///
+	,  	rnames(`theRownames') ///
 		`options'
 
 end
