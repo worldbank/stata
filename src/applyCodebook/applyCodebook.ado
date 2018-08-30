@@ -3,7 +3,7 @@
 cap prog drop applyCodebook
 prog def applyCodebook
 
-syntax using, [varlab] [vallab] [rename] [recode] [sheet(string)]
+syntax using, [drop] [novarlab] [novallab] [norename] [norecode] [sheet(string)]
 
 preserve
 
@@ -12,124 +12,115 @@ qui {
 * Open specific sheet if specified
 
 	if "`sheet'" != "" {
-
 		import excel `using', first clear sheet("`sheet'")
-
 		}
-
 	else {
-
 		import excel `using', first clear
-
 	}
+
+* Create varname list
+
+	qui count
+	forvalues i = 1/`r(N)' {
+		local theVarname = varname[`i']
+		local allVarnames = "`allVarnames' `theVarname'"
+		}
 
 * Prepare variable labels if specified.
 
-	if "`varlab'" != "" {
-
+	if "`varlab'" != "novarlab" {
 		qui count
 		forvalues i = 1/`r(N)' {
 			local theVarname = varname[`i']
 			local `theVarname'_lab = varlab[`i']
-			}
-
 		}
+	}
 
 * Prepare renames if specified.
 
-	if "`rename'" != "" {
-
+	if "`rename'" != "norename" {
 		qui count
 		forvalues i = 1/`r(N)' {
 			local theVarname = varname[`i']
 			local `theVarname'_ren = rename[`i']
-			}
-
 		}
+	}
 
 * Prepare recodes if specified.
 
-	if "`recode'" != "" {
-
+	if "`recode'" != "norecode" {
 		qui count
 		forvalues i = 1/`r(N)' {
 			local theVarname = varname[`i']
 			local `theVarname'_rec = recode[`i']
-			}
-
 		}
+	}
 
 * Prepare value labels if specified
 
-if "`vallab'" != "" {
+	if "`vallab'" != "novallab" {
 
-	* Prepare list of value labels needed.
+		* Prepare list of value labels needed.
 
-		drop if `vallab' == ""
+			drop if vallab == ""
+			cap duplicates drop vallab, force
 
-		cap duplicates drop `vallab', force
-
-		count
+			count
 			if `r(N)' == 1 {
-				local theValueLabels = `vallab'[1]
-				}
+				local theValueLabels = vallab[1]
+			}
 			else {
 				forvalues i = 1/`r(N)' {
-					local theNextValLab  = `vallab'[`i']
+					local theNextValLab  = vallab[`i']
 					local theValueLabels `theValueLabels' `theNextValLab'
-					}
 				}
+			}
 
-	* Prepare list of values for each value label.
+		* Prepare list of values for each value label.
 
-		import excel `using', first clear sheet(vallab)
-			tempfile valuelabels
-				save `valuelabels', replace
+			import excel `using', first clear sheet(vallab)
+				tempfile valuelabels
+					save `valuelabels', replace
 
-		foreach theValueLabel in `theValueLabels' {
-			use `valuelabels', clear
-			keep if name == "`theValueLabel'"
-			local theLabelList "`theValueLabel'"
-				count
-				local n_vallabs = `r(N)'
-				forvalues i = 1/`n_vallabs' {
-					local theNextValue = value[`i']
-					local theNextLabel = label[`i']
-					local theLabelList_`theValueLabel' `" `theLabelList_`theValueLabel'' `theNextValue' "`theNextLabel'" "'
+			foreach theValueLabel in `theValueLabels' {
+				use `valuelabels', clear
+				keep if name == "`theValueLabel'"
+				local theLabelList "`theValueLabel'"
+					count
+					local n_vallabs = `r(N)'
+					forvalues i = 1/`n_vallabs' {
+						local theNextValue = value[`i']
+						local theNextLabel = label[`i']
+						local theLabelList_`theValueLabel' `" `theLabelList_`theValueLabel'' `theNextValue' "`theNextLabel'" "'
 					}
 			}
 
-	* Prepare parallel lists of variables to be value-labeled and their corresponding value labels.
-	* Open specific sheet if specified
+		* Prepare parallel lists of variables to be value-labeled and their corresponding value labels.
+		* Open specific sheet if specified
 
-		if "`sheet'" != "" {
-
-			import excel `using', first clear sheet("`sheet'")
-
+			if "`sheet'" != "" {
+				import excel `using', first clear sheet("`sheet'")
+			}
+			else {
+				import excel `using', first clear
 			}
 
-		else {
-
-			import excel `using', first clear
-
-		}
-
-			keep if `vallab' != ""
+			keep if vallab != ""
 			local theValueLabelNames ""
 
 			count
-				if `r(N)' == 1 {
-					local theVarNames	 = varname[1]
-					local theValueLabelNames = `vallab'[1]
-					}
-				else {
-					forvalues i = 1/`r(N)' {
-						local theNextVarname  = varname[`i']
-						local theNextValLab   = `vallab'[`i']
-						local theVarNames `theVarNames' `theNextVarname'
-						local theValueLabelNames `theValueLabelNames' `theNextValLab'
-						}
-					}
+			if `r(N)' == 1 {
+				local theVarNames	 = varname[1]
+				local theValueLabelNames = vallab[1]
+			}
+			else {
+				forvalues i = 1/`r(N)' {
+					local theNextVarname  = varname[`i']
+					local theNextValLab   = vallab[`i']
+					local theVarNames `theVarNames' `theNextVarname'
+					local theValueLabelNames `theValueLabelNames' `theNextValLab'
+				}
+			}
 
 	} // End vallab option.
 
@@ -137,35 +128,49 @@ if "`vallab'" != "" {
 
 restore
 
-	foreach var of varlist * {
-		if "``var'_lab'" != "" label var `var' "``var'_lab'"
-		if "``var'_rec'" != "" recode    `var' ``var'_rec'
-		}
-
-	if "`vallab'" != "" {
-
-		foreach theValueLabel in `theValueLabels' {
-			label def `theValueLabel' `theLabelList_`theValueLabel'', replace
-			}
-
-			destring `theVarNames', replace
-
-			local n_labels : word count `theValueLabelNames'
-			if `n_labels' == 1 {
-				label val `theVarNames' `theValueLabelNames'
-				}
-			else {
-				forvalues i = 1/`n_labels' {
-					local theNextVarname : word `i' of `theVarNames'
-					local theNextValLab  : word `i' of `theValueLabelNames'
-					label val `theNextVarname' `theNextValLab'
-					}
-				}
-
-		} // End vallab option
+	* Recode
 
 		foreach var of varlist * {
-			if "``var'_ren'" != "" rename    `var' ``var'_ren'
+			if "``var'_lab'" != "" label var `var' "``var'_lab'"
+			if "``var'_rec'" != "" recode    `var' ``var'_rec'
+		}
+
+	* Value Labels
+
+		if "`vallab'" != "novallab" {
+			foreach theValueLabel in `theValueLabels' {
+				label def `theValueLabel' `theLabelList_`theValueLabel'', replace
+				}
+
+				destring `theVarNames', replace
+
+				local n_labels : word count `theValueLabelNames'
+				if `n_labels' == 1 {
+					label val `theVarNames' `theValueLabelNames'
+					}
+				else {
+					forvalues i = 1/`n_labels' {
+						local theNextVarname : word `i' of `theVarNames'
+						local theNextValLab  : word `i' of `theValueLabelNames'
+						label val `theNextVarname' `theNextValLab'
+						}
+					}
+		} // End vallab option
+
+	* Drop
+
+		if "`drop'" != "" {
+			foreach var of varlist * {
+				if !regexm("`allVarnames'","`var'") ///
+					drop `var'
+			}
+		}
+
+	* Rename
+
+		foreach var of varlist * {
+			if "``var'_ren'" != "" ///
+				rename `var' ``var'_ren'
 			}
 
 } // End qui
