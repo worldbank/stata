@@ -10,7 +10,8 @@ Help for {hi:orChart}
 
 {title:Syntax}
 
-{p 2 4}{cmd: orChart} {it:depvars} [{help if}] [{help in}], {opt c:ommand(estimation_command)} {opt rhs(indepvar [controlvars])}
+{p 2 4}{cmd: orChart} {it:depvars} [{help if}] [{help in}] [{help using} {it:/path/to/output.xls}]
+{break}, {opt c:ommand(estimation_command)} {opt rhs(indepvar [controlvars])}
 {break} [{opt globalif}] [{opt regopts(regression_options)}] [{it:tw_options}]
 
 {synoptset 16 tabbed}{...}
@@ -22,6 +23,7 @@ Help for {hi:orChart}
 {synopt:{opt globalif}}When applied, allows an if-condition to be set for each dependent variable separately. Before running the command with this option, create a global macro containing “&” followed by the logic expression needed for that variable. (Such as {it: global depvar “& ifvar==1”}).{p_end}
 {synopt:{opt regopts()}}Set any desired options for the regression command.{p_end}
 {synopt:{it:tw_options}}Specify any options needed for the graph.{p_end}
+{synopt:{help using}}Optionally output an .xls file of results, if all independent variables are binary.{p_end}
 {synoptline}
 {p 4 6 2}{it:(A * indicates required options.)}{p_end}
 
