@@ -5,7 +5,7 @@ prog def sumstats
 
 version 15.1
 
-syntax anything using/, stats(string asis) `replace'
+syntax anything using/ [aw fw], stats(string asis) [replace]
 
 cap mat drop stats_toprint
 qui {
@@ -50,6 +50,7 @@ qui {
 		// Get statistics
 		local ++theRow
 		qui tabstat  ``i''  ///
+			[`weight'`exp'] ///
 			, s(`stats') save
 			mat a = r(StatTotal)'
 			putexcel B`theRow' = matrix(a) , nformat(number_d2)
