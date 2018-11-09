@@ -1,4 +1,4 @@
-// outwriter: writes arbitrary matrix to Excel/LaTeX
+// outwriter: writes regressions or arbitrary matrix to Excel/LaTeX
 
 cap prog drop outwriter
 prog def outwriter
@@ -13,23 +13,68 @@ prog def outwriter
 		[colnames(string asis)]
 
 
-	// Regressions or matrix?
+	// Regressions setup
 	if `: word count `anything'' >= 2 {
 
 		cap mat drop results results_STARS
-		cap regprep `anything' , below `options'
+		cap regprep `anything' , below `options' stats(N r2)
 
 		mat results = r(results)
 		mat results_STARS = r(results_STARS)
 
-		qui forvalues row = 1/`=rowsof(results_STARS)' {
-		  forvalues col = 1/`=colsof(results_STARS)' {
+		// Correct star values
+		forvalues row = 1/`=rowsof(results_STARS)' {
+		forvalues col = 1/`=colsof(results_STARS)' {
 		    local check = results_STARS[`row',`col']
 		    if "`check'" == "1" mat results_STARS[`row',`col'] = 3
 		    if "`check'" == "3" mat results_STARS[`row',`col'] = 1
-		  }
 		}
-	local anything = "results"
+		}
+
+		// Correct row names
+		local conscounter = 0
+		local rownames ""
+		local rownames_old : rownames results, quoted
+		local rowcounter 1
+		cap mat drop results_new
+		cap mat drop results_new_STARS
+		foreach name in `rownames_old' {
+
+			// Constant
+			if regexm("`name'","_cons_easytofind0")  & (`conscounter' == 0) {
+				local rownames `"`rownames' "Constant" """'
+				mat results_new = nullmat(results_new) \ results[`=`rowcounter'-1',....]
+				mat results_new = nullmat(results_new) \ results[`rowcounter',....]
+				mat results_new_STARS = nullmat(results_new_STARS) \ J(1,colsof(results_STARS),0)
+				mat results_new_STARS = nullmat(results_new_STARS) \ J(1,colsof(results_STARS),0)
+				local ++conscounter
+			}
+
+			// Variables
+		 	if !regexm("`name'","_cons") & regexm("`name'","_easytofind0") & (`conscounter' == 0) {
+				local theVar = subinstr("`name'","_easytofind0","",.)
+				local theLab : var lab `theVar'
+				local rownames `"`rownames' "`theLab'" """'
+				mat results_new = nullmat(results_new) \ results[`rowcounter',....]
+				mat results_new = nullmat(results_new) \ results[`=`rowcounter'+1',....]
+				mat results_new_STARS = nullmat(results_new_STARS) \ results_STARS[`rowcounter',....]
+				mat results_new_STARS = nullmat(results_new_STARS) \ results_STARS[`=`rowcounter'+1',....]
+				local ++rowcounter
+			}
+
+			// Stats
+			if !regexm("`name'","_cons") & regexm("`name'","_easytofind1") & (`conscounter' == 1) {
+				local theLab = subinstr("`name'","_easytofind1","",.)
+				local rownames `"`rownames' "`theLab'""'
+				mat results_new = nullmat(results_new) \ results[`rowcounter'-1,....]
+				mat results_new_STARS = nullmat(results_new_STARS) \ J(1,colsof(results_STARS),0)
+			}
+
+		local ++rowcounter
+		}
+
+	local colnames `anything'
+	local anything = "results_new"
 	}
 
 	// Set up putexcel
@@ -39,14 +84,14 @@ prog def outwriter
 		local nRows = rowsof(`anything') + 1
 
 	// Write row names
-	if "`rownames'" == "" local rownames : rownames `anything', quoted
+	if `"`rownames'"' == "" local rownames : rownames `anything', quoted
 	forvalues i = 2/`nRows'{
 		local theName : word `=`i'-1' of `rownames'
 		putexcel A`i' = "`theName'" , nformat(bold)
 	}
 
 	// Write column names
-	if "`colnames'" == "" local colnames : colnames `anything', quoted
+	if `"`colnames'"' == "" local colnames : colnames `anything', quoted
 	forvalues i = 2/`nCols'{
 		local theName : word `=`i'-1' of `colnames'
 		local theCol : word `i' of `c(ALPHA)'
@@ -69,7 +114,7 @@ prog def outwriter
 		// Set the formatting
 		local theFormat = `format'*"0" + `nStars'*"\*" + `=3-`nStars''*"_*"
 
-		putexcel `theCol'`theRow' = `theValue' , nformat(#.`theFormat')
+		cap putexcel `theCol'`theRow' = `theValue' , nformat(#.`theFormat')
 
 		putexcel close
 	}
