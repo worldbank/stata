@@ -11,7 +11,8 @@ prog def outwriter
 		[format(integer 2)] ///
 		[rownames(string asis)] ///
 		[colnames(string asis)] ///
-		[stats(passthru)]
+		[stats(passthru)] ///
+		[replace]
 
 
 	// Regressions setup
@@ -40,19 +41,50 @@ prog def outwriter
 		cap mat drop results_new
 		cap mat drop results_new_STARS
 		foreach name in `rownames_old' {
-
+			// Cruft
+			if strpos("`name'","_easytofind")==1 | strpos("`name'","o.") {
+			}
 			// Constant
-			if regexm("`name'","_cons_easytofind0")  & (`conscounter' == 0) {
+			else if regexm("`name'","_cons_easytofind0")  & (`conscounter' == 0) {
 				local rownames `"`rownames' "Constant" """'
-				mat results_new = nullmat(results_new) \ results[`=`rowcounter'-1',....]
 				mat results_new = nullmat(results_new) \ results[`rowcounter',....]
+				mat results_new = nullmat(results_new) \ results[`=`rowcounter'+1',....]
 				mat results_new_STARS = nullmat(results_new_STARS) \ J(1,colsof(results_STARS),0)
 				mat results_new_STARS = nullmat(results_new_STARS) \ J(1,colsof(results_STARS),0)
 				local ++conscounter
 			}
+			// Factor variables
+			else if !regexm("`name'","_cons") & strpos("`name'",".") & regexm("`name'","_easytofind0") & (`conscounter' == 0) {
+				local theExp = subinstr("`name'","_easytofind0","",.)
 
-			// Variables
-		 	if !regexm("`name'","_cons") & regexm("`name'","_easytofind0") & (`conscounter' == 0) {
+				parse "`theExp'" , p(#)
+				local theExp ""
+				while "`1'" != "" {
+					if "`1'" == "#" {
+						local theExp = "`theExp' * "
+					}
+					else if strpos("`1'","c.") {
+						local theVar = subinstr("`1'","c.","",.)
+						local theLab : var lab `theVar'
+						local theExp = "`theExp'`theLab'"
+					}
+					else {
+						if regexm("`1'","^[0-9+]") local theLevel = regexs(0)
+						local theVar = substr("`1'",strpos("`1'",".")+1,.)
+						local theLab : var lab `theVar'
+						local theExp = "`theExp'`theLab'=`:label (`theVar') `theLevel''"
+					}
+				mac shift
+				}
+
+				local rownames `"`rownames' "`theExp'" """'
+				mat results_new = nullmat(results_new) \ results[`rowcounter',....]
+				mat results_new = nullmat(results_new) \ results[`=`rowcounter'+1',....]
+				mat results_new_STARS = nullmat(results_new_STARS) \ results_STARS[`rowcounter',....]
+				mat results_new_STARS = nullmat(results_new_STARS) \ results_STARS[`=`rowcounter'+1',....]
+			}
+			// Ordinary variables
+		 	else if !regexm("`name'","_cons") & regexm("`name'","_easytofind0") & (`conscounter' == 0) {
 				local theVar = subinstr("`name'","_easytofind0","",.)
 				local theLab : var lab `theVar'
 				local rownames `"`rownames' "`theLab'" """'
@@ -60,17 +92,14 @@ prog def outwriter
 				mat results_new = nullmat(results_new) \ results[`=`rowcounter'+1',....]
 				mat results_new_STARS = nullmat(results_new_STARS) \ results_STARS[`rowcounter',....]
 				mat results_new_STARS = nullmat(results_new_STARS) \ results_STARS[`=`rowcounter'+1',....]
-				local ++rowcounter
 			}
-
 			// Stats
-			if !regexm("`name'","_cons") & regexm("`name'","_easytofind1") & (`conscounter' == 1) {
+			else if !regexm("`name'","_cons") & regexm("`name'","_easytofind1")  & (`conscounter' == 1) {
 				local theLab = subinstr("`name'","_easytofind1","",.)
 				local rownames `"`rownames' "`theLab'""'
-				mat results_new = nullmat(results_new) \ results[`rowcounter'-1,....]
+				mat results_new = nullmat(results_new) \ results[`rowcounter',....]
 				mat results_new_STARS = nullmat(results_new_STARS) \ J(1,colsof(results_STARS),0)
 			}
-
 		local ++rowcounter
 		}
 
@@ -79,7 +108,7 @@ prog def outwriter
 	}
 
 	// Set up putexcel
-	putexcel set `using' , replace
+	qui putexcel set `using' , `replace'
 
 		local nCols = colsof(`anything') + 1
 		local nRows = rowsof(`anything') + 1
@@ -88,7 +117,7 @@ prog def outwriter
 	if `"`rownames'"' == "" local rownames : rownames `anything', quoted
 	forvalues i = 2/`nRows'{
 		local theName : word `=`i'-1' of `rownames'
-		putexcel A`i' = "`theName'" , nformat(bold)
+		qui putexcel A`i' = "`theName'" , nformat(bold)
 	}
 
 	// Write column names
@@ -96,7 +125,7 @@ prog def outwriter
 	forvalues i = 2/`nCols'{
 		local theName : word `=`i'-1' of `colnames'
 		local theCol : word `i' of `c(ALPHA)'
-		putexcel `theCol'1 = "`theName'" , nformat(bold)
+		qui putexcel `theCol'1 = "`theName'" , nformat(bold)
 	}
 
 	// Write values
@@ -115,7 +144,7 @@ prog def outwriter
 		// Set the formatting
 		local theFormat = `format'*"0" + `nStars'*"\*" + `=3-`nStars''*"_*"
 
-		cap putexcel `theCol'`theRow' = `theValue' , nformat(#.`theFormat')
+		qui cap putexcel `theCol'`theRow' = `theValue' , nformat(#.`theFormat')
 
 		putexcel close
 	}
@@ -124,12 +153,13 @@ prog def outwriter
 end
 
 sysuse auto.dta, clear
-reg price mpg
+reg price i.foreign##c.mpg
 	est sto reg1
+reg price i.foreign##c.mpg##i.rep78
 	est sto reg2
 	estadd scalar h = 4
 
-outwriter reg1 reg2 using "/users/bbdaniels/desktop/test.xlsx" , stats(N r2 h)
+outwriter reg1 reg2 using "/users/bbdaniels/desktop/test.xlsx" , stats(N r2 h) replace
 
 
 // Have a lovely day!
