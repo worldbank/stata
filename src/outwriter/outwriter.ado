@@ -10,14 +10,15 @@ prog def outwriter
 		, ///
 		[format(integer 2)] ///
 		[rownames(string asis)] ///
-		[colnames(string asis)]
+		[colnames(string asis)] ///
+		[stats(passthru)]
 
 
 	// Regressions setup
 	if `: word count `anything'' >= 2 {
 
 		cap mat drop results results_STARS
-		cap regprep `anything' , below `options' stats(N r2)
+		cap regprep `anything' , below `options' `stats'
 
 		mat results = r(results)
 		mat results_STARS = r(results_STARS)
@@ -126,8 +127,9 @@ sysuse auto.dta, clear
 reg price mpg
 	est sto reg1
 	est sto reg2
+	estadd scalar h = 4
 
-outwriter reg1 reg2 using "/users/bbdaniels/desktop/test.xlsx"
+outwriter reg1 reg2 using "/users/bbdaniels/desktop/test.xlsx" , stats(N r2 h)
 
 
 // Have a lovely day!
