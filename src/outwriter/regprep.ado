@@ -1,4 +1,4 @@
-
+***********************************************************
 * Required: modified version of xml_tab (all remaining code)
 *! This code based on xml_tab version 3.42 17Mar2008 M. Lokshin, Z. Sajaia
 
@@ -93,7 +93,7 @@ tempname M;
 				matrix  `M'_STARS = r(result);
 			};
 		};
-		getstarchars , `stars';
+		getstarchars , stars(0.1 0.05 0.01);
 
 		if missing("`long'") {;
 			Widemat `M';
@@ -1075,7 +1075,7 @@ program define Mkemat, rclass;
 
 	tempname n_stars D;
 
-	getstarchars , `stars';
+	getstarchars , stars(0.1 0.05 0.01);
 
 	local rr  = rowsof(`bbc');
 	local rc  = colsof(`bbc') / 2; // extra cols of tstats;
@@ -1527,6 +1527,7 @@ end;
 
 cap prog drop updateopts;
 program define updateopts;
+
 	syntax [anything(name=stname)], [VER(string) updateopts EXcelpath(string) CAlcpath(string)] isest(integer);
 
 	local stname =cond(missing("`stname'"), cond(`isest', "DEFAULT", "M"), upper("`stname'"));
@@ -1535,7 +1536,8 @@ program define updateopts;
 	tempfile tmpf;
 
  	// check if we have the options file
-	quietly findfile xml_tab.ado;
+
+	* quietly findfile xml_tab.ado;
 	local fname "`r(fn)'";
 	local fname : subinstr local fname "xml_tab.ado" "xml_tab_options.txt";
 
@@ -1595,6 +1597,7 @@ program define updateopts;
 			erase `tmpf';
 		};
 	};
+
 	if `writenew'>0 {; //there is no options file
 		local DEFAULT "format(S2100 (S2210 N2303)) cw(0 140) right wide stars(0.01 0.05 0.1)";
 		local S1      "format(S2100 (S2210 N2303) (S2210 N2123)) cw(0 140) right wide stars(0.01 0.05 0.1) lines(COL_NAMES 1 _cons 1 LAST_ROW 13) stats(N r2)";
@@ -1607,6 +1610,7 @@ program define updateopts;
 		local style "``stname''";
 	    local upd = 1;
 	};
+
 	if missing("`excelfound'") {;
 		capture confirm file "`excelpath'";
 		if _rc {;
@@ -1675,6 +1679,7 @@ program define updateopts;
 	c_local excelpath `"`excelpath'"';
 	c_local calcpath  `"`calcpath'"';
 	c_local styles `"`style'"';
+
 end; // program updateopts
 
 cap prog drop opts_Exclusive;
