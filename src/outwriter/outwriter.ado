@@ -33,9 +33,16 @@ prog def outwriter
 		}
 		}
 
+		// Flag for rownames/colnames
+		if `"`rownames'"' != "" local RN_FLAG = 1
+			else local RN_FLAG = 0
+		if `"`colnames'"' != "" local CN_FLAG = 1
+			else local CN_FLAG = 0
+
+
 		// Correct row names
 		local conscounter = 0
-		local rownames ""
+		if !`RN_FLAG' local rownames ""
 		local rownames_old : rownames results, quoted
 		local rowcounter 1
 		cap mat drop results_new
@@ -46,7 +53,7 @@ prog def outwriter
 			}
 			// Constant
 			else if regexm("`name'","_cons_easytofind0")  & (`conscounter' == 0) {
-				local rownames `"`rownames' "Constant" """'
+				if !`RN_FLAG' local rownames `"`rownames' "Constant" """'
 				mat results_new = nullmat(results_new) \ results[`rowcounter',....]
 				mat results_new = nullmat(results_new) \ results[`=`rowcounter'+1',....]
 				mat results_new_STARS = nullmat(results_new_STARS) \ J(1,colsof(results_STARS),0)
@@ -77,7 +84,7 @@ prog def outwriter
 				mac shift
 				}
 
-				local rownames `"`rownames' "`theExp'" """'
+				if !`RN_FLAG' local rownames `"`rownames' "`theExp'" """'
 				mat results_new = nullmat(results_new) \ results[`rowcounter',....]
 				mat results_new = nullmat(results_new) \ results[`=`rowcounter'+1',....]
 				mat results_new_STARS = nullmat(results_new_STARS) \ results_STARS[`rowcounter',....]
@@ -87,7 +94,7 @@ prog def outwriter
 		 	else if !regexm("`name'","_cons") & regexm("`name'","_easytofind0") & (`conscounter' == 0) {
 				local theVar = subinstr("`name'","_easytofind0","",.)
 				local theLab : var lab `theVar'
-				local rownames `"`rownames' "`theLab'" """'
+				if !`RN_FLAG' local rownames `"`rownames' "`theLab'" """'
 				mat results_new = nullmat(results_new) \ results[`rowcounter',....]
 				mat results_new = nullmat(results_new) \ results[`=`rowcounter'+1',....]
 				mat results_new_STARS = nullmat(results_new_STARS) \ results_STARS[`rowcounter',....]
@@ -96,14 +103,14 @@ prog def outwriter
 			// Stats
 			else if !regexm("`name'","_cons") & regexm("`name'","_easytofind1")  & (`conscounter' == 1) {
 				local theLab = subinstr("`name'","_easytofind1","",.)
-				local rownames `"`rownames' "`theLab'""'
+				if !`RN_FLAG' local rownames `"`rownames' "`theLab'""'
 				mat results_new = nullmat(results_new) \ results[`rowcounter',....]
 				mat results_new_STARS = nullmat(results_new_STARS) \ J(1,colsof(results_STARS),0)
 			}
 		local ++rowcounter
 		}
 
-	local colnames `anything'
+	if !`CN_FLAG' local colnames `anything'
 	local anything = "results_new"
 	}
 
@@ -159,7 +166,7 @@ reg price i.foreign##c.mpg##i.rep78
 	est sto reg2
 	estadd scalar h = 4
 
-outwriter reg1 reg2 using "/users/bbdaniels/desktop/test.xlsx" , stats(N r2 h) replace
+outwriter reg1 reg2 using "/users/bbdaniels/desktop/test.xlsx" , stats(N r2 h) replace colnames("Test" "HEY") rownames("1" "2" "3")
 
 
 // Have a lovely day!
