@@ -3,11 +3,12 @@
 cap prog drop tornado
 prog def tornado
 
-syntax anything =/exp /// syntax – tornado: reg d1 d2 d3 = i1 i2 i3
-	[if] [in] [using] [pweight] ///
+syntax anything =/exp /// syntax – tornado : reg d1 d2 d3 = treatment
+	[if] [in] [using] /// [pweight] ///
 	, [*] ///
 	 [or] /// odds-ratios
 	 [d]  /// cohen's d
+	 [controls(varlist)]
 
 preserve
 marksample touse, novarlist
@@ -22,4 +23,4 @@ end
 
 
 sysuse auto, clear
-tornado: price mpg = trunk headroom
+tornado reg price mpg = trunk
