@@ -8,12 +8,12 @@ version 14.1
 
 syntax anything using/ ///
 	, ///
-	[format(integer 2)] ///
-	[rownames(string asis)] ///
-	[colnames(string asis)] ///
+	[Format(integer 2)] ///
+	[ROWnames(string asis)] ///
+	[COLnames(string asis)] ///
 	[stats(passthru)] ///
-	[replace] [sheet(passthru)] ///
-	[*]
+	[Replace] [Modify] [sheet(passthru)] ///
+	[Drop(string asis)]
 
 qui {
 
@@ -21,7 +21,7 @@ qui {
 if `: word count `anything'' >= 2 {
 
 	cap mat drop results results_STARS
-	regprep `anything' , below `options' `stats'
+	regprep `anything' , below `stats'
 
 	mat results = r(results)
 	mat results_STARS = r(results_STARS)
@@ -35,13 +35,19 @@ if `: word count `anything'' >= 2 {
 	}
 	}
 
-	// Flag for rownames/colnames
+	// Flag for rownames/colnames manually set
 	if `"`rownames'"' != "" local RN_FLAG = 1
 		else local RN_FLAG = 0
 	if `"`colnames'"' != "" local CN_FLAG = 1
 		else local CN_FLAG = 0
 
-	// Correct row names
+	// Drop drop() variables and correct row names
+	if "`drop'" != "" {
+		fvrevar `drop' , tsonly
+		local drop = subinstr("`r(varlist)'"," ","|",.)
+	}
+
+	// Set final row names
 	local conscounter = 0
 	if !`RN_FLAG' local rownames ""
 	local rownames_old : rownames results, quoted
@@ -50,7 +56,7 @@ if `: word count `anything'' >= 2 {
 	cap mat drop results_new_STARS
 	foreach name in `rownames_old' {
 		// Cruft
-		if strpos("`name'","_easytofind")==1 | strpos("`name'","o.") | regexm("`name'","b.") {
+		if strpos("`name'","_easytofind")==1 | strpos("`name'","o.") | regexm("`name'","b.") | regexm("`=subinstr("`name'","_easytofind0","",.)'","^(`drop')$") {
 		}
 		// Constant
 		else if regexm("`name'","_cons_easytofind0")  & (`conscounter' == 0) {
@@ -130,7 +136,7 @@ else {
 		format(`format') ///
 		rownames(`rownames') ///
 		colnames(`colnames') ///
-		`replace' `sheet'
+		`replace' `sheet' `modify'
 
 // end main program
 }
@@ -148,7 +154,7 @@ syntax anything using/ , ///
 	[format(integer 2)] ///
 	[rownames(string asis)] ///
 	[colnames(string asis)] ///
-	[replace] [sheet(passthru)]
+	[replace] [sheet(passthru)] [modify]
 
 qui {
 
@@ -158,7 +164,7 @@ qui {
 		if _rc != 0 local STARS_FLAG = 0
 
 	// Set up putexcel
-	qui putexcel set `using' , `replace' `sheet'
+	qui putexcel set `using' , `replace' `sheet' `modify'
 	putexcel A1 , border(bottom thick)
 
 		local nCols = colsof(`anything') + 1

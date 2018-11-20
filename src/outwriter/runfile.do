@@ -12,6 +12,11 @@ reg price i.rep78
 	est sto reg3
 	estadd scalar h = 2.5
 
+outwriter reg1 reg2 reg3 using "/users/bbdaniels/desktop/test.xlsx" ///
+	, stats(N r2 h) drop(i.foreign##c.mpg) sheet(test, replace) modify
+
+-
+
 outwriter reg1 reg2 reg3 using "/users/bbdaniels/desktop/test.xlsx" , stats(N r2 h) replace // colnames("Test" "HEY") rownames("1" "2" "3")
 outwriter reg1 reg2 reg3 using "/users/bbdaniels/desktop/test.xls" , stats(N r2 h) replace // colnames("Test" "HEY") rownames("1" "2" "3")
 outwriter reg1 reg2 reg3 using "/users/bbdaniels/desktop/test.csv" , stats(N r2 h) replace // colnames("Test" "HEY") rownames("1" "2" "3")
