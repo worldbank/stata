@@ -1,4 +1,4 @@
-// outwriter: writes regressions or arbitrary matrix to Excel/LaTeX
+// outwriter: writes regressions or arbitrary matrix to Excel
 
 cap prog drop outwriter
 prog def outwriter
@@ -12,7 +12,8 @@ syntax anything using/ ///
 	[rownames(string asis)] ///
 	[colnames(string asis)] ///
 	[stats(passthru)] ///
-	[replace]
+	[replace] [sheet(passthru)] ///
+	[*]
 
 qui {
 
@@ -129,7 +130,7 @@ else {
 		format(`format') ///
 		rownames(`rownames') ///
 		colnames(`colnames') ///
-		`replace'
+		`replace' `sheet'
 
 // end main program
 }
@@ -147,7 +148,7 @@ syntax anything using/ , ///
 	[format(integer 2)] ///
 	[rownames(string asis)] ///
 	[colnames(string asis)] ///
-	[replace]
+	[replace] [sheet(passthru)]
 
 qui {
 
@@ -157,7 +158,7 @@ qui {
 		if _rc != 0 local STARS_FLAG = 0
 
 	// Set up putexcel
-	qui putexcel set `using' , `replace'
+	qui putexcel set `using' , `replace' `sheet'
 	putexcel A1 , border(bottom thick)
 
 		local nCols = colsof(`anything') + 1
