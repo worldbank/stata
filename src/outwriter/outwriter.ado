@@ -123,6 +123,7 @@ else {
 // Write
 
 	local fext = substr("`using'",strpos("`using'",".")+1,.)
+	if "`fext'" == "xls" local fext "xlsx"
 
 	mat2`fext' `anything' using "`using'" , ///
 		format(`format') ///
@@ -135,12 +136,12 @@ else {
 di as err "Wrote table to `using'!"
 end
 
-// Writing to XLSX: Requires Stata Version 15
+// Write matrix and matrix_STARS to clsx ****************************************
 
 cap prog drop mat2xlsx
 prog def mat2xlsx
 
-version 15.1
+cap version 15.1
 
 syntax anything using/ , ///
 	[format(integer 2)] ///
@@ -200,7 +201,7 @@ qui {
 }
 end // end mat2xlsx
 
-// Write matrix and matrix_STARS to csv
+// Write matrix and matrix_STARS to csv ****************************************
 
 cap prog drop mat2csv
 prog def mat2csv

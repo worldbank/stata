@@ -16,3 +16,4 @@ mat a = [1,3\2,4]
 
 outwriter a using "/users/bbdaniels/desktop/testmat.xlsx" , replace
 outwriter a using "/users/bbdaniels/desktop/testmat.csv" , replace
+outwriter a using "/users/bbdaniels/desktop/testmat.xls" , replace
