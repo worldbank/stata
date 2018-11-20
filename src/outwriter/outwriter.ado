@@ -41,7 +41,7 @@ if `: word count `anything'' >= 2 {
 	if `"`colnames'"' != "" local CN_FLAG = 1
 		else local CN_FLAG = 0
 
-	// Drop drop() variables and correct row names
+	// Drop drop() variables
 	if "`drop'" != "" {
 		fvrevar `drop' , tsonly
 		local drop = subinstr("`r(varlist)'"," ","|",.)
@@ -121,7 +121,7 @@ if `: word count `anything'' >= 2 {
 	local anything = "results_new"
 }
 
-// Row/colnames for matrix
+// Row & colnames for matrix
 else {
 	if `"`rownames'"' == "" local rownames : rownames `anything', quoted
 	if `"`colnames'"' == "" local colnames : colnames `anything', quoted
@@ -143,7 +143,7 @@ else {
 di as err "Wrote table to `using'!"
 end
 
-// Write matrix and matrix_STARS to clsx ****************************************
+// Write matrix and matrix_STARS to xlsx ****************************************
 
 cap prog drop mat2xlsx
 prog def mat2xlsx
@@ -229,7 +229,7 @@ syntax ///
 	preserve
 		clear
 		qui svmat `anything'
-		qui tostring * , force replace format(%9.2f)
+		qui tostring * , force replace format(%9.`format'f)
 
 	// Remove blanks
 	qui foreach var of varlist * {
