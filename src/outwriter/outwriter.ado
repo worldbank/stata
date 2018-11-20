@@ -114,6 +114,12 @@ if `: word count `anything'' >= 2 {
 	local anything = "results_new"
 }
 
+// Row/colnames for matrix
+else {
+	if `"`rownames'"' == "" local rownames : rownames `anything', quoted
+	if `"`colnames'"' == "" local colnames : colnames `anything', quoted
+}
+
 // Write
 
 	local fext = substr("`using'",strpos("`using'",".")+1,.)
@@ -123,9 +129,10 @@ if `: word count `anything'' >= 2 {
 		rownames(`rownames') ///
 		colnames(`colnames') ///
 		`replace'
-}
-	di as err "Wrote table to `using'!"
 
+// end main program
+}
+di as err "Wrote table to `using'!"
 end
 
 // Writing to XLSX: Requires Stata Version 15
@@ -143,6 +150,11 @@ syntax anything using/ , ///
 
 qui {
 
+	// Check for STARS matrix
+	local STARS_FLAG = 1
+	cap confirm matrix `anything'_STARS
+		if _rc != 0 local STARS_FLAG = 0
+
 	// Set up putexcel
 	qui putexcel set `using' , `replace'
 
@@ -150,14 +162,12 @@ qui {
 		local nRows = rowsof(`anything') + 1
 
 	// Write row names
-	if `"`rownames'"' == "" local rownames : rownames `anything', quoted
 	forvalues i = 2/`nRows'{
 		local theName : word `=`i'-1' of `rownames'
 		qui putexcel A`i' = "`theName'" , nformat(bold)
 	}
 
 	// Write column names
-	if `"`colnames'"' == "" local colnames : colnames `anything', quoted
 	forvalues i = 2/`nCols'{
 		local theName : word `=`i'-1' of `colnames'
 		local theCol : word `i' of `c(ALPHA)'
@@ -173,7 +183,8 @@ qui {
 		local theRow = `i'
 
 		// Get the values
-		local nStars 	= `anything'_STARS[`=`i'-1',`=`j'-1']
+		if `STARS_FLAG' local nStars 	= `anything'_STARS[`=`i'-1',`=`j'-1']
+			else local nStars = 0
 			local nStars = min(3,`nStars')
 		local theValue  = `anything'[`=`i'-1',`=`j'-1']
 
