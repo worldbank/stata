@@ -130,13 +130,16 @@ else {
 // Write
 
 	local fext = substr("`using'",strpos("`using'",".")+1,.)
-	if "`fext'" == "xls" local fext "xlsx"
+		if "`fext'" == "xls" local fext "xlsx"
+		if "`fext'" == "csv" local c "c"
+		if "`fext'" == "tex" local fext "csv"
+
 
 	mat2`fext' `anything' using "`using'" , ///
 		format(`format') ///
 		rownames(`rownames') ///
 		colnames(`colnames') ///
-		`replace' `sheet' `modify'
+		`replace' `sheet' `modify' `c'
 
 // end main program
 }
@@ -223,7 +226,7 @@ syntax ///
   [colnames(string asis)] /// column titles
   [rownames(string asis)] /// row titles
   [format(integer 2)] /// number of decimal places
-  [replace]
+  [replace] [c]
 
 	// Load matrix into Stata
 	preserve
@@ -242,18 +245,19 @@ syntax ///
 
 			qui count
 			local nrows = `r(N)'
-			local c = 0
+			local j = 0
 
 			foreach var of varlist * {
-				local ++c
+				local ++j
 				local r = 0
 				forvalues i = 1/`r(N)' {
 					local ++r
-					local pv = `anything'_STARS[`r',`c']
-					replace `var' = `var' + "*" in `r' if `pv' >= 1
-					replace `var' = `var' + "*" in `r' if `pv' >= 2
-					replace `var' = `var' + "*" in `r' if `pv' >= 3
-				  }
+					local pv = `anything'_STARS[`r',`j']
+					replace `var' = `var' + "\phantom{***}" in `r' if `pv' == 0 | `pv' > 3
+					replace `var' = `var' + "*\phantom{**}" in `r' if `pv' == 1
+					replace `var' = `var' + "**\phantom{*}" in `r' if `pv' == 2
+					replace `var' = `var' + "***" in `r' if `pv' == 3
+				}
 		}
 	}
 
@@ -287,10 +291,40 @@ syntax ///
 	    }
 	}
 
+	// Update for tex
+	if "`c'" == "" {
+		replace a = "{\bf " + a + "}"
+		foreach var of varlist `anything'* {
+			replace `var' = "{\bf " + `var' + "}" in 1
+		}
+
+		egen FINAL = concat(*) , punct(" & ")
+
+		keep FINAL
+		replace FINAL = FINAL + " \\"
+
+		gen sort = _n
+		qui count
+			local total = `r(N)'
+			set obs `=`total'+1'
+			replace sort = 0 if sort == .
+			replace sort = .5 in 1
+			set obs `=`total'+1'
+			replace sort = 1 if sort == .
+			sort sort
+			set obs `=`total'+4'
+		replace FINAL = "\begin{tabular}{@{\extracolsep{5pt}}lrrrrrrrrrrrrrrr}" in 1
+		replace FINAL = "\hline" in 3
+		replace FINAL = "\hline" in `=`total'+3'
+		replace FINAL = "\end{tabular}" in `=`total'+4'
+		drop sort
+	}
+
 	// Write
-	outsheet `using' , c `replace' noq non
+	outsheet `using' , `c' `replace' noq non
 
 end // end mat2csv
+
 
 * Have a lovely day!
 
