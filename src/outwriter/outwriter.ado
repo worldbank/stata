@@ -273,8 +273,8 @@ end // end mat2csv
 * Have a lovely day!
 
 ***********************************************************
-* Required: modified version of xml_tab (all remaining code)
-*! This code based on xml_tab version 3.42 17Mar2008 M. Lokshin, Z. Sajaia
+* Requires regprep: modified version of xml_tab (all remaining code)
+* This code based on xml_tab version 3.42 17Mar2008 M. Lokshin, Z. Sajaia
 qui {
 	*! version 3.42 17Mar2008 M. Lokshin, Z. Sajaia
 
