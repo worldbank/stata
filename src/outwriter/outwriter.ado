@@ -250,12 +250,19 @@ syntax ///
 			foreach var of varlist * {
 				local ++j
 				local r = 0
-				forvalues i = 1/`r(N)' {
+				if "`c'" == "" forvalues i = 1/`r(N)' {
 					local ++r
 					local pv = `anything'_STARS[`r',`j']
 					replace `var' = `var' + "\phantom{***}" in `r' if `pv' == 0 | `pv' > 3
 					replace `var' = `var' + "*\phantom{**}" in `r' if `pv' == 1
 					replace `var' = `var' + "**\phantom{*}" in `r' if `pv' == 2
+					replace `var' = `var' + "***" in `r' if `pv' == 3
+				}
+				else forvalues i = 1/`r(N)' {
+					local ++r
+					local pv = `anything'_STARS[`r',`j']
+					replace `var' = `var' + "*" in `r' if `pv' == 1
+					replace `var' = `var' + "**" in `r' if `pv' == 2
 					replace `var' = `var' + "***" in `r' if `pv' == 3
 				}
 		}
@@ -295,7 +302,7 @@ syntax ///
 	if "`c'" == "" {
 		replace a = "{\bf " + a + "}"
 		foreach var of varlist `anything'* {
-			replace `var' = "{\bf " + `var' + "}" in 1
+			replace `var' = "\multicolumn{1}{c}" + "{\bf " + `var' + "}" in 1
 		}
 
 		egen FINAL = concat(*) , punct(" & ")
@@ -309,10 +316,15 @@ syntax ///
 			set obs `=`total'+1'
 			replace sort = 0 if sort == .
 			replace sort = .5 in 1
-			set obs `=`total'+1'
+			set obs `=`total'+2'
 			replace sort = 1 if sort == .
-			sort sort
+			gsort + sort
 			set obs `=`total'+4'
+
+
+		pause on
+		pause
+
 		replace FINAL = "\begin{tabular}{@{\extracolsep{5pt}}lrrrrrrrrrrrrrrr}" in 1
 		replace FINAL = "\hline" in 3
 		replace FINAL = "\hline" in `=`total'+3'
