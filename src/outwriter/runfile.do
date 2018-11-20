@@ -8,9 +8,13 @@ reg price i.foreign##c.mpg
 reg price i.foreign##c.mpg##i.rep78
 	est sto reg2
 	estadd scalar h = 4
+reg price i.rep78
+	est sto reg3
+	estadd scalar h = 2.5
 
-outwriter reg1 reg2 using "/users/bbdaniels/desktop/test.xlsx" , stats(N r2 h) replace // colnames("Test" "HEY") rownames("1" "2" "3")
-outwriter reg1 reg2 using "/users/bbdaniels/desktop/test.csv" , stats(N r2 h) replace // colnames("Test" "HEY") rownames("1" "2" "3")
+outwriter reg1 reg2 reg3 using "/users/bbdaniels/desktop/test.xlsx" , stats(N r2 h) replace // colnames("Test" "HEY") rownames("1" "2" "3")
+outwriter reg1 reg2 reg3 using "/users/bbdaniels/desktop/test.xls" , stats(N r2 h) replace // colnames("Test" "HEY") rownames("1" "2" "3")
+outwriter reg1 reg2 reg3 using "/users/bbdaniels/desktop/test.csv" , stats(N r2 h) replace // colnames("Test" "HEY") rownames("1" "2" "3")
 
 mat a = [1,3\2,4]
 

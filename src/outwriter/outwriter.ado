@@ -158,6 +158,7 @@ qui {
 
 	// Set up putexcel
 	qui putexcel set `using' , `replace'
+	putexcel A1 , border(bottom thick)
 
 		local nCols = colsof(`anything') + 1
 		local nRows = rowsof(`anything') + 1
@@ -166,13 +167,14 @@ qui {
 	forvalues i = 2/`nRows'{
 		local theName : word `=`i'-1' of `rownames'
 		qui putexcel A`i' = "`theName'" , nformat(bold)
+		if (`nRows' == `i') putexcel A`i' , border(bottom thick)
 	}
 
 	// Write column names
 	forvalues i = 2/`nCols'{
 		local theName : word `=`i'-1' of `colnames'
 		local theCol : word `i' of `c(ALPHA)'
-		qui putexcel `theCol'1 = "`theName'" , nformat(bold)
+		qui putexcel `theCol'1 = "`theName'" , nformat(bold) border(bottom thick)
 	}
 
 	// Write values
@@ -193,6 +195,7 @@ qui {
 		local theFormat = `format'*"0" + `nStars'*"\*" + `=3-`nStars''*"_*"
 
 		qui cap putexcel `theCol'`theRow' = `theValue' , nformat(#.`theFormat')
+		if `nRows' == `i' putexcel `theCol'`theRow' , border(bottom thick)
 
 	}
 	}
