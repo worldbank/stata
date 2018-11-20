@@ -50,7 +50,7 @@ if `: word count `anything'' >= 2 {
 	cap mat drop results_new_STARS
 	foreach name in `rownames_old' {
 		// Cruft
-		if strpos("`name'","_easytofind")==1 | strpos("`name'","o.") {
+		if strpos("`name'","_easytofind")==1 | strpos("`name'","o.") | regexm("`name'","b.") {
 		}
 		// Constant
 		else if regexm("`name'","_cons_easytofind0")  & (`conscounter' == 0) {
@@ -170,7 +170,7 @@ reg price i.foreign##c.mpg##i.rep78
 	est sto reg2
 	estadd scalar h = 4
 
-outwriter reg1 reg2 using "/users/bbdaniels/desktop/test.xlsx" , stats(N r2 h) replace colnames("Test" "HEY") rownames("1" "2" "3")
+outwriter reg1 reg2 using "/users/bbdaniels/desktop/test.xlsx" , stats(N r2 h) replace // colnames("Test" "HEY") rownames("1" "2" "3")
 
 
 // Have a lovely day!
