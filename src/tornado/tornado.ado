@@ -1,4 +1,4 @@
-* Regression coefficient chart/table
+*! version 1.0 09212011 – Benjamin Daniels – bbdaniels@gmail.com
 
 cap prog drop tornado
 prog def tornado
@@ -97,11 +97,3 @@ svmat results , n(col)
 
 }
 end
-
-
-sysuse auto, clear
-gen check = rep78 > 3
-gen check2 = 1-foreign
-label val check origin
-tornado logit check2 foreign = check , or
-tornado reg headroom foreign = rep78 , d
