@@ -3,12 +3,16 @@
 cap prog drop outwriter
 prog def outwriter
 
+// Check version
+if `c(version)' < 15 local OLD = 1
+	else local OLD = 0
+
 // VERSION
 version 14.1
 
 syntax anything using/ ///
 	, ///
-	[Format(integer 2)] ///
+	[Format(string asis)] ///
 	[ROWnames(string asis)] ///
 	[COLnames(string asis)] ///
 	[stats(passthru)] ///
@@ -16,6 +20,9 @@ syntax anything using/ ///
 	[Drop(string asis)]
 
 qui {
+
+// Prep
+if "`format'" == "" local format = "%9.2f"
 
 // Regressions setup
 if `: word count `anything'' >= 2 {
@@ -129,17 +136,18 @@ else {
 
 // Write
 
-	local fext = substr("`using'",strpos("`using'",".")+1,.)
-		if "`fext'" == "xls" local fext "xlsx"
-		if "`fext'" == "csv" local c "c"
-		if "`fext'" == "tex" local fext "csv"
+	local ext = substr("`using'",strpos("`using'",".")+1,.)
+	if `OLD' == 1 | !regexm("`ext'","xls") local ext "csv"
+		else {
+			local ext "xlsx"
+			local format = substr("`format'",strpos("`format'",".")+1,1)
+		}
 
-
-	mat2`fext' `anything' using "`using'" , ///
+	mat2`ext' `anything' using "`using'" , ///
 		format(`format') ///
 		rownames(`rownames') ///
 		colnames(`colnames') ///
-		`replace' `sheet' `modify' `c'
+		`replace' `sheet' `modify' `c' ext(`ext')
 
 // end main program
 }
@@ -157,7 +165,7 @@ syntax anything using/ , ///
 	[format(integer 2)] ///
 	[rownames(string asis)] ///
 	[colnames(string asis)] ///
-	[replace] [sheet(passthru)] [modify]
+	[replace] [sheet(passthru)] [modify] [ext(string asis)]
 
 qui {
 
@@ -225,14 +233,14 @@ syntax ///
   ,               /// options
   [colnames(string asis)] /// column titles
   [rownames(string asis)] /// row titles
-  [format(integer 2)] /// number of decimal places
-  [replace] [c]
+  [format(string asis)] /// number of decimal places
+  [replace] [c] [ext(string asis)]
 
 	// Load matrix into Stata
 	preserve
 		clear
 		qui svmat `anything'
-		qui tostring * , force replace format(%9.`format'f)
+		qui tostring * , force replace format(`format')
 
 	// Remove blanks
 	qui foreach var of varlist * {
@@ -250,7 +258,7 @@ syntax ///
 			foreach var of varlist * {
 				local ++j
 				local r = 0
-				if "`c'" == "" forvalues i = 1/`r(N)' {
+				if "`ext'" == "tex" forvalues i = 1/`r(N)' {
 					local ++r
 					local pv = `anything'_STARS[`r',`j']
 					replace `var' = `var' + "\phantom{***}" in `r' if `pv' == 0 | `pv' > 3
@@ -299,7 +307,7 @@ syntax ///
 	}
 
 	// Update for tex
-	if "`c'" == "" {
+	if "`ext'" == "tex" {
 		replace a = "{\bf " + a + "}"
 		foreach var of varlist `anything'* {
 			replace `var' = "\multicolumn{1}{c}" + "{\bf " + `var' + "}" in 1
@@ -321,10 +329,6 @@ syntax ///
 			gsort + sort
 			set obs `=`total'+4'
 
-
-		pause on
-		pause
-
 		replace FINAL = "\begin{tabular}{@{\extracolsep{5pt}}lrrrrrrrrrrrrrrr}" in 1
 		replace FINAL = "\hline" in 3
 		replace FINAL = "\hline" in `=`total'+3'
@@ -333,7 +337,8 @@ syntax ///
 	}
 
 	// Write
-	outsheet `using' , `c' `replace' noq non
+	if inlist("`ext'","tex","csv") outsheet `using' , `c' `replace' noq non
+		else export excel `using' , `replace'
 
 end // end mat2csv
 
