@@ -1,7 +1,7 @@
 *! version 1.0 09212018 – Benjamin Daniels – bbdaniels@gmail.com
 
-cap prog drop regout
-prog def regout
+cap prog drop outwrite
+prog def outwrite
 
 // Check version
 if `c(version)' < 15 local OLD = 1

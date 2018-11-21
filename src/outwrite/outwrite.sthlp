@@ -1,17 +1,17 @@
 {smcl}
 {* Nov 21st 2018}
 {hline}
-Help for {hi:regout}
+Help for {hi:outwrite}
 {hline}
 
 {title:Description}
 
-{p}{cmd: regout} reads multiple regressions saved with {help estimates store}, consolidates them into a single table, and exports the results to a .xlsx, .xls, .csv, or .tex file.{p_end}
+{p}{cmd: outwrite} reads multiple regressions saved with {help estimates store}, consolidates them into a single table, and exports the results to a .xlsx, .xls, .csv, or .tex file.{p_end}
 {break}{break} {p}Alternatively, as a programming command, it will accept a single matrix and print that; it will also look for matrix_STARS and affix that number of stars to each cell.{p_end}
 
 {title:Syntax}
 
-{p 2 4 4}{cmd: regout} {it:estimates_1} {it:estimates_2} [...]{break}
+{p 2 4 4}{cmd: outwrite} {it:estimates_1} {it:estimates_2} [...]{break}
 {help using} {it:/path/to/output}.[xlsx|xls|csv|tex] , {break}
 [{opt r:eplace} {opt s:tats()} {opth d:rop(varlist)}] {break}
 [{opt t:stat}|{opt p:value}] [{opth f:ormat(format)}] {break}
@@ -46,10 +46,15 @@ Help for {hi:regout}
 {break}est sto reg3
 {break}estadd scalar h = 2.5
 
-{break}  regout reg1 reg2 reg3 using "test.xlsx" ///
+{break}  outwrite reg1 reg2 reg3 using "test.xlsx" ///
 {break}   , stats(N r2 h)  replace col("TEST" "(2)") drop(i.rep78) format(%9.3f)
 
 {title:Author}
 
 Benjamin Daniels
 bbdaniels@gmail.com
+
+{title:Acknowledgments}
+
+{pstd}
+While the concept of {cmd:outwrite} is original, we borrowed core functionality from {cmd:xml_tab} by Zurab Sajaia and Michael Lokshin, and many ideas from such programs as {helpb estout} by Ben Jann, {helpb outreg} by John Luke Gallup, {helpb outreg2} by Roy Wada, {helpb modltbl} by John H. Tyler, {helpb mktab} by Nicholas Winter, {helpb outtex} by Antoine Terracol, and {helpb est2tex} by Marc Muendler.
