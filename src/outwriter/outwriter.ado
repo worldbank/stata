@@ -15,7 +15,7 @@ syntax anything using/ ///
 	[Format(string asis)] ///
 	[ROWnames(string asis)] ///
 	[COLnames(string asis)] ///
-	[stats(passthru)] ///
+	[stats(passthru)] [Tstat] [Pvalue]  ///
 	[Replace] [Modify] [sheet(passthru)] ///
 	[Drop(string asis)]
 
@@ -28,7 +28,7 @@ if "`format'" == "" local format = "%9.2f"
 if `: word count `anything'' >= 2 {
 
 	cap mat drop results results_STARS
-	regprep `anything' , below `stats'
+	regprep `anything' , below `stats' `tstat' `pvalue'
 
 	mat results = r(results)
 	mat results_STARS = r(results_STARS)
@@ -212,7 +212,7 @@ qui {
 		// Set the formatting
 		local theFormat = `format'*"0" + `nStars'*"\*" + `=3-`nStars''*"_*"
 
-		qui cap putexcel `theCol'`theRow' = `theValue' , nformat(#.`theFormat')
+		qui cap putexcel `theCol'`theRow' = `theValue' , nformat(#0.`theFormat')
 		if `nRows' == `i' putexcel `theCol'`theRow' , border(bottom thick)
 
 	}
