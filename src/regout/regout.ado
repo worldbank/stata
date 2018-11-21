@@ -1,7 +1,7 @@
 // outwriter: writes regressions or arbitrary matrix to Excel
 
-cap prog drop outwriter
-prog def outwriter
+cap prog drop regout
+prog def regout
 
 // Check version
 if `c(version)' < 15 local OLD = 1
