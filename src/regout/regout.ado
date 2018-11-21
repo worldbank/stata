@@ -1,4 +1,4 @@
-// outwriter: writes regressions or arbitrary matrix to Excel
+*! version 1.0 09212018 – Benjamin Daniels – bbdaniels@gmail.com
 
 cap prog drop regout
 prog def regout
@@ -15,7 +15,7 @@ syntax anything using/ ///
 	[Format(string asis)] ///
 	[ROWnames(string asis)] ///
 	[COLnames(string asis)] ///
-	[stats(passthru)] [Tstat] [Pvalue]  ///
+	[Stats(passthru)] [Tstat] [Pvalue]  ///
 	[Replace] [Modify] [sheet(passthru)] ///
 	[Drop(string asis)]
 
@@ -341,7 +341,6 @@ syntax ///
 		else export excel `using' , `replace'
 
 end // end mat2csv
-
 
 * Have a lovely day!
 
