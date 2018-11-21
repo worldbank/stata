@@ -22,13 +22,13 @@ Help for {hi:outwrite}
 {synoptset 16 tabbed}{...}
 {p 4}{bf:Options}{p_end}
 {synopt:}{p_end}
-{synopt:{opt r:eplace}}Allows {bf:regout} to overwrite the output file.{p_end}
+{synopt:{opt r:eplace}}Allows {bf:outwrite} to overwrite the output file.{p_end}
 {synopt:{opt s:tats()}}Adds statistics from {help ereturn:e()} at the bottom of the table, such as N, r2, or scalars added by {help estadd}.{p_end}
 {synopt:{opth d:rop(varlist)}}Suppresses reporting of all variables in in {help varlist} from the output. This can be a factor variable list.{p_end}
 {synopt:{opt t:stat}|{opt p:value}}Reports T-statistics or P-values in regression table, instead of the default standard errors.{p_end}
 {synopt:{opth f:ormat(format)}}Format the table values. By default this is %9.2f.{p_end}
 {synopt:{opt sheet()}}Place results in a target sheet if using .xlsx format.{p_end}
-{synopt:{opt m:odify}}Allows {bf:regout} to modify the output file. Often required with {opt sheet()} to work as expected.{p_end}
+{synopt:{opt m:odify}}Allows {bf:outwrite} to modify the output file. Often required with {opt sheet()} to work as expected.{p_end}
 {synopt:{opt row:names()}}Manually renames rows of output. By default, the rows are named to reflect the variables in the estimation command.{p_end}
 {synopt:{opt col:names()}}Manually renames columns of output. By default, the columns are named to reflect the saved equation names.{p_end}
 {synoptline}
@@ -56,5 +56,4 @@ bbdaniels@gmail.com
 
 {title:Acknowledgments}
 
-{pstd}
-While the concept of {cmd:outwrite} is original, we borrowed core functionality from {cmd:xml_tab} by Zurab Sajaia and Michael Lokshin, and many ideas from such programs as {helpb estout} by Ben Jann, {helpb outreg} by John Luke Gallup, {helpb outreg2} by Roy Wada, {helpb modltbl} by John H. Tyler, {helpb mktab} by Nicholas Winter, {helpb outtex} by Antoine Terracol, and {helpb est2tex} by Marc Muendler.
+{p}While the concept of {cmd:outwrite} is original, we borrowed core functionality from {helpb xml_tab} by Zurab Sajaia and Michael Lokshin, and many ideas from such programs as {helpb estout} by Ben Jann, {helpb outreg} by John Luke Gallup, {helpb outreg2} by Roy Wada, {helpb modltbl} by John H. Tyler, {helpb mktab} by Nicholas Winter, {helpb outtex} by Antoine Terracol, and {helpb est2tex} by Marc Muendler.{p_end}
