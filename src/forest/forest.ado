@@ -1,9 +1,9 @@
 *! version 1.0 09212011 – Benjamin Daniels – bbdaniels@gmail.com
 
-cap prog drop tornado
-prog def tornado
+cap prog drop forest
+prog def forest
 
-syntax anything =/exp /// syntax – tornado reg d1 d2 d3 = treatment
+syntax anything =/exp /// syntax – forest reg d1 d2 d3 = treatment
 	[if] [in]  ///
 	, [*] /// regression options
 	 [or] /// odds-ratios

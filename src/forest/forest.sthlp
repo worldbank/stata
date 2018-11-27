@@ -1,18 +1,18 @@
 {smcl}
 {* Nov 21st 2018}
 {hline}
-Help for {hi:tornado}
+Help for {hi:forest}
 {hline}
 
 {title:Description}
 
-{p}{cmd: tornado} reports regression results as a modified "tornado" chart.
-This chart shows the effect of a single treatment variable on a range of independent variables.
+{p}{cmd: forest} reports regression results as a modified "forest" chart.
+This chart shows the effect of a single treatment variable of interest on a range of independent variables.
 It can display raw coefficients, standardized effect sizes (Cohen's {it:d}), or odds ratios (from logistic regressions).{p_end}
 
 {title:Syntax}
 
-{p 2 4}{cmd: tornado} {bf:estimator} {it:depvars} = {it: treatment}
+{p 2 4}{cmd: forest} {bf:estimator} {it:depvars} = {it: treatment}
 {break} [{help if}] [{help in}] , [{opth weight(weight)}] [{opth c:ontrols(varlist)}]
 {break} [{opth graph:opts(twoway_options)}] [{it:est_options}] [{bf:or|d}]
 
@@ -39,9 +39,9 @@ gen check = rep78 > 3
 gen check2 = 1-foreign
 label val check origin
 
-tornado reg headroom foreign = rep78
-tornado reg headroom foreign = rep78 , d
-tornado logit check2 foreign = check , or
+forest reg headroom foreign = rep78
+forest reg headroom foreign = rep78 , d
+forest logit check2 foreign = check , or
 
 {title:Author}
 
