@@ -34,14 +34,14 @@ It can display raw coefficients, standardized effect sizes (Cohen's {it:d}), or 
 
 {title:Examples}
 
-sysuse auto, clear
-gen check = rep78 > 3
-gen check2 = 1-foreign
-label val check origin
+{stata sysuse auto, clear : sysuse auto, clear}
+{stata gen check = rep78 > 3 : gen check = rep78 > 3}
+{stata gen check2 = 1-foreign : gen check2 = 1-foreign}
+{stata label val check origin : label val check origin}
 
-forest reg headroom foreign = rep78
-forest reg headroom foreign = rep78 , d
-forest logit check2 foreign = check , or
+{stata forest reg headroom foreign = rep78 : forest reg headroom foreign = rep78}
+{stata forest reg headroom foreign = rep78 , d : forest reg headroom foreign = rep78 , d}
+{stata forest logit check2 foreign = check , or : forest logit check2 foreign = check , or}
 
 {title:Author}
 
