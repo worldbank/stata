@@ -1,276 +1,254 @@
-# World Bank GitHub
+# World Bank Stata GitHub
 
-## Other World Bank Repositories
+This website is a hub for Stata practices from the DIME Analytics team.
+
+## DIME Analytics Public Resources
+
+* [DIME Wiki](https://dimewiki.worldbank.org/wiki/Main_Page)
+* [Manage Successful Impact Evaluations](https://osf.io/cyekq/)
+
+## DIME Analytics Code
 
 * [Impact Evaluations Toolkit](https://worldbank.github.io/ietoolkit/)
+* [Impact Evaluations Fieldkit](https://www.github.com/worldbank/iefieldkit/)
 * [Stata Visual Library](https://worldbank.github.io/Stata-IE-Visual-Library/)
 * [Distributional Impact Analysis Toolkit](https://worldbank.github.io/DIA-toolkit/)
 
-## Usage and contribution
+## DIME Analytics Blogposts
 
-This repository is an effort to debug, polish, improve, and disseminate useful reusable Stata code that is developed during the course of work. This repository is for such useful snippets – formalized as [adofiles](https://www.stata.com/manuals13/u17.pdf) – which automate routine data management, statistical analysis, and graphing tasks such as data import and cleaning, production of summary statistics tables, and categorical bar charts with confidence intervals.
+* [IE Analytics: Introducing the Development Impact Evaluation Wiki](http://blogs.worldbank.org/impactevaluations/ie-analytics-introducing-development-impact-evaluation-wiki)
+* [IE analytics: introducing ietoolkit](http://blogs.worldbank.org/impactevaluations/ie-analytics-introducing-ietoolkit)
+* [Tools of the trade: Using iemargins to graph impacts with standard error bars (IE Analytics update)](http://blogs.worldbank.org/impactevaluations/tools-trade-using-iemargins-graph-impacts-standard-error-bars-ie-analytics-update)
 
-Commands still in development can be found in and submitted to the [dev branch](https://github.com/worldbank/stata/tree/dev); please fork that branch and submit a pull request at any time. Current versions of released commands are in [src](https://github.com/worldbank/stata/tree/master/src) after review by the team. Commands in [src](https://github.com/worldbank/stata/tree/master/src) are surfaced on this [landing page](http://worldbank.github.io/stata/) and made visible to [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) after review.
+# Other useful commands:
 
-Please use the adofiles and/or any code they contain as desired; they are shared under the [MIT License](https://opensource.org/licenses/MIT). Please contribute development of existing code, new functionality, and documentation. For questions about any existing or intended functionality of any of the files, contact [Benjamin Daniels](mailto:bdaniels@worldbank.org) at [DIME Analytics](http://www.worldbank.org/en/research/dime/brief/DIME-Analytics).
+## Bar graphs with CIs
 
-## Installing Commands
+Making graphs with confidence intervals in Stata is now easy! Here's an example using `betterbar`:
 
-### wb_git_install
+![Graphs with confidence intervals in Stata](http://www.benjaminbdaniels.com/img/betterbar.png)
 
-[`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install) copies code from this [World Bank GitHub Stata respository](https://github.com/worldbank/stata) into Stata.  `wb_git_install` can access any command in this repository's [src](https://github.com/worldbank/stata/tree/master/src) directory by name alone. Begin by installing [`wb_git_install`](https://github.com/worldbank/stata/tree/master/wb_git_install):
-```
-net install "https://raw.githubusercontent.com/worldbank/stata/master/wb_git_install/wb_git_install.pkg"
-```
-
-Some corporate security policies, including the World Bank's, will not allow this functionality on company-managed machines. If the above command returns a security error, you will need to access the [src](https://github.com/worldbank/stata/tree/master/src) directory directly and install the commands manually into `c(sysdir_plus)` or `c(sysdir_personal)`. Type `sysdir` in Stata to see the location of these folders; [or access the Stata documentation for more details.](https://www.stata.com/manuals13/u17.pdf)
-
-### xml_tab
-
-Many of the commands listed here that write to Excel spreadsheets depend on [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html), which is included in the [Poverty Research Toolkit](http://econ.worldbank.org/WBSITE/EXTERNAL/EXTDEC/EXTRESEARCH/EXTPROGRAMS/EXTPOVRES/0,,contentMDK:20292195~menuPK:546578~pagePK:64168182~piPK:64168060~theSitePK:477894,00.html#xml_tab) and authored by [Zurab Sajaia](mailto:zsajaia@worldbank.org) and [Michael Lokshin](mailto:mlokshin@worldbank.org). [`xml_tab`](http://fmwww.bc.edu/repec/bocode/x/xml_tab.html) is available for installation in Stata by writing `net install dm0037.pkg`; `wb_git_install xml_tab, replace`; or `findit xml_tab`.
-
-
-# Codebooks for Data Management
-
-## importCodebook
-
-[`importCodebook`](https://github.com/worldbank/stata/tree/master/src/importCodebook) allows the user to create an Excel-based metadata file, then import one or more .xlsx or .dta files, including harmonizing variable naming and categorical coding and labeling. It can be used to expedite the cleaning of a single file or to combine (append) different surveys or survey rounds, taking the "hard work" out of the dofile.
-
-![importCodebook demo](https://raw.githubusercontent.com/worldbank/stata/master/src/importCodebook/importCodebook.png)
-
-```
-wb_git_install importCodebook
-[see documentation for extensive examples]
+```stata
+ssc install betterbar
+sysuse auto.dta , clear
+betterbarci ///
+  headroom trunk mpg ///
+  , over(foreign) legend(on)
 ```
 
-## applyCodebook
+Thanks to Gray Kimbrough for the [Uncluttered Stata Graph Theme](https://graykimbrough.github.io/uncluttered-stata-graphs/).
 
-[`applyCodebook`](https://github.com/worldbank/stata/tree/master/src/applyCodebook) allows the user to create an Excel codebook file, which will apply renames, recodes, variable labels, and value labels to the open dataset. It can be used to expedite the cleaning of a single file , taking the "hard work" out of the dofile.
+## Treatment effect graphs
 
-![applyCodebook demo](https://raw.githubusercontent.com/worldbank/stata/master/src/applyCodebook/applyCodebook.png)
+Visualizing treatment effects on multiple outcomes with Stata is now easy! Here's an example using `forest`:
 
-```
-wb_git_install applyCodebook
-sysuse auto, clear
+![Visualizing treatment effects on multiple outcomes with Stata](http://www.benjaminbdaniels.com/img/forest.png)
 
-applyCodebook ///
-  using "applyCodebook_DEMO.xlsx" ///
-  , rename varlab recode vallab
-```
+```stata
+ssc install forest
 
-## exportCodebook
+global tw_opts ///
+	title(, justification(left) color(black) span pos(11)) ///
+    graphregion(color(white) lc(white) lw(med)) bgcolor(white) ///
+    ylab(,angle(0) nogrid) xtit(,placement(left) justification(left)) ///
+    yscale(noline) xscale(noline) legend(region(lc(none) fc(none)))
 
-[`exportCodebook`](https://github.com/worldbank/stata/tree/master/src/exportCodebook) reads the currently open dataset and either (A) creates a codebook for it in the specified location; or (B) reads a series of .dofiles
-    that reference the data and keeps only the variables that those dofiles reference.
-
-
-![exportCodebook demo](https://raw.githubusercontent.com/worldbank/stata/master/src/exportCodebook/exportCodebook.png)
-
-```
-wb_git_install exportCodebook
-sysuse auto , clear
-exportCodebook "exportCodebook_compact" 	, compact
+sysuse auto.dta , clear
+forest reg mpg headroom trunk = displacement , graph($tw_opts)
 ```
 
-# Commands for Data Analysis
+`forest` visualizes results from multiple regressions on a single independent variable.  The resulting "forest" chart shows the effect of a single treatment variable of interest on a set of independent variables.  It can display raw coefficients, standardized effect sizes (Cohen's d), or odds ratios (from logistic regressions).  It can also make Bonferroni corrections to the confidence intervals for multiple comparisons.
 
-## betterBar
+## Quick regression tables
 
-[`betterBar`](https://github.com/worldbank/stata/tree/master/src/betterBar) creates bar graphs for multiple variables with confidence intervals, setting `by()` and `over()` groups, adding labels and legends, and various styling commands.
-
-![betterBar demo](https://raw.githubusercontent.com/worldbank/stata/master/src/betterBar/betterBar.png)
-
-```
-wb_git_install betterBar
-sysuse auto , clear
-betterBar mpg trunk turn ///
-  , over(foreign) se ///
-  barlook(1 lw(thin) lc(white) fi(100))
-```
-
-## weightTab
-
-[`weightTab`](https://github.com/worldbank/stata/tree/master/src/weightTab) creates tables of (weighted) statistics and, optionally, bar graphs for multiple variables with any output statistic from the `mean` command.
-
-![weightTab demo](https://raw.githubusercontent.com/worldbank/stata/master/src/weightTab/weightTab.png)
+`outwrite` reads multiple regressions saved with `estimates store`, consolidates them into a
+single table, and exports the results to a .xlsx, .xls, .csv, or .tex file:
 
 ```
-wb_git_install weightTab
-sysuse auto , clear
-weightTab  price-trunk [pweight = weight] ///
-	using "weightTab.xls" ///
-	, over(foreign) stats(b se ul ll) graph
+ssc install outwrite
+
+sysuse auto.dta, clear
+  reg price i.foreign##c.mpg
+  est sto reg1
+  reg price i.foreign##c.mpg##i.rep78
+  est sto reg2
+  estadd scalar h = 4
+  reg price i.rep78
+  est sto reg3
+  estadd scalar h = 2.5
+
+outwrite reg1 reg2 reg3 using "test.xlsx" ///
+ , stats(N r2 h)  replace col("TEST" "(2)") drop(i.rep78) format(%9.3f)
 ```
 
-## randReg
+![Writing regression tables to common filetypes in Stata.](http://www.benjaminbdaniels.com/img/outwrite.png)
 
-[`randReg`](https://github.com/worldbank/stata/tree/master/src/randReg) provides simulation results and visual illustration of randomization-based p-values, based on [Randomization inference vs. bootstrapping for p-values.](https://jasonkerwin.com/nonparibus/2017/09/25/randomization-inference-vs-bootstrapping-p-values/)
+Alternatively, as a programming command, it will accept a single matrix and print that; it
+will also look for matrix_STARS and affix that number of stars to each cell.
 
-![randReg demo](https://raw.githubusercontent.com/worldbank/stata/master/src/randReg/randReg.png)
+# Summary statistics tables
+
+Making tables of summary statistics with Stata is now easy! Here's an example using `sumstats`:
+
+![Making tables of summary statistics with Stata](http://www.benjaminbdaniels.com/img/sumstats.png)
+
+```stata
+ssc install sumstats
+sysuse auto.dta , clear
+sumstats  ///
+  (price mpg if foreign == 0) ///
+  (price displacement length if foreign == 1) ///
+  using "test.xlsx" , replace stats(mean sd)
+```
+
+## Unique IDs
+
+Making best-practice unique IDs in Stata is now easy! Here's an example using `makeid`:
+
+```stata
+. ssc install makeid
+. sysuse auto.dta , clear
+(1978 Automobile Data)
+
+. makeid foreign make , gen(uniqueid) project(Demo)
+(data now sorted by foreign make)
+(data now sorted by uniqueid)
+
+. de uniqueid
+
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------
+uniqueid        str4    %9s                   Demo ID: foreign + make
+
+. list foreign make uniqueid in 1/5
+
+     +-------------------------------------+
+     |  foreign   make            uniqueid |
+     |-------------------------------------|
+  1. | Domestic   AMC Concord         D101 |
+  2. | Domestic   AMC Pacer           D102 |
+  3. | Domestic   AMC Spirit          D103 |
+  4. | Domestic   Buick Century       D104 |
+  5. | Domestic   Buick Electra       D105 |
+     +-------------------------------------+
+
+. list foreign make uniqueid in 53/57
+
+     +---------------------------------+
+     | foreign   make         uniqueid |
+     |---------------------------------|
+ 53. | Foreign   Audi 5000        D201 |
+ 54. | Foreign   Audi Fox         D202 |
+ 55. | Foreign   BMW 320i         D203 |
+ 56. | Foreign   Datsun 200       D204 |
+ 57. | Foreign   Datsun 210       D205 |
+     +---------------------------------+
+```
+
+`makeid` creates a unique ID for every observation in the dataset, based on strata-type variables.
+
+For example, given a variable list such as _country state district name_, a unique ID is returned for every observation such that:
+
+1. Country code in the ID is fully unique
+2. State code in the ID is unique within country
+3. District code in the ID is unique within country and state
+4. Each name has a unique ID within country, state, and district.
+
+`makeid` prefixes each ID with the first letter of the project name, as a best practice to prevent against automatic conversion to numbers in Excel for example.
+
+# Flow charts
+
+Creating flow charts in Stata is now easy! Given an Excel spreadsheet with columns A, B, C, and D titled “logic”, “var”, “stat” and “value”, respectively, `statflow` replaces the “value” column with the requested statistic for the observations in the dataset that fit the condition expressed in “logic”. This allows for the creation of dynamically updating custom tables and flowcharts. Here's an example:
+
+![Making flowcharts with Stata](http://www.benjaminbdaniels.com/img/flowchart.png)
+
+```stata
+  ssc install statflow
+
+  // Set up a flowchart:
+    statflow template using "/path/to/file.xlsx" , [replace]
+
+  // Fill it out, then get all the requested statistics:
+    statflow using "/path/to/file.xlsx" [if] [in]
+```
+
+## K-fold cross-validation
+
+`crossfold` performs k-fold cross-validation on a specified model in order to evaluate a model's ability to fit out-of-sample data.
 
 ```
+. ssc install crossfold
+. sysuse nlsw88 , clear
+. crossfold reg wage union
+
+             |      RMSE
+-------------+-----------
+        est1 |  4.171849
+        est2 |  4.105884
+        est3 |  4.038483
+        est4 |  4.151482
+        est5 |  4.171727
+```
+
+This procedure splits the data randomly into k partitions, then for each partition it fits the specified model using the other k-1 groups and uses the resulting parameters to
+predict the dependent variable in the unused group.
+
+Finally, `crossfold` reports a measure of goodness-of-fit from each attempt. The default evaluation metric is root mean squared error (RMSE).
+
+## KML files
+
+Making KML files in Stata is now easy! Here's an example using `dta2kml`:
+
+![Outputting a KML file from a Stata dataset](http://www.benjaminbdaniels.com/img/dta2kml.jpg)
+
+```stata
+ssc install dta2kml
+
 clear
-set obs 1000
-gen treat_rand = runiform()
-gen treatment = treat_rand > 0.5
-gen error = rnormal()
-gen outcome = .3*treatment + 3*error
-randReg reg outcome treatment , seed(4747) t(treatment) graph reps(100)
-  graph export "randReg.png" , replace width(1000)
-  return list
+	set obs 100
+	gen lat = rnormal() +38
+	gen lon = rnormal() -77
+
+dta2kml using "demo.kml" , lat(lat) lon(lon) replace
 ```
 
-## orChart
+## Knapsack solver
 
-[`orChart`](https://github.com/worldbank/stata/tree/master/src/orChart) generates a chart of primary logistic regression results for a single binary independent variable, expressed as odds ratios, for a list of dependent variables, combined with a table detailing those results.
+Stata can now solve constrained optimization problems of the "knapsack" variety! Given a budget constraint and a dataset of items with prices and values, `knapsack` will calculate the most valuable obtainable combination under the given budget, and returns those items and their total value. Here's an example:
 
-![orChart demo](https://raw.githubusercontent.com/worldbank/stata/master/src/orChart/orChart.png)
+```stata
+ssc install knapsack
+. sysuse auto.dta, clear
+(1978 Automobile Data)
 
-```
-wb_git_install orChart
-webuse census , clear
-tab region , gen(region_)
-gen endsinA = substr(state,-1,1) == "a"
-orChart ///
-  region_1 region_2 region_3 region_4 ///
-  , command(logit) rhs(endsinA pop) ///
-  case0(Others) case1(States Ending in A) xsize(8)
-```
+. keep mpg price
+. rename (mpg price)(cost value)
 
-## sumStats
+. knapsack 500, p(cost) v(value) gen(chosen)
+(74 missing values generated)
+Maximum Total Price = 253853
 
-[`sumStats`](https://github.com/worldbank/stata/tree/master/src/sumStats) will produce requested statistics for any number and combination of variables and sample restrictions.
+. di "`r(max)'"
+253853
 
-![sumStats demo](https://raw.githubusercontent.com/worldbank/stata/master/src/sumStats/sumStats.png)
-
-```
-wb_git_install sumStats
-sysuse auto , clear
-sumStats ///
-  (price mpg rep78 headroom trunk if foreign == 0) ///
-  (price mpg rep78 headroom trunk if foreign == 1) ///
-  using "table_1.xls" ///
-  , replace stats(mean sd p5 p95 N)
- ```
-
-## knapsack
-
-[`knapsack`](https://github.com/worldbank/stata/tree/master/src/knapsack) implements a [dynamic programming solution to the Knapsack Problem](http://www.es.ele.tue.nl/education/5MC10/Solutions/knapsack.pdf), which selects an optimal set from a list of options based on input variables indicating price and value, and a set budget.
-
-![knapsack demo](https://raw.githubusercontent.com/worldbank/stata/master/src/knapsack/knapsack.png)
-
-```
-wb_git_install knapsack
-sysuse auto, clear
-keep mpg price
-rename (mpg price)(cost value)
-knapsack 500, p(cost) v(value) gen(chosen)
-di "`r(max)'"
-table chosen , c(sum cost sum value)
+. table chosen , c(sum cost sum value)
+----------------------------------
+   chosen |  sum(cost)  sum(value)
+----------+-----------------------
+        0 |       1076      202376
+        1 |        500      253853
+----------------------------------
 ```
 
-## dta2kml
+## QR codes
 
-[`dta2kml`](https://github.com/worldbank/stata/tree/master/src/dta2kml) outputs decimal lat/lon coordinates into a KML file for visual exploration.
+Making QR codes with Stata is now easy! Here's an example using `txt2qr`:
 
-![dta2kml demo](https://raw.githubusercontent.com/worldbank/stata/master/src/dta2kml/dta2kml.jpg)
-
-```
-wb_git_install dta2kml
-clear
-set obs 100
-gen lat = rnormal() +38
-gen lon = rnormal() -77
-dta2kml using demo.kml , lat(lat) lon(lon) replace
+```stata
+txt2qr this is a test using "test.png", replace
 ```
 
-## txt2qr
+![Making QR codes with Stata](http://www.benjaminbdaniels.com/img/txt2qr.png)
 
-[`txt2qr`](https://github.com/worldbank/stata/tree/master/src/txt2qr) outputs arbitrary text into a QR code for use with scanning devices such as ODK plugins.
-
-![txt2qr demo](https://raw.githubusercontent.com/worldbank/stata/master/src/txt2qr/txt2qr.png)
-
-```
-wb_git_install txt2qr
-txt2qr ///
-  worldbank.github.io/stata/ ///
-  using txt2qr.png ///
-  , save replace
-```
-
-## flowChart
-
-[`flowChart`](https://github.com/worldbank/stata/tree/master/src/flowChart) allows for the creation of dynamically updating custom tables and flowcharts via an Excel spreadsheet with a simple interface.
-
-![flowChart demo](https://raw.githubusercontent.com/worldbank/stata/master/src/flowChart/flowChart.png)
-
-```
-wb_git_install flowChart
-sysuse auto, clear
-flowchart using "flowChart.xlsx"
-```
-
-## manskiBounds
-
-[`manskiBounds`](https://github.com/worldbank/stata/tree/master/src/manskiBounds)  implements Manski bounding simulations as in Andrabi and Das (2017). For a binary treatment variable and a binary outcome variable, the first simulation is "extreme" bounds: all missing observations are assigned the outcome that would produce the least significant effect of treatment on outcome. This is then relaxed by varying the "bounding fraction" until outcome simulation is random in both treatment and control groups with missing outcomes (50%), which induces measurement error in the original estimate proportional to the number of missing outcome values. The displayed graph shows this relaxation process, as well as the bounding fractions at which p<0.01 and p<0.05 are attained, and the estimated effect from the original model on non-missing data.
-
-![manskiBounds demo](https://raw.githubusercontent.com/worldbank/stata/master/src/manskiBounds/manskiBounds.png)
-
-```
-wb_git_install manskiBounds
-clear
-set obs 1000
-matrix c = (1,-.5,0 \ -.5,1,.4 \ 0,.4,1)
-corr2data x y z, corr(c)
-
-replace x = 1 if x > 0
-replace x = 0 if x < 0
-replace y = 1 if y > 0
-replace y = 0 if y < 0
-replace x = . if z > .5
-
-manskiBounds reg x y z ///
-  , t(y) o(x)
-
-graph export manskiBounds.png , replace
-```
-
-## timeLines
-
-[`timeLines`](https://github.com/worldbank/stata/tree/master/src/timeLines) creates a graphical representation of time use for various panel units when each observation represents an activity with a start and end time.
-
-![timeLines demo](https://raw.githubusercontent.com/worldbank/stata/master/src/timeLines/timeLines.png)
-
-```
-wb_git_install timeLines
-webuse census , clear
-keep in 40/50
-replace pop18p = pop18p / 1000
-replace pop = pop / 1000
-format pop18p %tdMon_CCYY
-drop if state == "Virginia"
-xtile category = popurban , n(2)
-  label def category 1 "Early Adopters" 2 "Late Adopters"
-  label val category category
-timeLines , ///
-  id(region) start(pop18p) end(pop) ///
-  labels(state) labopts(mlabangle(30)) ///
-  xsize(7) class(category) classcolors(maroon navy)
-```
-
-# Commands for Data Cleaning
-
-## cleanLabels
-
-[`cleanLabels`](https://github.com/worldbank/stata/tree/master/src/cleanLabels) removes characters from value labels. By default it removes “,” and “:” since these are known to cause issues with export commands.
-
-![cleanLabels demo](https://raw.githubusercontent.com/worldbank/stata/master/src/cleanLabels/cleanlabels.png)
-
-```
-wb_git_install cleanLabels
-sysuse auto , clear
-label def origin 1 "Of, Foreign : Origin" 0 "D,omes:tic" , modify
-labelbook origin
-cleanLabels foreign
-labelbook origin
-```
+`txt2qr` saves a QR code containing text to the location specified in using. The file extension .png is recommended. Spaces and special characters are not currently supported in text. Internet connection is required.

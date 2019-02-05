@@ -1,8 +1,0 @@
-v 1.0
-d wb_git_install. Installs files from World Bank Stata GitHub Repository.
-d Benjamin Daniels (bdaniels@worldbank.org).
-d
-d
-
-f wb_git_install.ado
-f wb_git_install.sthlp
