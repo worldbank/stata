@@ -4,7 +4,7 @@ This website is a hub for Stata practices from the DIME Analytics team.
 
 ## DIME Analytics Public Resources
 
-* [DIME Wiki](https://dimewiki.worldbank.org/wiki/Main_Page)
+* [DIME Wiki](https://dimewiki.worldbank.org)
 * [Manage Successful Impact Evaluations](https://osf.io/cyekq/)
 
 ## DIME Analytics Code
