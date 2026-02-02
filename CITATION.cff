@@ -1,0 +1,23 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: stata-practices
+message: Hub for Stata practices from the DIME Analytics team
+type: software
+authors:
+  - name: 'DIME Analytics, The World Bank'
+    address: 1818 H St NW
+    city: 'Washington, DC'
+    country: US
+    post-code: '20433'
+    email: dimeanalytics@worldbank.org
+repository-code: 'https://github.com/worldbank/stata'
+url: 'https://worldbank.github.io/stata/'
+keywords:
+  - stata
+  - impact-evaluations
+  - best-practices
+  - visualizations
+  - table-output
+license: MIT
