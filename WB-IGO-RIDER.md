@@ -1,0 +1,12 @@
+### WORLD BANK IGO RIDER - PROCEDURAL TERMS
+Where the Licensor is an intergovernmental organization (IGO), the following additional terms shall apply: 
+1. **Privileges and Immunities** Nothing in this License shall constitute or be interpreted as a waiver, express or implied, of any privileges and immunities that apply to the Licensor pursuant to international law, treaties, or the Licensor's constituent documents, including immunity from jurisdiction and execution. 
+2. **Dispute Resolution** Any dispute arising under this License that involves the Licensor shall be resolved, to the extent not settled amicably, through the following procedures: 
+     - First, by non-binding mediation conducted in accordance with rules designated by the Licensor, or, if none, the UNCITRAL Mediation Rules; 
+     - Failing settlement within 45 days, by final and binding arbitration in accordance with the UNCITRAL Arbitration Rules then in force, by a sole arbitrator, conducted in English, seated at the Licensor's headquarters, and conducted remotely when practicable. 
+3. **Interpretation under International Law** This License shall be interpreted in accordance with general principles of international law, including those reflected in the Berne Convention (1971), the WIPO Copyright Treaty (1996), and the Universal Copyright Convention (1971). No provision shall be interpreted in a manner that derogates from the legal status of the Licensor under international law. 
+4. **No Waiver** No provision of this License shall be deemed waived and no breach consented to unless expressly agreed in writing and signed by the Licensor. 
+5. **No Ongoing Support or Maintenance** Nothing in this License shall be construed to create an obligation on the part of the Licensor to provide updates, maintenance, support or any form of continued service for the software once released. 
+6. **Entire Agreement** This License constitutes the entire agreement between the Licensee and the Licensor concerning the Work and supersedes any additional terms submitted by You. No modification shall be effective unless agreed in writing by both parties. 
+7. **Severability** If any provision of this License is held to be unenforceable, it shall be interpreted to give effect to its purpose to the extent permitted by applicable law, and the remainder of the License shall remain in full force and effect. 
+8. **Precedence** In the event of any inconsistency between these Additional Terms for IGOs and the terms of the MIT License, these Additional Terms for IGOs shall prevail.
