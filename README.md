@@ -15,3 +15,7 @@ This project is licensed under the MIT License together with the [World Bank IGO
 ## Citation
 
 Please use the citation suggested in [CITATION.cff](CITATION.cff). Find the `APA` and `BIBTeX` formats in the right hand side menu of the [landing page](https://github.com/worldbank/stata) of this project's repository.
+
+### Contact
+
+DIME Analytics ([dimeanalytics@worldbank.org](mailto:dimeanalytics@worldbank.org))
