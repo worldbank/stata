@@ -9,9 +9,11 @@ This website is a hub for Stata practices from the DIME Analytics team.
 
 ## DIME Analytics Code
 
-* [Impact Evaluations Toolkit](https://worldbank.github.io/ietoolkit/)
-* [Impact Evaluations Fieldkit](https://www.github.com/worldbank/iefieldkit/)
-* [Stata Visual Library](https://worldbank.github.io/Stata-IE-Visual-Library/)
+* [Reproducible Research Toolkit](https://worldbank.github.io/repkit/)
+* [Impact Evaluations Toolkit](https://worldbank.github.io/ietoolkit)
+* [Impact Evaluations Fieldkit](https://www.github.com/worldbank/iefieldkit)
+* [Stata Visual Library](https://worldbank.github.io/stata-visual-library)
+* [High-Frequency Data Quality Checks Dashboard](https://github.com/dime-worldbank/iehfc)
 * [Distributional Impact Analysis Toolkit](https://worldbank.github.io/DIA-toolkit/)
 
 ## DIME Analytics Blogposts
