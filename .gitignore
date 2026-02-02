@@ -1,2 +1,126 @@
+########################################################################
+#
+# Based on DIME .gitignore template. Follow the instructions in the URL
+# below to set up this template in your own repository
+# https://github.com/worldbank/dime-github-trainings/tree/main/GitHub-resources/DIME-GitHub-Templates
+#
+# This is version 2.0
+#
+########################################################################
 
-\.DS_Store
+#######################
+# Start by ignoring everything, and below we are explicitly saying
+# what to not ignore
+*
+
+#######################
+# List of files with GitHub functionality anywhere in the repo
+# that we do not want to ignore
+
+# These files include GitHub settings
+!.gitignore
+!.gitattributes
+
+# Git placeholder file (to commit empty folders)
+!/**/*.gitkeep
+
+# Keep markdown files used for documentation on GitHub
+!README.md
+!CONTRIBUTING.md
+!LICENSE*
+# Git-friendly citation file
+!CITATION.cff
+
+* Unignore reproot files - see https://dime-worldbank.github.io/repkit/articles/reproot-files.html
+!reproot*.yaml
+
+#######################
+# For performance reasons, if a folder is already ignored, then
+# GitHub does not check the content for that folder for matches
+# with additional rules. The line below includes folder in the
+# top folder (but not their content), so that anything matching
+# the rules below will still not be ignored.
+!*/
+
+#######################
+# The following file types are code that should always be
+# included no matter where in the repository folder they are
+# located unless you explicitly ignore that folder
+
+# Stata
+!/**/*.do
+!/**/*.ado
+!/**/*.sthlp
+!/**/*.smcl
+
+# R
+!/**/*.R
+!/**/*.Rmd
+!/**/*.Rproj
+!/**/*.qmd
+# Still ignore user file for R projects
+.Rproj.user
+
+# LaTeX
+!/**/*.tex
+!/**/*.bib
+
+# Python
+!/**/*.py
+!/**/*.ipynb
+!/**/requirements.txt
+!/**/Pipfile
+!/**/Pipfile.lock
+# Still ignore .ipynb files in checkpoint folders
+.ipynb_checkpoints
+
+# Matlab
+!/**/*.m
+
+# Markdown
+!/**/*.md
+
+# Julia
+!/**/*.jl
+
+#Files to create custom layout and functionality
+# in dashboards, markdown notebooks, bookdown etc.
+!/**/*.css
+!/**/*.js
+
+#Bash scripts
+!/**/*.sh
+
+# .yml and .yaml files
+# These files sometimes have credentials, so only unignore these lines by removing
+# the "#" below after you checked your .yml/.yaml files for sensitive content
+#!/**/*.yml
+#!/**/*.yaml
+
+
+
+#######################
+# Include some additional file formats in any output folder. You might have
+# to change the name of the Output folder to whatever it is called in your
+# project, but we strongly recommend that you only include these files in
+# a subset of the folders where you are certain no private data is ever stored.
+!/**/Output/**/*.txt
+!/**/Output/**/*.csv
+!/**/Output/**/*.xml
+!/**/Output/**/*.eps
+!/**/Output/**/*.svg
+
+#######################
+# Include all the files with passwords or tokens here. All files named
+# password or passwords are with this template ignored no matter which
+# format you are using. Additionally, all content in any folder called
+# password or passwords are also ignored. NOTE that your project might be
+# using different names and then you must edit the lines below accordingly.
+password.*
+passwords.*
+password/
+passwords/
+token.*
+tokens.*
+token/
+tokens/
