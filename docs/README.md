@@ -9,9 +9,11 @@ This website is a hub for Stata practices from the DIME Analytics team.
 
 ## DIME Analytics Code
 
-* [Impact Evaluations Toolkit](https://worldbank.github.io/ietoolkit/)
-* [Impact Evaluations Fieldkit](https://www.github.com/worldbank/iefieldkit/)
-* [Stata Visual Library](https://worldbank.github.io/Stata-IE-Visual-Library/)
+* [Reproducible Research Toolkit](https://worldbank.github.io/repkit/)
+* [Impact Evaluations Toolkit](https://worldbank.github.io/ietoolkit)
+* [Impact Evaluations Fieldkit](https://www.github.com/worldbank/iefieldkit)
+* [Stata Visual Library](https://worldbank.github.io/stata-visual-library)
+* [High-Frequency Data Quality Checks Dashboard](https://github.com/dime-worldbank/iehfc)
 * [Distributional Impact Analysis Toolkit](https://worldbank.github.io/DIA-toolkit/)
 
 ## DIME Analytics Blogposts
@@ -26,7 +28,7 @@ This website is a hub for Stata practices from the DIME Analytics team.
 
 Making graphs with confidence intervals in Stata is now easy! Here's an example using `betterbar`:
 
-![Graphs with confidence intervals in Stata](http://www.benjaminbdaniels.com/img/betterbar.png)
+![Graphs with confidence intervals in Stata](img/betterbar.png)
 
 ```stata
 ssc install betterbar
@@ -42,7 +44,7 @@ Thanks to Gray Kimbrough for the [Uncluttered Stata Graph Theme](https://graykim
 
 Visualizing treatment effects on multiple outcomes with Stata is now easy! Here's an example using `forest`:
 
-![Visualizing treatment effects on multiple outcomes with Stata](http://www.benjaminbdaniels.com/img/forest.png)
+![Visualizing treatment effects on multiple outcomes with Stata](img/forest.png)
 
 ```stata
 ssc install forest
@@ -81,7 +83,7 @@ outwrite reg1 reg2 reg3 using "test.xlsx" ///
  , stats(N r2 h)  replace col("TEST" "(2)") drop(i.rep78) format(%9.3f)
 ```
 
-![Writing regression tables to common filetypes in Stata.](http://www.benjaminbdaniels.com/img/outwrite.png)
+![Writing regression tables to common filetypes in Stata.](img/outwrite.png)
 
 Alternatively, as a programming command, it will accept a single matrix and print that; it
 will also look for matrix_STARS and affix that number of stars to each cell.
@@ -90,7 +92,7 @@ will also look for matrix_STARS and affix that number of stars to each cell.
 
 Making tables of summary statistics with Stata is now easy! Here's an example using `sumstats`:
 
-![Making tables of summary statistics with Stata](http://www.benjaminbdaniels.com/img/sumstats.png)
+![Making tables of summary statistics with Stata](img/sumstats.png)
 
 ```stata
 ssc install sumstats
@@ -161,7 +163,7 @@ For example, given a variable list such as _country state district name_, a uniq
 
 Creating flow charts in Stata is now easy! Given an Excel spreadsheet with columns A, B, C, and D titled “logic”, “var”, “stat” and “value”, respectively, `statflow` replaces the “value” column with the requested statistic for the observations in the dataset that fit the condition expressed in “logic”. This allows for the creation of dynamically updating custom tables and flowcharts. Here's an example:
 
-![Making flowcharts with Stata](http://www.benjaminbdaniels.com/img/flowchart.png)
+![Making flowcharts with Stata](img/flowchart.png)
 
 ```stata
   ssc install statflow
@@ -200,7 +202,7 @@ Finally, `crossfold` reports a measure of goodness-of-fit from each attempt. The
 
 Making KML files in Stata is now easy! Here's an example using `dta2kml`:
 
-![Outputting a KML file from a Stata dataset](http://www.benjaminbdaniels.com/img/dta2kml.jpg)
+![Outputting a KML file from a Stata dataset](img/dta2kml.jpg)
 
 ```stata
 ssc install dta2kml
@@ -249,6 +251,6 @@ Making QR codes with Stata is now easy! Here's an example using `txt2qr`:
 txt2qr this is a test using "test.png", replace
 ```
 
-![Making QR codes with Stata](http://www.benjaminbdaniels.com/img/txt2qr.png)
+![Making QR codes with Stata](img/txt2qr.png)
 
 `txt2qr` saves a QR code containing text to the location specified in using. The file extension .png is recommended. Spaces and special characters are not currently supported in text. Internet connection is required.
